@@ -260,6 +260,68 @@ eval "$(nodenv init -)"
 eval "$(nodenv init -)"
 ```
 
+### 403 Forbidden Error
+
+If you see "403 Forbidden" error:
+
+**Step 1: Create .env file (if missing)**
+```bash
+cd ~/intra.turturiello.com
+cp .env.example .env
+php artisan key:generate
+```
+
+**Step 2: Fix permissions**
+```bash
+cd ~/intra.turturiello.com
+
+# Fix storage and cache permissions
+chmod -R 775 storage bootstrap/cache
+chmod -R 755 public
+
+# For Plesk servers:
+chown -R psacln:psacln storage bootstrap/cache public
+
+# For standard servers:
+chown -R www-data:www-data storage bootstrap/cache public
+```
+
+**Step 3: Verify document root points to /public**
+```bash
+# Check if public/index.php exists
+ls -la ~/intra.turturiello.com/public/index.php
+
+# Verify public directory permissions
+ls -ld ~/intra.turturiello.com/public
+```
+
+**Step 4: Clear Laravel caches**
+```bash
+cd ~/intra.turturiello.com
+php artisan config:clear
+php artisan cache:clear
+php artisan route:clear
+php artisan view:clear
+php artisan config:cache
+```
+
+**Step 5: Check web server configuration**
+- For Plesk: Document root should be: `~/intra.turturiello.com/public`
+- For Apache/Nginx: Document root should point to `/path/to/intra.turturiello.com/public`
+
+**Quick fix (all steps combined):**
+```bash
+cd ~/intra.turturiello.com && \
+cp .env.example .env && \
+php artisan key:generate && \
+chmod -R 775 storage bootstrap/cache && \
+chmod -R 755 public && \
+chown -R psacln:psacln storage bootstrap/cache public && \
+php artisan config:clear && \
+php artisan cache:clear && \
+php artisan config:cache
+```
+
 ### PHP Version Issues
 
 Make sure you're using the correct PHP version:
