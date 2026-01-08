@@ -16,7 +16,19 @@ cd /path/to/your/project
 git pull origin main
 ```
 
-### 3. Install/Update Dependencies
+### 3. Set Node Version (if using nodenv)
+```bash
+# Set Node version from .node-version file
+nodenv install -s 2>/dev/null || true
+nodenv local 20
+eval "$(nodenv init -)"
+
+# Verify Node and npm are available
+node -v
+npm -v
+```
+
+### 4. Install/Update Dependencies
 ```bash
 # Composer dependencies (production)
 composer install --no-dev --optimize-autoloader
@@ -25,51 +37,51 @@ composer install --no-dev --optimize-autoloader
 npm ci --production
 ```
 
-### 4. Build Assets
+### 5. Build Assets
 ```bash
 npm run build
 ```
 
-### 5. Run Database Migrations
+### 6. Run Database Migrations
 ```bash
 php artisan migrate --force
 ```
 
-### 6. Clear and Cache Configuration
+### 7. Clear and Cache Configuration
 ```bash
 php artisan config:clear
 php artisan config:cache
 ```
 
-### 7. Clear and Cache Routes
+### 8. Clear and Cache Routes
 ```bash
 php artisan route:clear
 php artisan route:cache
 ```
 
-### 8. Clear and Cache Views
+### 9. Clear and Cache Views
 ```bash
 php artisan view:clear
 php artisan view:cache
 ```
 
-### 9. Clear Application Cache
+### 10. Clear Application Cache
 ```bash
 php artisan cache:clear
 ```
 
-### 10. Optimize Application
+### 11. Optimize Application
 ```bash
 php artisan optimize
 ```
 
-### 11. Set Permissions
+### 12. Set Permissions
 ```bash
 chmod -R 755 storage bootstrap/cache
 chown -R www-data:www-data storage bootstrap/cache
 ```
 
-### 12. Create Storage Link (if needed)
+### 13. Create Storage Link (if needed)
 ```bash
 php artisan storage:link
 ```
@@ -81,6 +93,7 @@ You can combine all commands into one line:
 ```bash
 cd /path/to/your/project && \
 git pull origin main && \
+nodenv local 20 && eval "$(nodenv init -)" && \
 composer install --no-dev --optimize-autoloader && \
 npm ci --production && \
 npm run build && \
@@ -210,6 +223,41 @@ chown -R www-data:www-data storage bootstrap/cache
 # Or if using Plesk:
 chmod -R 775 storage bootstrap/cache
 chown -R psacln:psacln storage bootstrap/cache
+```
+
+### Node/npm Command Not Found (nodenv)
+
+If you get `nodenv: npm: command not found`:
+
+**Quick Fix:**
+```bash
+cd /var/www/vhosts/turturiello.com/intra.turturiello.com
+
+# Set Node version (20 or 21)
+nodenv local 20
+# or
+nodenv local 21
+
+# Initialize nodenv in current shell
+eval "$(nodenv init -)"
+
+# Verify npm is now available
+npm -v
+```
+
+**Permanent Fix:**
+The `.node-version` file in the project root will automatically set the Node version. After pulling the code:
+```bash
+cd /var/www/vhosts/turturiello.com/intra.turturiello.com
+git pull origin main
+nodenv install -s  # Install Node version if not already installed
+nodenv local      # This reads .node-version file
+eval "$(nodenv init -)"
+```
+
+**For SSH sessions, add to your shell profile (~/.bashrc or ~/.zshrc):**
+```bash
+eval "$(nodenv init -)"
 ```
 
 ### PHP Version Issues

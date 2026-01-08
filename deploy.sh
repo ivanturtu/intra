@@ -24,6 +24,14 @@ echo "📦 Installing Composer dependencies..."
 # rm -rf vendor
 composer install --no-dev --optimize-autoloader --no-interaction
 
+# Set Node version (if using nodenv)
+if command -v nodenv &> /dev/null; then
+    echo "📌 Setting Node version..."
+    nodenv install -s 2>/dev/null || true
+    nodenv local $(cat .node-version 2>/dev/null || echo "20") 2>/dev/null || true
+    eval "$(nodenv init -)"
+fi
+
 # Install/Update NPM dependencies
 echo "📦 Installing NPM dependencies..."
 npm ci --production
