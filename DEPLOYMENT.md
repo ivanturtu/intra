@@ -157,10 +157,77 @@ Make sure your `.env` file is properly configured on the server with:
 - Database credentials
 - Other necessary environment variables
 
+## Troubleshooting
+
+### Composer Vendor Directory Corruption Error
+
+If you encounter errors like:
+```
+Script Illuminate\Foundation\ComposerScripts::prePackageUninstall handling the pre-package-uninstall event terminated with an exception
+Class "SebastianBergmann\Version" not found
+```
+
+This indicates a corrupted or incomplete `vendor` directory. Fix it with:
+
+**Option 1: Use the fix script**
+```bash
+cd /var/www/vhosts/turturiello.com/intra.turturiello.com
+bash fix-composer.sh
+```
+
+**Option 2: Manual fix**
+```bash
+cd /var/www/vhosts/turturiello.com/intra.turturiello.com
+
+# Backup and remove corrupted vendor directory
+mv vendor vendor.backup.$(date +%Y%m%d_%H%M%S)
+# or simply remove it:
+rm -rf vendor
+
+# Clear composer cache
+composer clear-cache
+
+# Fresh install
+composer install --no-dev --optimize-autoloader --no-interaction
+```
+
+**Option 3: Quick fix (if vendor is partially corrupted)**
+```bash
+cd /var/www/vhosts/turturiello.com/intra.turturiello.com
+composer clear-cache
+rm -rf vendor
+composer install --no-dev --optimize-autoloader --no-interaction
+```
+
+### Permission Errors
+
+If you get permission errors:
+```bash
+# Fix storage and cache permissions
+chmod -R 775 storage bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache
+
+# Or if using Plesk:
+chmod -R 775 storage bootstrap/cache
+chown -R psacln:psacln storage bootstrap/cache
+```
+
+### PHP Version Issues
+
+Make sure you're using the correct PHP version:
+```bash
+# Check PHP version
+php -v
+
+# Use specific PHP version (if multiple installed)
+/opt/plesk/php/8.2/bin/php composer install --no-dev --optimize-autoloader
+```
+
 ## Notes
 
 - Replace `/path/to/your/project` with your actual project path
-- Replace `www-data` with your web server user (common: `www-data`, `nginx`, `apache`)
+- Replace `www-data` with your web server user (common: `www-data`, `nginx`, `apache`, `psacln` for Plesk)
 - The `--force` flag on migrations is needed in production
 - Use `--no-dev` for Composer to skip development dependencies
 - Use `npm ci` instead of `npm install` for faster, reliable builds in production
+- For Plesk servers, use `/opt/plesk/php/8.2/bin/php` instead of `php` if needed

@@ -20,7 +20,9 @@ git pull origin main
 
 # Install/Update Composer dependencies
 echo "📦 Installing Composer dependencies..."
-composer install --no-dev --optimize-autoloader
+# Remove vendor directory if corrupted (uncomment if needed)
+# rm -rf vendor
+composer install --no-dev --optimize-autoloader --no-interaction
 
 # Install/Update NPM dependencies
 echo "📦 Installing NPM dependencies..."
