@@ -57,15 +57,15 @@
             </div>
             
             <!-- Main Image - Full Width -->
-            <div class="mb-8">
+            <div class="mb-8 h-[600px] overflow-hidden">
                 @if($project->main_image)
                     <img src="{{ asset('storage/' . $project->main_image) }}" 
                          alt="{{ $project->title }}" 
-                         class="w-full h-auto">
+                         class="w-full h-full object-cover object-center">
                 @else
                     <img src="https://via.placeholder.com/1200x600/87CEEB/FFFFFF?text={{ urlencode($project->title) }}" 
                          alt="{{ $project->title }}" 
-                         class="w-full h-auto">
+                         class="w-full h-full object-cover object-center">
                 @endif
             </div>
             
