@@ -61,9 +61,11 @@
                                 {{ $project->short_description }}
                             </p>
                         @endif
-                        <a href="{{ route('work.show', $project->slug) }}" class="inline-block border-2 border-white px-8 py-3 rounded hover:bg-white hover:text-[#1a304f] transition">
-                            VIEW PROJECT
-                        </a>
+                        @if($project->slug)
+                            <a href="{{ route('work.show', $project->slug) }}" class="inline-block border-2 border-white px-8 py-3 rounded hover:bg-white hover:text-[#1a304f] transition">
+                                VIEW PROJECT
+                            </a>
+                        @endif
                     </div>
                 </div>
             @endforeach

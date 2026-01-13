@@ -10,6 +10,14 @@ Route::get('/', function () {
         ->orderBy('order')
         ->get();
     
+    // Generate slugs for projects that don't have one
+    foreach ($heroProjects as $project) {
+        if (empty($project->slug)) {
+            $project->slug = \Illuminate\Support\Str::slug($project->title);
+            $project->save();
+        }
+    }
+    
     return view('home', ['heroProjects' => $heroProjects]);
 });
 
