@@ -206,8 +206,13 @@
     </section>
 
     <!-- Intra Mag Section -->
-    <section id="mag" class="bg-white py-20 px-8">
-        <div class="container mx-auto">
+    <section id="mag" class="relative py-20 px-8 overflow-hidden">
+        <!-- Background: Tertiary color covering 4/5 (80%) of section -->
+        <div class="absolute inset-0 bg-[#d3924f] z-0" style="height: 80%;"></div>
+        <!-- Background: White covering remaining 1/5 (20%) -->
+        <div class="absolute bottom-0 left-0 right-0 bg-white z-0" style="height: 20%;"></div>
+        
+        <div class="container mx-auto relative z-10">
             <h2 class="text-4xl md:text-5xl mb-12 text-[#1b304e]">
                 <span class="font-normal">Intra</span> <span class="font-bold">Mag</span>
             </h2>
