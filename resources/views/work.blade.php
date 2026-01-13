@@ -308,7 +308,7 @@
                     </div>
                     <div>
                         <ul class="space-y-4">
-                            <li class="bg-[#d68f75] px-4 py-3 rounded">
+                            <li class="bg-tertiary/80 px-4 py-3 rounded">
                                 <span class="font-semibold">Preliminary Analysis and Research</span>
                             </li>
                             <li class="px-4 py-3">Assessment and Diagnosis</li>
