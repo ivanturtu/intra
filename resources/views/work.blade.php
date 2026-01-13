@@ -239,10 +239,10 @@
                     <!-- Team Members -->
                     @if($project->projectTeamMembers->count() > 0)
                         <div>
-                            <h3 class="font-semibold mb-4 text-gray-900">Team</h3>
-                            <ul class="space-y-3 text-sm">
+                            <h3 class="font-semibold mb-4 text-[#d3924f]">Team</h3>
+                            <ul class="space-y-0 text-sm">
                                 @foreach($project->projectTeamMembers as $member)
-                                    <li class="text-gray-700">
+                                    <li class="text-gray-700 border-b border-[#dfdfbb] py-2 last:border-b-0">
                                         @if($member->name && $member->role)
                                             <span class="font-medium">{{ $member->name }}:</span> {{ $member->role }}
                                         @elseif($member->name)
@@ -259,10 +259,10 @@
                     <!-- INTRAstudio Team Leads -->
                     @if($project->intraStudioTeamLeads->count() > 0)
                         <div>
-                            <h3 class="font-semibold mb-4 text-gray-900">INTRAstudio Team Leads</h3>
-                            <ul class="space-y-2 text-sm text-gray-700">
+                            <h3 class="font-semibold mb-4 text-[#d3924f]">INTRAstudio Team Leads</h3>
+                            <ul class="space-y-0 text-sm text-gray-700">
                                 @foreach($project->intraStudioTeamLeads as $lead)
-                                    <li>{{ $lead->name }}@if($lead->surname) {{ $lead->surname }}@endif</li>
+                                    <li class="border-b border-[#dfdfbb] py-2 last:border-b-0">{{ $lead->name }}@if($lead->surname) {{ $lead->surname }}@endif</li>
                                 @endforeach
                             </ul>
                         </div>
@@ -270,28 +270,28 @@
 
                     <!-- Project Details -->
                     <div>
-                        <h3 class="font-semibold mb-4 text-gray-900">Project Details</h3>
-                        <ul class="space-y-3 text-sm">
+                        <h3 class="font-semibold mb-4 text-[#d3924f]">Project Details</h3>
+                        <ul class="space-y-0 text-sm">
                             @if($project->sector)
-                                <li>
+                                <li class="border-b border-[#dfdfbb] py-2 last:border-b-0">
                                     <span class="text-gray-500">Sector:</span>
                                     <span class="font-medium text-gray-900">{{ $project->sector }}</span>
                                 </li>
                             @endif
                             @if($project->client)
-                                <li>
+                                <li class="border-b border-[#dfdfbb] py-2 last:border-b-0">
                                     <span class="text-gray-500">Client:</span>
                                     <span class="font-medium text-gray-900">{{ $project->client }}</span>
                                 </li>
                             @endif
                             @if($project->location)
-                                <li>
+                                <li class="border-b border-[#dfdfbb] py-2 last:border-b-0">
                                     <span class="text-gray-500">Location:</span>
                                     <span class="font-medium text-gray-900">{{ $project->location }}</span>
                                 </li>
                             @endif
                             @if($project->year)
-                                <li>
+                                <li class="border-b border-[#dfdfbb] py-2 last:border-b-0">
                                     <span class="text-gray-500">Year:</span>
                                     <span class="font-medium text-gray-900">{{ $project->year }}</span>
                                 </li>
