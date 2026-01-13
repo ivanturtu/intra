@@ -97,62 +97,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <!-- Footer Content -->
-        <div class="bg-[#1b304e] text-white py-12 px-8">
-            <div class="container mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-8">
-                    <!-- Address Section -->
-                    <div>
-                        <h4 class="text-xl font-bold mb-4">INTRA studio</h4>
-                        <p class="text-gray-300 mb-4">
-                            1505 Barrington Street, Suite 100 - M03<br>
-                            Halifax, Nova Scotia, B3J 2A4 CANADA
-                        </p>
-                        <div class="flex gap-4">
-                            <a href="#" class="text-white hover:text-[#dfdfbb] transition">FB</a>
-                            <a href="#" class="text-white hover:text-[#dfdfbb] transition">LI</a>
-                            <a href="#" class="text-white hover:text-[#dfdfbb] transition">PH</a>
-                        </div>
-                    </div>
-
-                    <!-- Menu Section -->
-                    <div>
-                        <h5 class="font-semibold mb-4">Menu</h5>
-                        <ul class="space-y-2 text-gray-300">
-                            <li><a href="/work" class="hover:text-white transition">Works</a></li>
-                            <li><a href="#expertise" class="hover:text-white transition">Expertise</a></li>
-                            <li><a href="#story" class="hover:text-white transition">Our Story</a></li>
-                            <li><a href="#mag" class="hover:text-white transition">MAG</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Services Section -->
-                    <div>
-                        <h5 class="font-semibold mb-4">Services</h5>
-                        <ul class="space-y-2 text-gray-300">
-                            <li><a href="#" class="hover:text-white transition">Heritage</a></li>
-                            <li><a href="#" class="hover:text-white transition">Conservation</a></li>
-                            <li><a href="#" class="hover:text-white transition">Research</a></li>
-                            <li><a href="#" class="hover:text-white transition">Project management</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Copyright Bar -->
-        <div class="bg-[#d3924f] text-white py-4 px-8">
-            <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
-                <p class="text-sm mb-2 md:mb-0">© 2025 INTRA studio • All Rights Reserved.</p>
-                <div class="flex gap-6 text-sm">
-                    <a href="#" class="hover:underline">Privacy Policy</a>
-                    <a href="#" class="hover:underline">Terms of Service</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    @include('partials.footer')
 
     <script>
         // Category filter functionality
