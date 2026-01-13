@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Header -->
-    <header class="bg-primary text-white px-8 sticky top-0 z-50 py-0">
+    <header class="bg-[#1b304e] text-white px-8 sticky top-0 z-50 py-0">
         <div class="container mx-auto flex items-center justify-between header-logo-container">
             <div class="flex items-center h-full">
                 <img src="{{ asset('images/INTRAstudio-logotype-beige.png') }}" alt="INTRA studio" class="h-full">
