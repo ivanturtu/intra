@@ -32,8 +32,7 @@ class Form extends Component
     public $selectedImage;
     public $selectedImagePath;
     public $teamMembers = [];
-    public $teamMemberPhotos = [];
-    public $teamLeads = [];
+    public $intraStudioTeamLeads = [];
     public $categoryId = null;
     public $order = 0;
     public $isPublished = false;

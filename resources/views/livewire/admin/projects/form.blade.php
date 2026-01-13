@@ -229,40 +229,6 @@
         }
     }
 
-    function initTeamMemberEditors() {
-        const teamMembers = @this.teamMembers || [];
-        teamMembers.forEach((member, index) => {
-            const editorId = `teamMemberDescriptionEditor${index}`;
-            const textareaId = `teamMemberDescription${index}`;
-            
-            if (!teamMemberQuills[index] && document.getElementById(editorId)) {
-                teamMemberQuills[index] = new Quill(`#${editorId}`, {
-                    theme: 'snow',
-                    modules: {
-                        toolbar: [
-                            [{ 'header': [1, 2, 3, false] }],
-                            ['bold', 'italic', 'underline'],
-                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                            ['link'],
-                            ['clean']
-                        ]
-                    }
-                });
-
-                const descContent = member.description || '';
-                if (descContent) {
-                    teamMemberQuills[index].root.innerHTML = descContent;
-                }
-
-                teamMemberQuills[index].on('text-change', function() {
-                    const content = teamMemberQuills[index].root.innerHTML;
-                    document.getElementById(textareaId).value = content;
-                    @this.set(`teamMembers.${index}.description`, content);
-                });
-            }
-        });
-    }
-
     document.addEventListener('livewire:init', () => {
         setTimeout(() => {
             initEditors();
