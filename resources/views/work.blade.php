@@ -132,7 +132,7 @@
         <section class="bg-[#dfdfbb] py-12 px-8">
             <div class="container mx-auto">
                 <div class="bg-[#dfdfbb] p-8">
-                    <p class="text-lg md:text-xl text-[#1b304e] leading-relaxed">
+                    <p class="text-4xl text-[#1b304e] italic leading-tight">
                         {{ $project->quote }}
                     </p>
                 </div>
