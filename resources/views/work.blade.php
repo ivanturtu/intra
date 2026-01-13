@@ -240,7 +240,7 @@
 
     <!-- Project Development Section -->
     @if($project->description)
-        <section id="development" class="py-12 px-8 bg-white">
+        <section id="development" class="py-12 px-8 bg-white border-b border-[#dfdfbb]">
             <div class="container mx-auto">
                 <h2 class="text-3xl font-bold mb-8">Project development</h2>
                 <div class="mb-12">
