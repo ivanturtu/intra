@@ -56,8 +56,8 @@
                 @endif
             </div>
             
-            <!-- Main Image - Full Width -->
-            <div class="mb-8 h-[600px] overflow-hidden">
+            <!-- Main Image - Full Width with Overlay Title -->
+            <div class="mb-8 h-[600px] overflow-hidden relative">
                 @if($project->main_image)
                     <img src="{{ asset('storage/' . $project->main_image) }}" 
                          alt="{{ $project->title }}" 
@@ -67,10 +67,11 @@
                          alt="{{ $project->title }}" 
                          class="w-full h-full object-cover object-center">
                 @endif
+                <!-- Title Overlay - Bottom Left -->
+                <div class="absolute bottom-0 left-0 bg-white px-6 py-4">
+                    <h1 class="text-4xl font-bold text-[#1b304e] leading-tight">{{ $project->title }}</h1>
+                </div>
             </div>
-            
-            <!-- Title -->
-            <h1 class="text-4xl font-bold mb-8 text-[#1b304e] leading-tight">{{ $project->title }}</h1>
             
             <!-- Content Grid: Description Left, Metadata Right -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
