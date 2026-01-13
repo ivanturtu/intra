@@ -208,7 +208,9 @@
     <!-- Intra Mag Section -->
     <section id="mag" class="bg-white py-20 px-8">
         <div class="container mx-auto">
-            <h2 class="text-4xl md:text-5xl font-bold mb-12 text-[#d3924f]">Intra Mag</h2>
+            <h2 class="text-4xl md:text-5xl mb-12 text-[#1b304e]">
+                <span class="font-normal">Intra</span> <span class="font-bold">Mag</span>
+            </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 @if(isset($magazineArticles) && $magazineArticles->count() > 0)
                     @foreach($magazineArticles as $article)
