@@ -73,19 +73,17 @@
                         @endif
                         <div class="absolute inset-0 bg-black/40"></div>
                     </div>
-                    <div class="relative z-10 text-center text-white px-8">
-                        <h2 class="text-4xl md:text-6xl font-bold mb-8 max-w-4xl mx-auto">
-                            {{ $project->title }}
-                        </h2>
-                        @if($project->short_description)
-                            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-                                {{ $project->short_description }}
-                            </p>
-                        @endif
+                    <div class="relative z-10 text-left text-white px-8">
                         @if($project->slug)
-                            <a href="{{ route('work.show', $project->slug) }}" class="inline-block border-2 border-white px-8 py-3 rounded hover:bg-white hover:text-[#1b304e] transition">
-                                VIEW PROJECT
+                            <a href="{{ route('work.show', $project->slug) }}" class="block">
+                                <h2 class="text-4xl md:text-6xl font-light max-w-4xl">
+                                    {{ $project->title }}
+                                </h2>
                             </a>
+                        @else
+                            <h2 class="text-4xl md:text-6xl font-light max-w-4xl">
+                                {{ $project->title }}
+                            </h2>
                         @endif
                     </div>
                 </div>
@@ -124,13 +122,10 @@
                      class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-black/40"></div>
             </div>
-            <div class="relative z-10 text-center text-white px-8">
-                <h2 class="text-4xl md:text-6xl font-bold mb-8 max-w-4xl mx-auto">
+            <div class="relative z-10 text-left text-white px-8">
+                <h2 class="text-4xl md:text-6xl font-light max-w-4xl">
                     The Delight Factor. A New Metric of Your Workplace.
                 </h2>
-                <a href="/work" class="inline-block border-2 border-white px-8 py-3 rounded hover:bg-white hover:text-[#1b304e] transition">
-                    TAG WORK
-                </a>
             </div>
         </section>
     @endif
