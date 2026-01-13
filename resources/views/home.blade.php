@@ -209,52 +209,58 @@
     <section id="mag" class="bg-[#d3924f] text-white py-20 px-8">
         <div class="container mx-auto">
             <h2 class="text-4xl md:text-5xl font-bold mb-12">Intra Mag</h2>
+        </div>
+    </section>
+    
+    <!-- Intra Mag Content Section -->
+    <section class="bg-[#dfdfbb] py-20 px-8">
+        <div class="container mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 @if(isset($magazineArticles) && $magazineArticles->count() > 0)
                     @foreach($magazineArticles as $article)
                     <a href="#" class="group cursor-pointer">
-                        <div class="relative overflow-hidden rounded-lg mb-4">
+                        <div class="relative overflow-hidden mb-4">
                             @if($article->image)
                                 <img src="{{ asset('storage/' . $article->image) }}" 
                                      alt="{{ $article->title }}" 
-                                     class="w-full h-[400px] object-cover group-hover:scale-105 transition duration-300">
+                                     class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
                             @else
                                 <img src="https://via.placeholder.com/800x600/8B7355/FFFFFF?text={{ urlencode($article->title) }}" 
                                      alt="{{ $article->title }}" 
-                                     class="w-full h-[400px] object-cover group-hover:scale-105 transition duration-300">
+                                     class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
                             @endif
                             @if($article->category)
-                                <div class="absolute top-0 right-0 bg-[#1b304e] px-4 py-2">
-                                    <span class="text-xs uppercase">{{ strtoupper($article->category->name) }}</span>
+                                <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2">
+                                    <span class="text-xs uppercase text-white">{{ strtoupper($article->category->name) }}</span>
                                 </div>
                             @endif
                         </div>
-                        <h3 class="text-lg font-medium">{{ $article->title }}</h3>
+                        <h3 class="text-lg font-medium text-[#1b304e]">{{ $article->title }}</h3>
                     </a>
                     @endforeach
                 @else
                     <!-- Fallback static content if no articles -->
                     <div class="group cursor-pointer">
-                        <div class="relative overflow-hidden rounded-lg mb-4">
+                        <div class="relative overflow-hidden mb-4">
                             <img src="https://via.placeholder.com/800x600/8B7355/FFFFFF?text=Parthenon+Ruins" 
                                  alt="L'antico tempio della Grecia" 
-                                 class="w-full h-[400px] object-cover group-hover:scale-105 transition duration-300">
-                            <div class="absolute top-0 right-0 bg-[#1b304e] px-4 py-2">
-                                <span class="text-xs uppercase">BENI CULTURALI</span>
+                                 class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                            <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2">
+                                <span class="text-xs uppercase text-white">BENI CULTURALI</span>
                             </div>
                         </div>
-                        <h3 class="text-lg font-medium">L'antico tempio della Grecia</h3>
+                        <h3 class="text-lg font-medium text-[#1b304e]">L'antico tempio della Grecia</h3>
                     </div>
                     <div class="group cursor-pointer">
-                        <div class="relative overflow-hidden rounded-lg mb-4">
+                        <div class="relative overflow-hidden mb-4">
                             <img src="https://via.placeholder.com/800x600/2C2C2C/FFFFFF?text=Giovanni+Muzio+Book" 
                                  alt="Giovanni Muzio" 
-                                 class="w-full h-[400px] object-cover group-hover:scale-105 transition duration-300">
-                            <div class="absolute top-0 right-0 bg-[#1b304e] px-4 py-2">
-                                <span class="text-xs uppercase">SOSTENIBILITÀ</span>
+                                 class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                            <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2">
+                                <span class="text-xs uppercase text-white">SOSTENIBILITÀ</span>
                             </div>
                         </div>
-                        <h3 class="text-lg font-medium">Giovanni Muzio, Casa dei giornalisti (Milano 1936).</h3>
+                        <h3 class="text-lg font-medium text-[#1b304e]">Giovanni Muzio, Casa dei giornalisti (Milano 1936).</h3>
                     </div>
                 @endif
             </div>
