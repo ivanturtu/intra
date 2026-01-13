@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Projects;
 
+use App\Models\Category;
 use App\Models\Project;
 use App\Models\Team;
 use Livewire\Component;
@@ -30,11 +31,12 @@ class Form extends Component
     public $selectedImagePath;
     public $teamMembers = [];
     public $teamLeads = [];
-    public $category = '';
+    public $categoryId = null;
     public $order = 0;
     public $isPublished = false;
 
     public $allTeams = [];
+    public $allCategories = [];
 
     protected function rules()
     {
@@ -47,7 +49,7 @@ class Form extends Component
             'year' => 'nullable|integer|min:1900|max:' . (date('Y') + 10),
             'quote' => 'nullable|string',
             'description' => 'nullable|string',
-            'category' => 'nullable|string|max:255',
+            'categoryId' => 'nullable|exists:categories,id',
             'order' => 'nullable|integer',
             'isPublished' => 'boolean',
             'mainImage' => 'nullable|image|max:10240',
@@ -59,6 +61,7 @@ class Form extends Component
     public function mount($id = null)
     {
         $this->allTeams = Team::orderBy('name')->get();
+        $this->allCategories = Category::orderBy('order')->orderBy('name')->get();
 
         if ($id) {
             $project = Project::findOrFail($id);
@@ -74,7 +77,7 @@ class Form extends Component
             $this->description = $project->description;
             $this->selectedImagePath = $project->selected_image;
             $this->teamMembers = $project->team_members ?? [];
-            $this->category = $project->category;
+            $this->categoryId = $project->category_id;
             $this->order = $project->order;
             $this->isPublished = $project->is_published;
             $this->mainImagePath = $project->main_image;
@@ -120,7 +123,7 @@ class Form extends Component
             'year' => $this->year ? (int) $this->year : null,
             'quote' => $this->quote,
             'description' => $this->description,
-            'category' => $this->category,
+            'category_id' => $this->categoryId,
             'order' => $this->order,
             'is_published' => $this->isPublished,
             'team_members' => array_filter($this->teamMembers, function ($member) {

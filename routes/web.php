@@ -14,6 +14,7 @@ Route::get('/work', function () {
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {
+    // Projects
     Route::get('/projects', function () {
         return view('admin.projects.index');
     })->name('projects.index');
@@ -23,4 +24,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/projects/{id}/edit', function ($id) {
         return view('admin.projects.form', ['id' => $id]);
     })->name('projects.edit');
+
+    // Categories
+    Route::get('/categories', function () {
+        return view('admin.categories.index');
+    })->name('categories.index');
+    Route::get('/categories/create', function () {
+        return view('admin.categories.form');
+    })->name('categories.create');
+    Route::get('/categories/{id}/edit', function ($id) {
+        return view('admin.categories.form', ['id' => $id]);
+    })->name('categories.edit');
 });

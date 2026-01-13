@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Project extends Model
@@ -23,7 +24,7 @@ class Project extends Model
         'description',
         'selected_image',
         'team_members',
-        'category',
+        'category_id',
         'order',
         'is_published',
     ];
@@ -35,6 +36,14 @@ class Project extends Model
         'order' => 'integer',
         'is_published' => 'boolean',
     ];
+
+    /**
+     * Get the category that owns the project.
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
 
     /**
      * The team members that belong to the project.

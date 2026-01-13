@@ -27,6 +27,9 @@
                 <a href="{{ route('admin.projects.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.projects.*') ? 'bg-gray-700' : '' }}">
                     Projects
                 </a>
+                <a href="{{ route('admin.categories.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.categories.*') ? 'bg-gray-700' : '' }}">
+                    Categories
+                </a>
                 <a href="#" class="block px-6 py-3 hover:bg-gray-700">
                     Teams
                 </a>
