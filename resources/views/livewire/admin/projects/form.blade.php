@@ -27,7 +27,7 @@
                 </div>
 
                 <!-- Short Description -->
-                <div>
+                <div wire:ignore>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Short Description</label>
                     <div id="shortDescriptionEditor" style="height: 200px;" class="mb-2"></div>
                     <textarea wire:model="shortDescription" id="shortDescription" style="display: none;"></textarea>
@@ -61,7 +61,7 @@
                 </div>
 
                 <!-- Description -->
-                <div>
+                <div wire:ignore>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
                     <div id="descriptionEditor" style="height: 400px;" class="mb-2"></div>
                     <textarea wire:model="description" id="description" style="display: none;"></textarea>
@@ -200,7 +200,13 @@
 
         // Initialize Quill for Description if not already initialized
         const descEl = document.getElementById('descriptionEditor');
-        if (!descriptionQuill && descEl && !descEl.querySelector('.ql-container')) {
+        if (descEl && !descEl.querySelector('.ql-container')) {
+            // Destroy existing instance if any
+            if (descriptionQuill) {
+                try {
+                    descriptionQuill = null;
+                } catch(e) {}
+            }
             descriptionQuill = new Quill('#descriptionEditor', {
                 theme: 'snow',
                 modules: {
@@ -240,23 +246,10 @@
 
     // Use Livewire hooks to properly initialize editors
     document.addEventListener('livewire:init', () => {
-        // Reinitialize editors after DOM updates (especially after file uploads)
-        Livewire.hook('morph.updated', ({ el, component }) => {
-            setTimeout(() => {
-                // Check if editors exist but are not initialized
-                const shortDescEl = document.getElementById('shortDescriptionEditor');
-                const descEl = document.getElementById('descriptionEditor');
-                
-                if (shortDescEl && (!shortDescriptionQuill || !shortDescriptionQuill.root)) {
-                    shortDescriptionQuill = null; // Reset to allow reinitialization
-                    initEditors();
-                }
-                if (descEl && (!descriptionQuill || !descriptionQuill.root)) {
-                    descriptionQuill = null; // Reset to allow reinitialization
-                    initEditors();
-                }
-            }, 100);
-        });
+        // Initialize editors once when Livewire is ready
+        setTimeout(() => {
+            initEditors();
+        }, 300);
     });
 
     // Initialize editors when component is loaded
@@ -279,25 +272,11 @@
         }, 200);
     }
 
-    // Prevent Livewire from updating editor content unnecessarily
+    // With wire:ignore, Livewire won't touch the editor containers
+    // So we don't need to worry about them being destroyed
+    // Just sync content when needed (but not during typing)
     document.addEventListener('livewire:update', () => {
-        // First, check if editors need to be reinitialized (after file uploads)
-        setTimeout(() => {
-            const shortDescEl = document.getElementById('shortDescriptionEditor');
-            const descEl = document.getElementById('descriptionEditor');
-            
-            if (shortDescEl && (!shortDescriptionQuill || !shortDescriptionQuill.root)) {
-                shortDescriptionQuill = null;
-                initEditors();
-            }
-            if (descEl && (!descriptionQuill || !descriptionQuill.root)) {
-                descriptionQuill = null;
-                initEditors();
-            }
-        }, 150);
-        
-        // Don't update editor content on every Livewire update
-        // Only sync if the editor is not focused (user is not typing)
+        // Only sync if editor exists and is not focused
         setTimeout(() => {
             if (shortDescriptionQuill && shortDescriptionQuill.root && !shortDescriptionQuill.hasFocus() && @this.shortDescription) {
                 const currentContent = shortDescriptionQuill.root.innerHTML;
@@ -313,6 +292,6 @@
                     descriptionQuill.root.innerHTML = livewireContent;
                 }
             }
-        }, 200);
+        }, 100);
     });
 </script>
