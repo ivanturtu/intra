@@ -1,8 +1,4 @@
 <div>
-    @extends('layouts.admin')
-
-    @section('content')
-    <div>
         <div class="mb-6">
             <h2 class="text-3xl font-bold text-gray-800">
                 {{ $projectId ? 'Edit Project' : 'Create New Project' }}
@@ -149,6 +145,4 @@
                 </div>
             </div>
         </form>
-    </div>
-    @endsection
 </div>
