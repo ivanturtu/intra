@@ -271,6 +271,47 @@ eval "$(nodenv init -)"
 eval "$(nodenv init -)"
 ```
 
+### Images Not Loading in Backoffice
+
+**Sintomo**: Le immagini non si caricano nel backoffice (progetti, categorie, team leads).
+
+**Causa**: Il symlink `public/storage` non esiste o è rotto.
+
+**Soluzione**:
+```bash
+# 1. Verifica se il symlink esiste
+ls -la public/storage
+
+# 2. Se non esiste o è rotto, rimuovilo
+rm -f public/storage
+
+# 3. Crea il symlink corretto
+php artisan storage:link
+
+# 4. Verifica che sia stato creato correttamente
+ls -la public/storage
+# Dovrebbe mostrare: storage -> /percorso/completo/storage/app/public
+
+# 5. Verifica i permessi della cartella storage
+chmod -R 775 storage/app/public
+chown -R psacln:psacln storage/app/public
+
+# 6. Verifica che le immagini esistano
+ls -la storage/app/public/projects/
+ls -la storage/app/public/categories/
+ls -la storage/app/public/intra-studio-team-leads/
+```
+
+**Nota**: In Plesk, assicurati che il symlink sia creato correttamente. A volte potrebbe essere necessario crearlo manualmente:
+```bash
+# Trova il percorso completo del progetto
+cd ~/intra.turturiello.com
+pwd
+
+# Crea il symlink manualmente (sostituisci il percorso se diverso)
+ln -s $(pwd)/storage/app/public $(pwd)/public/storage
+```
+
 ### 403 Forbidden Error
 
 If you see "403 Forbidden" error:
