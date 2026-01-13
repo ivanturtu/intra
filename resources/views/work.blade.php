@@ -1,6 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    @media (min-width: 768px) {
+        .description-column {
+            column-count: 2;
+            column-gap: 2rem;
+        }
+        .description-column p {
+            margin-bottom: 1rem;
+            break-inside: avoid;
+        }
+        .description-column p:last-child {
+            margin-bottom: 0;
+        }
+        .description-column h1,
+        .description-column h2,
+        .description-column h3,
+        .description-column h4,
+        .description-column h5,
+        .description-column h6 {
+            break-after: avoid;
+        }
+    }
+</style>
     <!-- Header -->
     <header class="bg-[#1a304f] text-white px-8 py-0">
         <div class="container mx-auto flex items-center justify-between header-logo-container">
