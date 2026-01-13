@@ -60,7 +60,7 @@
                      x-transition:leave="transition ease-in duration-300"
                      x-transition:leave-start="opacity-100"
                      x-transition:leave-end="opacity-0"
-                     class="absolute inset-0 flex items-center justify-center">
+                     class="absolute inset-0 flex items-center">
                     <div class="absolute inset-0 z-0">
                         @if($project->main_image)
                             <img src="{{ asset('storage/' . $project->main_image) }}" 
@@ -73,15 +73,15 @@
                         @endif
                         <div class="absolute inset-0 bg-black/40"></div>
                     </div>
-                    <div class="relative z-10 text-left text-white px-8">
+                    <div class="relative z-10 text-left text-white px-8 container mx-auto">
                         @if($project->slug)
                             <a href="{{ route('work.show', $project->slug) }}" class="block">
-                                <h2 class="text-4xl md:text-6xl font-light max-w-4xl">
+                                <h2 class="text-4xl md:text-6xl font-light">
                                     {{ $project->title }}
                                 </h2>
                             </a>
                         @else
-                            <h2 class="text-4xl md:text-6xl font-light max-w-4xl">
+                            <h2 class="text-4xl md:text-6xl font-light">
                                 {{ $project->title }}
                             </h2>
                         @endif
@@ -115,15 +115,15 @@
             @endif
         </section>
     @else
-        <section class="relative h-[80vh] min-h-[600px] flex items-center justify-center">
+        <section class="relative h-[80vh] min-h-[600px] flex items-center">
             <div class="absolute inset-0 z-0">
                 <img src="https://via.placeholder.com/1920x1080/87CEEB/FFFFFF?text=Ornate+Interior+Design" 
                      alt="Hero Background" 
                      class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-black/40"></div>
             </div>
-            <div class="relative z-10 text-left text-white px-8">
-                <h2 class="text-4xl md:text-6xl font-light max-w-4xl">
+            <div class="relative z-10 text-left text-white px-8 container mx-auto">
+                <h2 class="text-4xl md:text-6xl font-light">
                     The Delight Factor. A New Metric of Your Workplace.
                 </h2>
             </div>
