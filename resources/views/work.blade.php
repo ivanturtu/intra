@@ -98,22 +98,89 @@
         </div>
     </section>
 
-    <!-- Image Gallery -->
+    <!-- Quote Section -->
+    @if($project->quote)
+        <section class="bg-[#e8d5c4] py-12 px-8">
+            <div class="container mx-auto">
+                <div class="bg-[#e8d5c4] p-8">
+                    <p class="text-lg md:text-xl text-[#1a304f] leading-relaxed">
+                        {{ $project->quote }}
+                    </p>
+                </div>
+            </div>
+        </section>
+    @endif
+
+    <!-- Image Gallery - Horizontal Scroll -->
     @if($project->image_gallery && count($project->image_gallery) > 0)
         <section class="py-12 px-8 bg-white">
             <div class="container mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
-                    @foreach(array_slice($project->image_gallery, 0, 2) as $index => $image)
-                        <img src="{{ asset('storage/' . $image) }}" 
-                             alt="Gallery Image {{ $index + 1 }}" 
-                             class="w-full h-auto">
-                    @endforeach
-                </div>
-                @if(count($project->image_gallery) > 1)
-                    <div class="text-left text-sm text-gray-500">
-                        1/{{ count($project->image_gallery) }}
+                <div class="relative" 
+                     x-data="{ 
+                         currentIndex: 0,
+                         totalSlides: {{ ceil(count($project->image_gallery) / 2) }},
+                         images: @js($project->image_gallery),
+                         nextSlide() {
+                             if (this.currentIndex < this.totalSlides - 1) {
+                                 this.currentIndex++;
+                             }
+                         },
+                         prevSlide() {
+                             if (this.currentIndex > 0) {
+                                 this.currentIndex--;
+                             }
+                         }
+                     }">
+                    <!-- Gallery Container -->
+                    <div class="overflow-hidden">
+                        <div class="flex transition-transform duration-500 ease-in-out" 
+                             :style="`transform: translateX(-${currentIndex * 100}%)`">
+                            @for($i = 0; $i < count($project->image_gallery); $i += 2)
+                                <div class="w-full flex-shrink-0 grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    @if(isset($project->image_gallery[$i]))
+                                        <img src="{{ asset('storage/' . $project->image_gallery[$i]) }}" 
+                                             alt="Gallery Image {{ $i + 1 }}" 
+                                             class="w-full h-auto">
+                                    @endif
+                                    @if(isset($project->image_gallery[$i + 1]))
+                                        <img src="{{ asset('storage/' . $project->image_gallery[$i + 1]) }}" 
+                                             alt="Gallery Image {{ $i + 2 }}" 
+                                             class="w-full h-auto">
+                                    @endif
+                                </div>
+                            @endfor
+                        </div>
                     </div>
-                @endif
+                    
+                    <!-- Navigation Buttons -->
+                    @if(count($project->image_gallery) > 2)
+                        <div class="flex justify-between items-center mt-8">
+                            <button @click="prevSlide()" 
+                                    :disabled="currentIndex === 0"
+                                    class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed transition">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+                            
+                            <div class="text-sm text-gray-500">
+                                <span x-text="currentIndex + 1"></span>/<span x-text="totalSlides"></span>
+                            </div>
+                            
+                            <button @click="nextSlide()" 
+                                    :disabled="currentIndex === totalSlides - 1"
+                                    class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed transition">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
+                    @else
+                        <div class="text-left text-sm text-gray-500 mt-4">
+                            1/{{ ceil(count($project->image_gallery) / 2) }}
+                        </div>
+                    @endif
+                </div>
             </div>
         </section>
     @endif
