@@ -199,7 +199,8 @@
         }
 
         // Initialize Quill for Description if not already initialized
-        if (!descriptionQuill && document.getElementById('descriptionEditor')) {
+        const descEl = document.getElementById('descriptionEditor');
+        if (!descriptionQuill && descEl && !descEl.querySelector('.ql-container')) {
             descriptionQuill = new Quill('#descriptionEditor', {
                 theme: 'snow',
                 modules: {
@@ -239,16 +240,22 @@
 
     // Use Livewire hooks to properly initialize editors
     document.addEventListener('livewire:init', () => {
+        // Reinitialize editors after DOM updates (especially after file uploads)
         Livewire.hook('morph.updated', ({ el, component }) => {
-            // Reinitialize editors if they were destroyed
             setTimeout(() => {
-                if (!shortDescriptionQuill && document.getElementById('shortDescriptionEditor')) {
+                // Check if editors exist but are not initialized
+                const shortDescEl = document.getElementById('shortDescriptionEditor');
+                const descEl = document.getElementById('descriptionEditor');
+                
+                if (shortDescEl && (!shortDescriptionQuill || !shortDescriptionQuill.root)) {
+                    shortDescriptionQuill = null; // Reset to allow reinitialization
                     initEditors();
                 }
-                if (!descriptionQuill && document.getElementById('descriptionEditor')) {
+                if (descEl && (!descriptionQuill || !descriptionQuill.root)) {
+                    descriptionQuill = null; // Reset to allow reinitialization
                     initEditors();
                 }
-            }, 50);
+            }, 100);
         });
     });
 
@@ -274,21 +281,38 @@
 
     // Prevent Livewire from updating editor content unnecessarily
     document.addEventListener('livewire:update', () => {
+        // First, check if editors need to be reinitialized (after file uploads)
+        setTimeout(() => {
+            const shortDescEl = document.getElementById('shortDescriptionEditor');
+            const descEl = document.getElementById('descriptionEditor');
+            
+            if (shortDescEl && (!shortDescriptionQuill || !shortDescriptionQuill.root)) {
+                shortDescriptionQuill = null;
+                initEditors();
+            }
+            if (descEl && (!descriptionQuill || !descriptionQuill.root)) {
+                descriptionQuill = null;
+                initEditors();
+            }
+        }, 150);
+        
         // Don't update editor content on every Livewire update
         // Only sync if the editor is not focused (user is not typing)
-        if (shortDescriptionQuill && !shortDescriptionQuill.hasFocus() && @this.shortDescription) {
-            const currentContent = shortDescriptionQuill.root.innerHTML;
-            const livewireContent = @this.shortDescription;
-            if (currentContent !== livewireContent && livewireContent !== '') {
-                shortDescriptionQuill.root.innerHTML = livewireContent;
+        setTimeout(() => {
+            if (shortDescriptionQuill && shortDescriptionQuill.root && !shortDescriptionQuill.hasFocus() && @this.shortDescription) {
+                const currentContent = shortDescriptionQuill.root.innerHTML;
+                const livewireContent = @this.shortDescription;
+                if (currentContent !== livewireContent && livewireContent !== '') {
+                    shortDescriptionQuill.root.innerHTML = livewireContent;
+                }
             }
-        }
-        if (descriptionQuill && !descriptionQuill.hasFocus() && @this.description) {
-            const currentContent = descriptionQuill.root.innerHTML;
-            const livewireContent = @this.description;
-            if (currentContent !== livewireContent && livewireContent !== '') {
-                descriptionQuill.root.innerHTML = livewireContent;
+            if (descriptionQuill && descriptionQuill.root && !descriptionQuill.hasFocus() && @this.description) {
+                const currentContent = descriptionQuill.root.innerHTML;
+                const livewireContent = @this.description;
+                if (currentContent !== livewireContent && livewireContent !== '') {
+                    descriptionQuill.root.innerHTML = livewireContent;
+                }
             }
-        }
+        }, 200);
     });
 </script>
