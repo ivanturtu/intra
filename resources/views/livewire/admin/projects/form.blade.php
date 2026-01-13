@@ -29,7 +29,8 @@
                 <!-- Short Description -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Short Description</label>
-                    <textarea wire:model="shortDescription" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                    <div id="shortDescriptionEditor" style="height: 200px;" class="mb-2"></div>
+                    <textarea wire:model="shortDescription" id="shortDescription" style="display: none;"></textarea>
                     @error('shortDescription') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                 </div>
 
@@ -62,7 +63,8 @@
                 <!-- Description -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
-                    <textarea wire:model="description" rows="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                    <div id="descriptionEditor" style="height: 400px;" class="mb-2"></div>
+                    <textarea wire:model="description" id="description" style="display: none;"></textarea>
                 </div>
 
                 <!-- Selected Image -->
@@ -156,3 +158,102 @@
             </div>
         </form>
 </div>
+
+<script>
+    let shortDescriptionQuill = null;
+    let descriptionQuill = null;
+
+    function initEditors() {
+        // Initialize Quill for Short Description if not already initialized
+        if (!shortDescriptionQuill && document.getElementById('shortDescriptionEditor')) {
+            shortDescriptionQuill = new Quill('#shortDescriptionEditor', {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, false] }],
+                        ['bold', 'italic', 'underline'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        ['link'],
+                        ['clean']
+                    ]
+                }
+            });
+
+            // Set initial content
+            const shortDescContent = @this.shortDescription || '';
+            if (shortDescContent) {
+                shortDescriptionQuill.root.innerHTML = shortDescContent;
+            }
+
+            // Update Livewire on text change
+            shortDescriptionQuill.on('text-change', function() {
+                const content = shortDescriptionQuill.root.innerHTML;
+                document.getElementById('shortDescription').value = content;
+                @this.set('shortDescription', content);
+            });
+        }
+
+        // Initialize Quill for Description if not already initialized
+        if (!descriptionQuill && document.getElementById('descriptionEditor')) {
+            descriptionQuill = new Quill('#descriptionEditor', {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        [{ 'script': 'sub'}, { 'script': 'super' }],
+                        [{ 'indent': '-1'}, { 'indent': '+1' }],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'align': [] }],
+                        ['link', 'image'],
+                        ['clean'],
+                        ['code-block']
+                    ]
+                }
+            });
+
+            // Set initial content
+            const descContent = @this.description || '';
+            if (descContent) {
+                descriptionQuill.root.innerHTML = descContent;
+            }
+
+            // Update Livewire on text change
+            descriptionQuill.on('text-change', function() {
+                const content = descriptionQuill.root.innerHTML;
+                document.getElementById('description').value = content;
+                @this.set('description', content);
+            });
+        }
+    }
+
+    document.addEventListener('livewire:init', () => {
+        // Wait a bit for DOM to be ready
+        setTimeout(initEditors, 100);
+    });
+
+    document.addEventListener('livewire:load', () => {
+        setTimeout(initEditors, 100);
+    });
+
+    // Reinitialize after Livewire updates
+    document.addEventListener('livewire:update', () => {
+        setTimeout(() => {
+            if (shortDescriptionQuill && @this.shortDescription) {
+                const currentContent = shortDescriptionQuill.root.innerHTML;
+                const livewireContent = @this.shortDescription;
+                if (currentContent !== livewireContent) {
+                    shortDescriptionQuill.root.innerHTML = livewireContent;
+                }
+            }
+            if (descriptionQuill && @this.description) {
+                const currentContent = descriptionQuill.root.innerHTML;
+                const livewireContent = @this.description;
+                if (currentContent !== livewireContent) {
+                    descriptionQuill.root.innerHTML = livewireContent;
+                }
+            }
+        }, 100);
+    });
+</script>
