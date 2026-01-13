@@ -103,4 +103,15 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/magazine/{id}/edit', function ($id) {
         return view('admin.magazine.form', ['id' => $id]);
     })->name('magazine.edit');
+
+    // Magazine Categories
+    Route::get('/magazine-categories', function () {
+        return view('admin.magazine-categories.index');
+    })->name('magazine-categories.index');
+    Route::get('/magazine-categories/create', function () {
+        return view('admin.magazine-categories.form');
+    })->name('magazine-categories.create');
+    Route::get('/magazine-categories/{id}/edit', function ($id) {
+        return view('admin.magazine-categories.form', ['id' => $id]);
+    })->name('magazine-categories.edit');
 });

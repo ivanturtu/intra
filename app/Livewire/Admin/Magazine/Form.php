@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Admin\Magazine;
 
-use App\Models\Category;
 use App\Models\MagazineArticle;
+use App\Models\MagazineCategory;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
@@ -33,7 +33,7 @@ class Form extends Component
             'title' => 'required|string|max:255',
             'date' => 'required|date',
             'text' => 'nullable|string',
-            'categoryId' => 'nullable|exists:categories,id',
+            'categoryId' => 'nullable|exists:magazine_categories,id',
             'order' => 'nullable|integer',
             'isPublished' => 'boolean',
             'image' => 'nullable|image|max:10240',
@@ -43,7 +43,7 @@ class Form extends Component
 
     public function mount($id = null)
     {
-        $this->allCategories = Category::orderBy('order')->orderBy('name')->get();
+        $this->allCategories = MagazineCategory::orderBy('order')->orderBy('name')->get();
 
         if ($id) {
             $article = MagazineArticle::findOrFail($id);
@@ -52,7 +52,7 @@ class Form extends Component
             $this->date = $article->date->format('Y-m-d');
             $this->text = $article->text;
             $this->imageGallery = $article->image_gallery ?? [];
-            $this->categoryId = $article->category_id;
+            $this->categoryId = $article->magazine_category_id;
             $this->order = $article->order;
             $this->isPublished = $article->is_published;
             $this->imagePath = $article->image;
@@ -85,7 +85,7 @@ class Form extends Component
             'slug' => Str::slug($this->title),
             'date' => $this->date,
             'text' => $this->text,
-            'category_id' => $this->categoryId,
+            'magazine_category_id' => $this->categoryId,
             'order' => $this->order,
             'is_published' => $this->isPublished,
         ];

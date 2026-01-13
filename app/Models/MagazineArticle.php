@@ -18,7 +18,7 @@ class MagazineArticle extends Model
         'text',
         'image',
         'image_gallery',
-        'category_id',
+        'magazine_category_id',
         'order',
         'is_published',
     ];
@@ -35,7 +35,7 @@ class MagazineArticle extends Model
      */
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(MagazineCategory::class, 'magazine_category_id');
     }
 
     /**
