@@ -2,51 +2,53 @@
 
 @section('content')
     <!-- Header -->
-    <header class="bg-[#1a304f] text-white px-8 py-0">
-        <div class="container mx-auto flex items-center justify-between header-logo-container">
-            <div class="flex items-center h-full">
-                <img src="{{ asset('images/INTRAstudio-logotype-beige.png') }}" alt="INTRA studio" class="h-full">
+    <header class="bg-[#1a304f] text-white px-8 py-4">
+        <div class="container mx-auto flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="text-white">
+                    <div class="text-2xl font-bold">INTRA</div>
+                    <div class="text-sm font-light">studio</div>
+                </div>
             </div>
             <nav class="hidden md:flex items-center gap-8">
-                <a href="/" class="hover:text-gray-300 transition">WORK</a>
+                <a href="/" class="hover:text-gray-300 transition">WORKS</a>
                 <a href="#expertise" class="hover:text-gray-300 transition">EXPERTISE</a>
                 <a href="#story" class="hover:text-gray-300 transition">OUR STORY</a>
                 <a href="#mag" class="hover:text-gray-300 transition">MAG</a>
                 <a href="#contact" class="hover:text-gray-300 transition">CONTACT</a>
             </nav>
-            <button class="bg-[#d39250] px-4 py-2 rounded hover:bg-[#c08545] transition">
-                SEE MORE
-            </button>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="py-16 px-8">
+    <!-- Project Overview Section -->
+    <section class="bg-white py-12 px-8">
         <div class="container mx-auto">
+            <div class="text-sm text-gray-500 mb-6">Projects</div>
+            
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                <!-- Main Image -->
+                <!-- Main Image - Left Side (2/3) -->
                 <div class="lg:col-span-2">
                     @if($project->main_image)
                         <img src="{{ asset('storage/' . $project->main_image) }}" 
                              alt="{{ $project->title }}" 
-                             class="w-full h-auto rounded-lg">
+                             class="w-full h-auto">
                     @else
                         <img src="https://via.placeholder.com/800x600/87CEEB/FFFFFF?text={{ urlencode($project->title) }}" 
                              alt="{{ $project->title }}" 
-                             class="w-full h-auto rounded-lg">
+                             class="w-full h-auto">
                     @endif
                 </div>
                 
-                <!-- Project Details -->
+                <!-- Project Details - Right Side (1/3) -->
                 <div class="space-y-6">
                     <div>
-                        <h2 class="text-3xl font-bold mb-4">{{ $project->title }}</h2>
+                        <h1 class="text-4xl font-bold mb-6 leading-tight">{{ $project->title }}</h1>
                         @if($project->short_description)
-                            <div class="text-gray-700 mb-4 prose max-w-none">
+                            <div class="text-gray-700 mb-6 prose max-w-none text-base leading-relaxed">
                                 {!! $project->short_description !!}
                             </div>
                         @endif
-                        <a href="#workflow" class="text-[#d39250] font-semibold hover:underline inline-flex items-center gap-2">
+                        <a href="#workflow" class="text-[#d39250] font-semibold hover:underline inline-flex items-center gap-2 mb-6">
                             GO TO Project Workflow
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -55,67 +57,59 @@
                     </div>
                     
                     <!-- Project Metadata -->
-                    <div class="border-t pt-6 space-y-3">
+                    <div class="border-t border-gray-200 pt-6 space-y-4">
                         @if($project->sector)
                             <div>
                                 <span class="text-sm text-gray-500">Sector:</span>
-                                <p class="font-medium">{{ $project->sector }}</p>
+                                <p class="font-medium text-gray-900">{{ $project->sector }}</p>
                             </div>
                         @endif
                         @if($project->client)
                             <div>
                                 <span class="text-sm text-gray-500">Client:</span>
-                                <p class="font-medium">{{ $project->client }}</p>
+                                <p class="font-medium text-gray-900">{{ $project->client }}</p>
                             </div>
                         @endif
                         @if($project->location)
                             <div>
                                 <span class="text-sm text-gray-500">Location:</span>
-                                <p class="font-medium">{{ $project->location }}</p>
+                                <p class="font-medium text-gray-900">{{ $project->location }}</p>
                             </div>
                         @endif
                         @if($project->year)
                             <div>
                                 <span class="text-sm text-gray-500">Year:</span>
-                                <p class="font-medium">{{ $project->year }}</p>
-                            </div>
-                        @endif
-                        @if($project->category)
-                            <div>
-                                <span class="text-sm text-gray-500">Category:</span>
-                                <p class="font-medium">{{ $project->category->name }}</p>
+                                <p class="font-medium text-gray-900">{{ $project->year }}</p>
                             </div>
                         @endif
                     </div>
                 </div>
             </div>
+            
+            <!-- Quote Box -->
+            @if($project->quote)
+                <div class="mt-8 bg-[#e8d5c4] p-8">
+                    <p class="text-lg text-gray-800 leading-relaxed">
+                        {{ $project->quote }}
+                    </p>
+                </div>
+            @endif
         </div>
     </section>
 
-    <!-- Quote Section -->
-    @if($project->quote)
-        <section class="bg-[#f5e6d3] py-16 px-8">
-            <div class="container mx-auto max-w-4xl">
-                <blockquote class="text-2xl md:text-3xl font-medium text-center text-gray-800">
-                    "{{ $project->quote }}"
-                </blockquote>
-            </div>
-        </section>
-    @endif
-
     <!-- Image Gallery -->
     @if($project->image_gallery && count($project->image_gallery) > 0)
-        <section class="py-16 px-8">
+        <section class="py-12 px-8 bg-white">
             <div class="container mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                    @foreach($project->image_gallery as $index => $image)
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
+                    @foreach(array_slice($project->image_gallery, 0, 2) as $index => $image)
                         <img src="{{ asset('storage/' . $image) }}" 
                              alt="Gallery Image {{ $index + 1 }}" 
-                             class="w-full h-auto rounded-lg">
+                             class="w-full h-auto">
                     @endforeach
                 </div>
                 @if(count($project->image_gallery) > 1)
-                    <div class="text-center text-sm text-gray-500">
+                    <div class="text-left text-sm text-gray-500">
                         1/{{ count($project->image_gallery) }}
                     </div>
                 @endif
@@ -125,19 +119,22 @@
 
     <!-- Project Development Section -->
     @if($project->description)
-        <section class="py-16 px-8 bg-white">
+        <section class="py-12 px-8 bg-white">
             <div class="container mx-auto">
                 <h2 class="text-3xl font-bold mb-8">Project development</h2>
-                <div class="prose max-w-none mb-12">
-                    {!! $project->description !!}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                    <div class="prose max-w-none text-gray-700">
+                        {!! $project->description !!}
+                    </div>
+                    <div></div>
                 </div>
                 
-                <!-- Selected Image (Map) -->
+                <!-- Selected Image (Map/Drawings) -->
                 @if($project->selected_image)
                     <div class="mb-12">
                         <img src="{{ asset('storage/' . $project->selected_image) }}" 
                              alt="Project Map" 
-                             class="w-full h-auto rounded-lg">
+                             class="w-full h-auto">
                     </div>
                 @endif
 
@@ -146,10 +143,10 @@
                     <!-- Team Members -->
                     @if($project->projectTeamMembers->count() > 0)
                         <div>
-                            <h3 class="font-semibold mb-4">Team</h3>
+                            <h3 class="font-semibold mb-4 text-gray-900">Team</h3>
                             <ul class="space-y-3 text-sm">
                                 @foreach($project->projectTeamMembers as $member)
-                                    <li>
+                                    <li class="text-gray-700">
                                         @if($member->name && $member->role)
                                             <span class="font-medium">{{ $member->name }}:</span> {{ $member->role }}
                                         @elseif($member->name)
@@ -166,10 +163,10 @@
                     <!-- INTRAstudio Team Leads -->
                     @if($project->intraStudioTeamLeads->count() > 0)
                         <div>
-                            <h3 class="font-semibold mb-4">INTRAstudio Team Leads</h3>
-                            <ul class="space-y-2 text-sm">
+                            <h3 class="font-semibold mb-4 text-gray-900">INTRAstudio Team Leads</h3>
+                            <ul class="space-y-2 text-sm text-gray-700">
                                 @foreach($project->intraStudioTeamLeads as $lead)
-                                    <li>{{ $lead->name }} @if($lead->surname) {{ $lead->surname }} @endif</li>
+                                    <li>{{ $lead->name }}@if($lead->surname) {{ $lead->surname }}@endif</li>
                                 @endforeach
                             </ul>
                         </div>
@@ -177,30 +174,30 @@
 
                     <!-- Project Details -->
                     <div>
-                        <h3 class="font-semibold mb-4">Project Details</h3>
+                        <h3 class="font-semibold mb-4 text-gray-900">Project Details</h3>
                         <ul class="space-y-3 text-sm">
                             @if($project->sector)
                                 <li>
                                     <span class="text-gray-500">Sector:</span>
-                                    <span class="font-medium">{{ $project->sector }}</span>
+                                    <span class="font-medium text-gray-900">{{ $project->sector }}</span>
                                 </li>
                             @endif
                             @if($project->client)
                                 <li>
                                     <span class="text-gray-500">Client:</span>
-                                    <span class="font-medium">{{ $project->client }}</span>
+                                    <span class="font-medium text-gray-900">{{ $project->client }}</span>
                                 </li>
                             @endif
                             @if($project->location)
                                 <li>
                                     <span class="text-gray-500">Location:</span>
-                                    <span class="font-medium">{{ $project->location }}</span>
+                                    <span class="font-medium text-gray-900">{{ $project->location }}</span>
                                 </li>
                             @endif
                             @if($project->year)
                                 <li>
                                     <span class="text-gray-500">Year:</span>
-                                    <span class="font-medium">{{ $project->year }}</span>
+                                    <span class="font-medium text-gray-900">{{ $project->year }}</span>
                                 </li>
                             @endif
                         </ul>
@@ -242,10 +239,13 @@
                     <!-- Company Info -->
                     <div>
                         <div class="flex items-center mb-4">
-                            <img src="{{ asset('images/INTRAstudio-logotype-beige.png') }}" alt="INTRA studio" class="h-8">
+                            <div class="text-white">
+                                <div class="text-xl font-bold">INTRA</div>
+                                <div class="text-xs font-light">studio</div>
+                            </div>
                         </div>
                         <p class="text-sm text-gray-400 mb-4">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            1505 Barrington Street, Suite 100 - M03, Halifax, Nova Scotia, B3J 2A4 CANADA
                         </p>
                         <div class="flex gap-4">
                             <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition">
@@ -255,22 +255,19 @@
                                 <span class="text-sm">in</span>
                             </a>
                             <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition">
-                                <span class="text-sm">ig</span>
-                            </a>
-                            <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition">
                                 <span class="text-sm">📞</span>
                             </a>
                         </div>
                     </div>
 
-                    <!-- Products -->
+                    <!-- Menu -->
                     <div>
-                        <h5 class="font-semibold mb-4">Products</h5>
+                        <h5 class="font-semibold mb-4">Menu</h5>
                         <ul class="space-y-2 text-sm text-gray-400">
-                            <li><a href="#" class="hover:text-white transition">Product 1</a></li>
-                            <li><a href="#" class="hover:text-white transition">Product 2</a></li>
-                            <li><a href="#" class="hover:text-white transition">Product 3</a></li>
-                            <li><a href="#" class="hover:text-white transition">Product 4</a></li>
+                            <li><a href="/" class="hover:text-white transition">Works</a></li>
+                            <li><a href="#expertise" class="hover:text-white transition">Expertise</a></li>
+                            <li><a href="#story" class="hover:text-white transition">Our Story</a></li>
+                            <li><a href="#mag" class="hover:text-white transition">MAG</a></li>
                         </ul>
                     </div>
 
@@ -278,10 +275,10 @@
                     <div>
                         <h5 class="font-semibold mb-4">Services</h5>
                         <ul class="space-y-2 text-sm text-gray-400">
-                            <li><a href="#" class="hover:text-white transition">Service 1</a></li>
-                            <li><a href="#" class="hover:text-white transition">Service 2</a></li>
-                            <li><a href="#" class="hover:text-white transition">Service 3</a></li>
-                            <li><a href="#" class="hover:text-white transition">Service 4</a></li>
+                            <li><a href="#" class="hover:text-white transition">Heritage</a></li>
+                            <li><a href="#" class="hover:text-white transition">Conservation</a></li>
+                            <li><a href="#" class="hover:text-white transition">Research</a></li>
+                            <li><a href="#" class="hover:text-white transition">Project management</a></li>
                         </ul>
                     </div>
 
@@ -289,8 +286,8 @@
                     <div>
                         <h5 class="font-semibold mb-4">Resources</h5>
                         <ul class="space-y-2 text-sm text-gray-400">
-                            <li><a href="#" class="hover:text-white transition">News</a></li>
-                            <li><a href="#" class="hover:text-white transition">Blog</a></li>
+                            <li><a href="#contact" class="hover:text-white transition">Contact</a></li>
+                            <li><a href="#mag" class="hover:text-white transition">MAG</a></li>
                             <li><a href="#" class="hover:text-white transition">Videos</a></li>
                             <li><a href="#" class="hover:text-white transition">FAQs</a></li>
                         </ul>
@@ -298,7 +295,7 @@
                 </div>
 
                 <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-sm text-gray-400">© 2023 Mockup. All Rights Reserved.</p>
+                    <p class="text-sm text-gray-400">© {{ date('Y') }} INTRA studio - All Rights Reserved.</p>
                     <div class="flex gap-6 mt-4 md:mt-0">
                         <a href="#" class="text-sm text-gray-400 hover:text-white transition">Privacy Policy</a>
                         <a href="#" class="text-sm text-gray-400 hover:text-white transition">Terms of Service</a>
@@ -308,4 +305,3 @@
         </div>
     </footer>
 @endsection
-
