@@ -26,21 +26,26 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
                 <!-- Main Image -->
                 <div class="lg:col-span-2">
-                    <img src="https://via.placeholder.com/800x600/87CEEB/FFFFFF?text=Interior+Design" 
-                         alt="Project Image" 
-                         class="w-full h-auto rounded-lg">
+                    @if($project->main_image)
+                        <img src="{{ asset('storage/' . $project->main_image) }}" 
+                             alt="{{ $project->title }}" 
+                             class="w-full h-auto rounded-lg">
+                    @else
+                        <img src="https://via.placeholder.com/800x600/87CEEB/FFFFFF?text={{ urlencode($project->title) }}" 
+                             alt="{{ $project->title }}" 
+                             class="w-full h-auto rounded-lg">
+                    @endif
                 </div>
                 
                 <!-- Project Details -->
                 <div class="space-y-6">
                     <div>
-                        <h2 class="text-3xl font-bold mb-4">The Delight Factor. A New Metric of Your Workplace.</h2>
-                        <p class="text-gray-700 mb-4">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-                        </p>
-                        <p class="text-gray-700 mb-6">
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecati cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
+                        <h2 class="text-3xl font-bold mb-4">{{ $project->title }}</h2>
+                        @if($project->short_description)
+                            <div class="text-gray-700 mb-4 prose max-w-none">
+                                {!! $project->short_description !!}
+                            </div>
+                        @endif
                         <a href="#workflow" class="text-[#d39250] font-semibold hover:underline inline-flex items-center gap-2">
                             GO TO Project Workflow
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -51,22 +56,36 @@
                     
                     <!-- Project Metadata -->
                     <div class="border-t pt-6 space-y-3">
-                        <div>
-                            <span class="text-sm text-gray-500">Sector:</span>
-                            <p class="font-medium">Heritage & Conservation</p>
-                        </div>
-                        <div>
-                            <span class="text-sm text-gray-500">Client:</span>
-                            <p class="font-medium">Zio Paperone City</p>
-                        </div>
-                        <div>
-                            <span class="text-sm text-gray-500">Location:</span>
-                            <p class="font-medium">Topolinia Walt Disney (USA)</p>
-                        </div>
-                        <div>
-                            <span class="text-sm text-gray-500">Year:</span>
-                            <p class="font-medium">2000</p>
-                        </div>
+                        @if($project->sector)
+                            <div>
+                                <span class="text-sm text-gray-500">Sector:</span>
+                                <p class="font-medium">{{ $project->sector }}</p>
+                            </div>
+                        @endif
+                        @if($project->client)
+                            <div>
+                                <span class="text-sm text-gray-500">Client:</span>
+                                <p class="font-medium">{{ $project->client }}</p>
+                            </div>
+                        @endif
+                        @if($project->location)
+                            <div>
+                                <span class="text-sm text-gray-500">Location:</span>
+                                <p class="font-medium">{{ $project->location }}</p>
+                            </div>
+                        @endif
+                        @if($project->year)
+                            <div>
+                                <span class="text-sm text-gray-500">Year:</span>
+                                <p class="font-medium">{{ $project->year }}</p>
+                            </div>
+                        @endif
+                        @if($project->category)
+                            <div>
+                                <span class="text-sm text-gray-500">Category:</span>
+                                <p class="font-medium">{{ $project->category->name }}</p>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -74,120 +93,122 @@
     </section>
 
     <!-- Quote Section -->
-    <section class="bg-[#f5e6d3] py-16 px-8">
-        <div class="container mx-auto max-w-4xl">
-            <blockquote class="text-2xl md:text-3xl font-medium text-center text-gray-800">
-                "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum atque corrupti quos dolores et quas molestias excepturi sint occaecati, similique sunt in culpa qui officia deserunt mollitia animi, id est fuga"
-            </blockquote>
-        </div>
-    </section>
+    @if($project->quote)
+        <section class="bg-[#f5e6d3] py-16 px-8">
+            <div class="container mx-auto max-w-4xl">
+                <blockquote class="text-2xl md:text-3xl font-medium text-center text-gray-800">
+                    "{{ $project->quote }}"
+                </blockquote>
+            </div>
+        </section>
+    @endif
 
     <!-- Image Gallery -->
-    <section class="py-16 px-8">
-        <div class="container mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                <img src="https://via.placeholder.com/600x400/CCCCCC/FFFFFF?text=Building" 
-                     alt="Gallery Image 1" 
-                     class="w-full h-auto rounded-lg">
-                <img src="https://via.placeholder.com/600x400/FFA500/FFFFFF?text=Heritage" 
-                     alt="Gallery Image 2" 
-                     class="w-full h-auto rounded-lg">
+    @if($project->image_gallery && count($project->image_gallery) > 0)
+        <section class="py-16 px-8">
+            <div class="container mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    @foreach($project->image_gallery as $index => $image)
+                        <img src="{{ asset('storage/' . $image) }}" 
+                             alt="Gallery Image {{ $index + 1 }}" 
+                             class="w-full h-auto rounded-lg">
+                    @endforeach
+                </div>
+                @if(count($project->image_gallery) > 1)
+                    <div class="text-center text-sm text-gray-500">
+                        1/{{ count($project->image_gallery) }}
+                    </div>
+                @endif
             </div>
-            <div class="text-center text-sm text-gray-500">
-                1/6
-            </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <!-- Project Development Section -->
-    <section class="py-16 px-8 bg-white">
-        <div class="container mx-auto">
-            <h2 class="text-3xl font-bold mb-8">Project development</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                <div>
-                    <p class="text-gray-700 mb-4">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                    <p class="text-gray-700">
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecati cupidatat non proident.
-                    </p>
+    @if($project->description)
+        <section class="py-16 px-8 bg-white">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold mb-8">Project development</h2>
+                <div class="prose max-w-none mb-12">
+                    {!! $project->description !!}
                 </div>
-                <div>
-                    <p class="text-gray-700 mb-4">
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-                    </p>
-                    <p class="text-gray-700">
-                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                    </p>
+                
+                <!-- Selected Image (Map) -->
+                @if($project->selected_image)
+                    <div class="mb-12">
+                        <img src="{{ asset('storage/' . $project->selected_image) }}" 
+                             alt="Project Map" 
+                             class="w-full h-auto rounded-lg">
+                    </div>
+                @endif
+
+                <!-- Team Section -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <!-- Team Members -->
+                    @if($project->projectTeamMembers->count() > 0)
+                        <div>
+                            <h3 class="font-semibold mb-4">Team</h3>
+                            <ul class="space-y-3 text-sm">
+                                @foreach($project->projectTeamMembers as $member)
+                                    <li>
+                                        @if($member->name && $member->role)
+                                            <span class="font-medium">{{ $member->name }}:</span> {{ $member->role }}
+                                        @elseif($member->name)
+                                            {{ $member->name }}
+                                        @elseif($member->role)
+                                            {{ $member->role }}
+                                        @endif
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <!-- INTRAstudio Team Leads -->
+                    @if($project->intraStudioTeamLeads->count() > 0)
+                        <div>
+                            <h3 class="font-semibold mb-4">INTRAstudio Team Leads</h3>
+                            <ul class="space-y-2 text-sm">
+                                @foreach($project->intraStudioTeamLeads as $lead)
+                                    <li>{{ $lead->name }} @if($lead->surname) {{ $lead->surname }} @endif</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <!-- Project Details -->
+                    <div>
+                        <h3 class="font-semibold mb-4">Project Details</h3>
+                        <ul class="space-y-3 text-sm">
+                            @if($project->sector)
+                                <li>
+                                    <span class="text-gray-500">Sector:</span>
+                                    <span class="font-medium">{{ $project->sector }}</span>
+                                </li>
+                            @endif
+                            @if($project->client)
+                                <li>
+                                    <span class="text-gray-500">Client:</span>
+                                    <span class="font-medium">{{ $project->client }}</span>
+                                </li>
+                            @endif
+                            @if($project->location)
+                                <li>
+                                    <span class="text-gray-500">Location:</span>
+                                    <span class="font-medium">{{ $project->location }}</span>
+                                </li>
+                            @endif
+                            @if($project->year)
+                                <li>
+                                    <span class="text-gray-500">Year:</span>
+                                    <span class="font-medium">{{ $project->year }}</span>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Map Image -->
-            <div class="mb-12">
-                <img src="https://via.placeholder.com/1200x600/8B7355/FFFFFF?text=Map+of+SINOPE" 
-                     alt="Project Map" 
-                     class="w-full h-auto rounded-lg">
-            </div>
-
-            <!-- Team Section -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                <!-- Team Roles -->
-                <div>
-                    <h3 class="font-semibold mb-4">Team</h3>
-                    <ul class="space-y-3 text-sm">
-                        <li>
-                            <span class="font-medium">Architect, Canada:</span> Rosa Milito
-                        </li>
-                        <li>
-                            <span class="font-medium">Civil Engineering, UK:</span> Tizio Caio
-                        </li>
-                        <li>
-                            <span class="font-medium">Landscape Architect, UK:</span> Tizio Caio
-                        </li>
-                        <li>
-                            <span class="font-medium">Main Contractor:</span> Pablo Picasso
-                        </li>
-                        <li>
-                            <span class="font-medium">Photographer:</span> Altan ISO
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- INTRAstudio Team Leads -->
-                <div>
-                    <h3 class="font-semibold mb-4">INTRAstudio Team Leads</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li>Rosa Milito</li>
-                        <li>Zio Paperino</li>
-                        <li>Paperoga</li>
-                    </ul>
-                </div>
-
-                <!-- Project Details -->
-                <div>
-                    <h3 class="font-semibold mb-4">Project Details</h3>
-                    <ul class="space-y-3 text-sm">
-                        <li>
-                            <span class="text-gray-500">Sector:</span>
-                            <span class="font-medium">Heritage & Conservation</span>
-                        </li>
-                        <li>
-                            <span class="text-gray-500">Client:</span>
-                            <span class="font-medium">Zio Paperone City</span>
-                        </li>
-                        <li>
-                            <span class="text-gray-500">Location:</span>
-                            <span class="font-medium">Topolinia Walt Disney (USA)</span>
-                        </li>
-                        <li>
-                            <span class="text-gray-500">Year:</span>
-                            <span class="font-medium">0000</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <!-- Footer -->
     <footer>

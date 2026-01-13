@@ -13,9 +13,13 @@ Route::get('/', function () {
     return view('home', ['heroProjects' => $heroProjects]);
 });
 
-Route::get('/work', function () {
-    return view('work');
-});
+Route::get('/work/{project:slug}', function (\App\Models\Project $project) {
+    // Only show published projects
+    if (!$project->is_published) {
+        abort(404);
+    }
+    return view('work', ['project' => $project]);
+})->name('work.show');
 
 // Authentication Routes
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');

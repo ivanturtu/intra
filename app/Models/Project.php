@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Project extends Model
 {
@@ -15,6 +16,7 @@ class Project extends Model
     protected $fillable = [
         'main_image',
         'title',
+        'slug',
         'short_description',
         'sector',
         'client',
@@ -62,5 +64,33 @@ class Project extends Model
     public function intraStudioTeamLeads(): BelongsToMany
     {
         return $this->belongsToMany(IntraStudioTeamLead::class, 'project_intra_studio_team_lead');
+    }
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($project) {
+            if (empty($project->slug)) {
+                $project->slug = Str::slug($project->title);
+            }
+        });
+
+        static::updating(function ($project) {
+            if ($project->isDirty('title') && empty($project->slug)) {
+                $project->slug = Str::slug($project->title);
+            }
+        });
+    }
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }
