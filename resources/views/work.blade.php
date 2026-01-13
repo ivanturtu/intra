@@ -105,12 +105,14 @@
                 <!-- Right Side - Split into 2 sections of 3 columns each -->
                 <!-- First section (3 columns) - GO TO Project Development -->
                 <div class="lg:col-span-3">
-                    <a href="#development" class="text-[#d3924f] font-semibold hover:underline inline-flex items-center gap-2">
-                        GO TO
-                        <span>Project Development</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                        </svg>
+                    <a href="#development" class="text-[#1b304e] hover:opacity-80 transition inline-block">
+                        <div class="text-lg font-bold">GO TO</div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-base font-normal">Project Development</span>
+                            <svg class="w-5 h-5 text-[#d3924f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </div>
                     </a>
                 </div>
                 
