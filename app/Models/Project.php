@@ -57,10 +57,10 @@ class Project extends Model
     }
 
     /**
-     * The team members that belong to the project.
+     * The INTRAstudio team leads that belong to the project.
      */
-    public function teamLeads(): BelongsToMany
+    public function intraStudioTeamLeads(): BelongsToMany
     {
-        return $this->belongsToMany(Team::class);
+        return $this->belongsToMany(IntraStudioTeamLead::class, 'project_intra_studio_team_lead');
     }
 }

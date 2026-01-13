@@ -34,6 +34,9 @@
                 <a href="{{ route('admin.categories.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.categories.*') ? 'bg-gray-700' : '' }}">
                     Categories
                 </a>
+                <a href="{{ route('admin.intra-studio-team-leads.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.intra-studio-team-leads.*') ? 'bg-gray-700' : '' }}">
+                    INTRAstudio Team Leads
+                </a>
                 <a href="#" class="block px-6 py-3 hover:bg-gray-700">
                     Teams
                 </a>

@@ -40,4 +40,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/categories/{id}/edit', function ($id) {
         return view('admin.categories.form', ['id' => $id]);
     })->name('categories.edit');
+
+    // INTRAstudio Team Leads
+    Route::get('/intra-studio-team-leads', function () {
+        return view('admin.intra-studio-team-leads.index');
+    })->name('intra-studio-team-leads.index');
+    Route::get('/intra-studio-team-leads/create', function () {
+        return view('admin.intra-studio-team-leads.form');
+    })->name('intra-studio-team-leads.create');
+    Route::get('/intra-studio-team-leads/{id}/edit', function ($id) {
+        return view('admin.intra-studio-team-leads.form', ['id' => $id]);
+    })->name('intra-studio-team-leads.edit');
 });

@@ -155,9 +155,9 @@
                 <!-- INTRAstudio Team Leads (Multiselect) -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">INTRAstudio Team Leads</label>
-                    <select wire:model="teamLeads" multiple class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" size="5">
-                        @foreach($allTeams as $team)
-                            <option value="{{ $team->id }}">{{ $team->name }} @if($team->role) - {{ $team->role }} @endif</option>
+                    <select wire:model="intraStudioTeamLeads" multiple class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" size="5">
+                        @foreach($allIntraStudioTeamLeads as $lead)
+                            <option value="{{ $lead->id }}">{{ $lead->name }} @if($lead->surname) {{ $lead->surname }} @endif @if($lead->role) - {{ $lead->role }} @endif</option>
                         @endforeach
                     </select>
                     <p class="mt-1 text-xs text-gray-500">Hold Ctrl (Cmd on Mac) to select multiple</p>

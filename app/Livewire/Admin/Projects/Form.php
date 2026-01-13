@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Projects;
 
 use App\Models\Category;
+use App\Models\IntraStudioTeamLead;
 use App\Models\Project;
 use App\Models\ProjectTeamMember;
 use App\Models\Team;
@@ -38,7 +39,7 @@ class Form extends Component
     public $isPublished = false;
     public $inHero = false;
 
-    public $allTeams = [];
+    public $allIntraStudioTeamLeads = [];
     public $allCategories = [];
 
     protected function rules()
@@ -65,7 +66,7 @@ class Form extends Component
 
     public function mount($id = null)
     {
-        $this->allTeams = Team::orderBy('name')->get();
+        $this->allIntraStudioTeamLeads = IntraStudioTeamLead::orderBy('order')->orderBy('name')->get();
         $this->allCategories = Category::orderBy('order')->orderBy('name')->get();
 
         if ($id) {
@@ -99,7 +100,7 @@ class Form extends Component
             $this->isPublished = $project->is_published;
             $this->inHero = $project->in_hero;
             $this->mainImagePath = $project->main_image;
-            $this->teamLeads = $project->teamLeads->pluck('id')->toArray();
+            $this->intraStudioTeamLeads = $project->intraStudioTeamLeads->pluck('id')->toArray();
         } else {
             $this->teamMembers = [[
                 'id' => null,
@@ -234,8 +235,8 @@ class Form extends Component
             }
         }
 
-        // Sync team leads
-        $project->teamLeads()->sync($this->teamLeads);
+        // Sync INTRAstudio team leads
+        $project->intraStudioTeamLeads()->sync($this->intraStudioTeamLeads);
 
         return redirect()->route('admin.projects.index');
     }
