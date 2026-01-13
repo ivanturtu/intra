@@ -2,22 +2,21 @@
 
 @section('content')
     <!-- Header -->
-    <header class="bg-[#1a304f] text-white px-8 py-4">
-        <div class="container mx-auto flex items-center justify-between">
-            <div class="flex items-center">
-                <div class="text-white flex items-baseline">
-                    <div class="text-2xl font-bold">INTRA</div>
-                    <div class="w-px h-6 bg-white mx-2"></div>
-                    <div class="text-sm font-light">studio</div>
-                </div>
+    <header class="bg-[#1a304f] text-white px-8 py-0">
+        <div class="container mx-auto flex items-center justify-between header-logo-container">
+            <div class="flex items-center h-full">
+                <img src="{{ asset('images/INTRAstudio-logotype-beige.png') }}" alt="INTRA studio" class="h-full">
             </div>
             <nav class="hidden md:flex items-center gap-8">
-                <a href="/" class="hover:text-gray-300 transition">WORKS</a>
+                <a href="/" class="hover:text-gray-300 transition">WORK</a>
                 <a href="#expertise" class="hover:text-gray-300 transition">EXPERTISE</a>
                 <a href="#story" class="hover:text-gray-300 transition">OUR STORY</a>
                 <a href="#mag" class="hover:text-gray-300 transition">MAG</a>
                 <a href="#contact" class="hover:text-gray-300 transition">CONTACT</a>
             </nav>
+            <button class="bg-[#d39250] px-4 py-2 rounded hover:bg-[#c08545] transition">
+                SEE MORE
+            </button>
         </div>
     </header>
 
