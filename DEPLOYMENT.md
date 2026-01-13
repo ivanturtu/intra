@@ -81,10 +81,21 @@ chmod -R 755 storage bootstrap/cache
 chown -R www-data:www-data storage bootstrap/cache
 ```
 
-### 13. Create Storage Link (if needed)
+### 13. Create Storage Link (IMPORTANT for images)
 ```bash
+# Remove existing symlink if it exists (broken or wrong)
+rm -f public/storage
+
+# Create the storage symlink
 php artisan storage:link
+
+# Verify the symlink was created correctly
+ls -la public/storage
+
+# Should show something like: storage -> /path/to/storage/app/public
 ```
+
+**IMPORTANTE**: Se le immagini non si caricano nel backoffice, questo è probabilmente il problema. Il symlink deve puntare da `public/storage` a `storage/app/public`.
 
 ## One-Line Deployment Command
 
