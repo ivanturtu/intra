@@ -191,10 +191,8 @@
             <div class="container mx-auto">
                 <h2 class="text-3xl font-bold mb-8">Project development</h2>
                 <div class="mb-12">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-700 text-base leading-relaxed">
-                        <div class="description-column">
-                            {!! $project->description !!}
-                        </div>
+                    <div class="description-column text-gray-700 text-base leading-relaxed">
+                        {!! $project->description !!}
                     </div>
                 </div>
                 
