@@ -59,6 +59,7 @@ class Form extends Component
             'mainImage' => 'nullable|image|max:10240',
             'selectedImage' => 'nullable|image|max:10240',
             'imageGalleryFiles.*' => 'nullable|image|max:10240',
+            'teamMemberPhotos.*' => 'nullable|image|max:10240',
         ];
     }
 
