@@ -187,14 +187,18 @@
                             @for($i = 0; $i < count($project->image_gallery); $i += 2)
                                 <div class="w-full flex-shrink-0 grid grid-cols-1 md:grid-cols-2 gap-8">
                                     @if(isset($project->image_gallery[$i]))
-                                        <img src="{{ asset('storage/' . $project->image_gallery[$i]) }}" 
-                                             alt="Gallery Image {{ $i + 1 }}" 
-                                             class="w-full h-auto">
+                                        <div class="h-[600px] overflow-hidden">
+                                            <img src="{{ asset('storage/' . $project->image_gallery[$i]) }}" 
+                                                 alt="Gallery Image {{ $i + 1 }}" 
+                                                 class="w-full h-full object-cover object-center">
+                                        </div>
                                     @endif
                                     @if(isset($project->image_gallery[$i + 1]))
-                                        <img src="{{ asset('storage/' . $project->image_gallery[$i + 1]) }}" 
-                                             alt="Gallery Image {{ $i + 2 }}" 
-                                             class="w-full h-auto">
+                                        <div class="h-[600px] overflow-hidden">
+                                            <img src="{{ asset('storage/' . $project->image_gallery[$i + 1]) }}" 
+                                                 alt="Gallery Image {{ $i + 2 }}" 
+                                                 class="w-full h-full object-cover object-center">
+                                        </div>
                                     @endif
                                 </div>
                             @endfor
