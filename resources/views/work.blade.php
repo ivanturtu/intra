@@ -306,7 +306,7 @@
     <!-- Footer -->
     <footer>
         <!-- Workflow Section -->
-        <div class="bg-[#d3924f] text-white py-16 px-8">
+        <div id="workflow" class="bg-[#d3924f] text-white py-16 px-8">
             <div class="container mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div>
