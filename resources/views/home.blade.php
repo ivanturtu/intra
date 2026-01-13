@@ -14,6 +14,9 @@
                 <a href="#mag" class="text-[#dfdfbb] hover:font-bold transition">MAG</a>
                 <a href="#contact" class="text-[#dfdfbb] hover:font-bold transition">CONTACT</a>
             </nav>
+            <div class="text-white">
+                <span>ENG</span>
+            </div>
         </div>
     </header>
 

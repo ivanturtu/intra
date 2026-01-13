@@ -21,6 +21,25 @@ Route::get('/', function () {
     return view('home', ['heroProjects' => $heroProjects]);
 });
 
+Route::get('/work', function () {
+    $categories = \App\Models\Category::orderBy('order')->get();
+    $projects = \App\Models\Project::where('is_published', true)
+        ->with('category')
+        ->orderBy('order')
+        ->orderBy('created_at', 'desc')
+        ->get();
+    
+    // Generate slugs for projects that don't have one
+    foreach ($projects as $project) {
+        if (empty($project->slug)) {
+            $project->slug = \Illuminate\Support\Str::slug($project->title);
+            $project->save();
+        }
+    }
+    
+    return view('works', ['projects' => $projects, 'categories' => $categories]);
+})->name('works.index');
+
 Route::get('/work/{project:slug}', function (\App\Models\Project $project) {
     // Only show published projects
     if (!$project->is_published) {
