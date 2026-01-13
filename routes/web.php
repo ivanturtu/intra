@@ -131,4 +131,15 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/settings', function () {
         return view('admin.settings.form');
     })->name('settings.index');
+
+    // Users
+    Route::get('/users', function () {
+        return view('admin.users.index');
+    })->name('users.index');
+    Route::get('/users/create', function () {
+        return view('admin.users.form');
+    })->name('users.create');
+    Route::get('/users/{id}/edit', function ($id) {
+        return view('admin.users.form', ['id' => $id]);
+    })->name('users.edit');
 });

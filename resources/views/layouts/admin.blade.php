@@ -56,6 +56,9 @@
                 <a href="{{ route('admin.settings.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.settings.*') ? 'bg-gray-700' : '' }}">
                     Settings
                 </a>
+                <a href="{{ route('admin.users.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.users.*') ? 'bg-gray-700' : '' }}">
+                    Users
+                </a>
                 <a href="/" class="block px-6 py-3 hover:bg-gray-700" target="_blank">
                     View Site
                 </a>

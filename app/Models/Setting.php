@@ -17,6 +17,7 @@ class Setting extends Model
         'address',
         'phone',
         'email',
+        'privacy_policy',
     ];
 
     /**

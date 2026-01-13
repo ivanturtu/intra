@@ -23,6 +23,7 @@ class Form extends Component
     public $address = '';
     public $phone = '';
     public $email = '';
+    public $privacyPolicy = '';
 
     protected function rules()
     {
@@ -37,6 +38,7 @@ class Form extends Component
             'address' => 'nullable|string|max:500',
             'phone' => 'nullable|string|max:50',
             'email' => 'nullable|email|max:255',
+            'privacyPolicy' => 'nullable|string',
         ];
     }
 
@@ -53,6 +55,7 @@ class Form extends Component
         $this->address = $settings->address ?? '';
         $this->phone = $settings->phone ?? '';
         $this->email = $settings->email ?? '';
+        $this->privacyPolicy = $settings->privacy_policy ?? '';
     }
 
     public function save()
@@ -70,6 +73,7 @@ class Form extends Component
             'address' => $this->address,
             'phone' => $this->phone,
             'email' => $this->email,
+            'privacy_policy' => $this->privacyPolicy,
         ];
 
         // Handle logo upload

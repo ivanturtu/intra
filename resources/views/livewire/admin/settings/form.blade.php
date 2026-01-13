@@ -94,6 +94,17 @@
                 </div>
             </div>
 
+            <!-- Privacy Policy -->
+            <div class="border-t pt-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Privacy Policy</h3>
+                <div wire:ignore>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Privacy Policy Text</label>
+                    <div id="privacyPolicyEditor" style="height: 400px;" class="mb-2"></div>
+                    <textarea wire:model="privacyPolicy" id="privacyPolicy" style="display: none;"></textarea>
+                    @error('privacyPolicy') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                </div>
+            </div>
+
             <!-- Submit Buttons -->
             <div class="flex justify-end gap-4 pt-4 border-t">
                 <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
@@ -103,3 +114,77 @@
         </div>
     </form>
 </div>
+
+<script>
+    let privacyPolicyQuill = null;
+    let privacyPolicyQuillInitialized = false;
+
+    function initPrivacyPolicyEditor() {
+        if (privacyPolicyQuillInitialized) {
+            return;
+        }
+
+        const editorEl = document.getElementById('privacyPolicyEditor');
+        if (!editorEl) {
+            return;
+        }
+
+        if (editorEl.querySelector('.ql-container')) {
+            privacyPolicyQuillInitialized = true;
+            return;
+        }
+
+        privacyPolicyQuill = new Quill('#privacyPolicyEditor', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'script': 'sub'}, { 'script': 'super' }],
+                    [{ 'indent': '-1'}, { 'indent': '+1' }],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'align': [] }],
+                    ['link'],
+                    ['clean'],
+                    ['code-block']
+                ]
+            }
+        });
+
+        privacyPolicyQuillInitialized = true;
+
+        const content = @this.privacyPolicy || '';
+        if (content) {
+            privacyPolicyQuill.root.innerHTML = content;
+        }
+
+        let timeout;
+        privacyPolicyQuill.on('text-change', function() {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                const content = privacyPolicyQuill.root.innerHTML;
+                document.getElementById('privacyPolicy').value = content;
+                @this.set('privacyPolicy', content, false);
+            }, 300);
+        });
+    }
+
+    document.addEventListener('livewire:init', () => {
+        setTimeout(() => {
+            initPrivacyPolicyEditor();
+        }, 300);
+    });
+
+    document.addEventListener('livewire:update', () => {
+        setTimeout(() => {
+            if (privacyPolicyQuill && privacyPolicyQuill.root && !privacyPolicyQuill.hasFocus() && @this.privacyPolicy) {
+                const currentContent = privacyPolicyQuill.root.innerHTML;
+                const livewireContent = @this.privacyPolicy;
+                if (currentContent !== livewireContent && livewireContent !== '') {
+                    privacyPolicyQuill.root.innerHTML = livewireContent;
+                }
+            }
+        }, 100);
+    });
+</script>
