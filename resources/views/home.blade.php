@@ -190,39 +190,20 @@
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section class="bg-[#1b304e] text-white py-20 px-8">
+    <!-- Expertise Section -->
+    <section id="expertise" class="bg-[#1b304e] text-white py-20 px-8">
         <div class="container mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
                 <div>
-                    <h2 class="text-4xl md:text-5xl font-bold text-[#d3924f] mb-8">Our Services</h2>
+                    <h2 class="text-4xl md:text-5xl font-bold text-[#d3924f] mb-8">Expertise</h2>
                 </div>
                 <div>
                     <ul class="space-y-0">
-                        <li class="py-4 border-b border-white/10">
-                            <span class="text-lg">Restauro Conservativo</span>
-                        </li>
-                        <li class="py-4 border-b border-white/10">
-                            <span class="text-lg">Ristrutturazioni e Riqualificazioni</span>
-                        </li>
-                        <li class="py-4 border-b border-white/10">
-                            <span class="text-lg">Analisi e Diagnosi Strutturale</span>
-                        </li>
-                        <li class="py-4 border-b border-white/10">
-                            <span class="text-lg">Restauro Artistico</span>
-                        </li>
-                        <li class="py-4 border-b border-white/10">
-                            <span class="text-lg">Consulenza per Vincoli Architettonici e Paesaggistici</span>
-                        </li>
-                        <li class="py-4 border-b border-white/10">
-                            <span class="text-lg">Progettazione Integrata</span>
-                        </li>
-                        <li class="py-4 border-b border-white/10">
-                            <span class="text-lg">Restauro Urbano</span>
-                        </li>
-                        <li class="py-4">
-                            <span class="text-lg">Sostenibilità nei Restauri</span>
-                        </li>
+                        @foreach($categories as $index => $category)
+                            <li class="py-4 {{ $index < $categories->count() - 1 ? 'border-b border-white/10' : '' }}">
+                                <span class="text-lg">{{ $category->name }}</span>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
