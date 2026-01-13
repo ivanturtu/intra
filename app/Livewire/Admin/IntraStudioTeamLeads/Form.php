@@ -15,6 +15,9 @@ class Form extends Component
     public $name = '';
     public $surname = '';
     public $role = '';
+    public $qualification = '';
+    public $incipit = '';
+    public $visionPhrase = '';
     public $description = '';
     public $email = '';
     public $photo;
@@ -27,6 +30,9 @@ class Form extends Component
             'name' => 'required|string|max:255',
             'surname' => 'nullable|string|max:255',
             'role' => 'nullable|string|max:255',
+            'qualification' => 'nullable|string|max:255',
+            'incipit' => 'nullable|string',
+            'visionPhrase' => 'nullable|string|max:500',
             'description' => 'nullable|string',
             'email' => 'nullable|email|max:255',
             'photo' => 'nullable|image|max:10240',
@@ -42,6 +48,9 @@ class Form extends Component
             $this->name = $teamLead->name;
             $this->surname = $teamLead->surname;
             $this->role = $teamLead->role;
+            $this->qualification = $teamLead->qualification ?? '';
+            $this->incipit = $teamLead->incipit ?? '';
+            $this->visionPhrase = $teamLead->vision_phrase ?? '';
             $this->description = $teamLead->description;
             $this->email = $teamLead->email;
             $this->photoPath = $teamLead->photo;
@@ -57,6 +66,9 @@ class Form extends Component
             'name' => $this->name,
             'surname' => $this->surname,
             'role' => $this->role,
+            'qualification' => $this->qualification,
+            'incipit' => $this->incipit,
+            'vision_phrase' => $this->visionPhrase,
             'description' => $this->description,
             'email' => $this->email,
             'order' => $this->order,

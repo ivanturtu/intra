@@ -32,17 +32,38 @@
                 </div>
             </div>
 
-            <!-- Role and Email -->
+            <!-- Role and Qualification -->
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Role</label>
                     <input type="text" wire:model="role" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                    <input type="email" wire:model="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    @error('email') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Qualification</label>
+                    <input type="text" wire:model="qualification" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    @error('qualification') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                 </div>
+            </div>
+
+            <!-- Incipit -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Incipit</label>
+                <textarea wire:model="incipit" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                @error('incipit') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
+
+            <!-- Vision Phrase -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Vision Phrase</label>
+                <input type="text" wire:model="visionPhrase" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                @error('visionPhrase') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <input type="email" wire:model="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                @error('email') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>
 
             <!-- Description with Editor -->
