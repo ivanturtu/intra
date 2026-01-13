@@ -82,6 +82,11 @@
                             {!! $project->short_description !!}
                         </div>
                     @endif
+                </div>
+                
+                <!-- Right Side - Split into 2 sections of 3 columns each -->
+                <!-- First section (3 columns) - GO TO Project Workflow -->
+                <div class="lg:col-span-3">
                     <a href="#workflow" class="text-[#d3924f] font-semibold hover:underline inline-flex items-center gap-2">
                         GO TO
                         <span>Project Workflow</span>
@@ -91,8 +96,8 @@
                     </a>
                 </div>
                 
-                <!-- Project Metadata - Right Side (6 columns / 50%) -->
-                <div class="lg:col-span-6 space-y-4">
+                <!-- Second section (3 columns) - Project Metadata -->
+                <div class="lg:col-span-3 space-y-4">
                     @if($project->sector)
                         <div>
                             <span class="text-sm text-gray-500">Sector:</span>
