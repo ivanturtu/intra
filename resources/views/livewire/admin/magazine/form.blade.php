@@ -95,79 +95,72 @@
 
 <script>
     let textQuill = null;
+    let textQuillInitialized = false;
 
-    function initEditors() {
-        // Initialize Quill for Text if not already initialized
-        const textEl = document.getElementById('textEditor');
-        if (textEl && !textEl.querySelector('.ql-container')) {
-            // Destroy existing instance if any
-            if (textQuill) {
-                try {
-                    textQuill = null;
-                } catch(e) {}
-            }
-            textQuill = new Quill('#textEditor', {
-                theme: 'snow',
-                modules: {
-                    toolbar: [
-                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                        ['bold', 'italic', 'underline', 'strike'],
-                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                        [{ 'script': 'sub'}, { 'script': 'super' }],
-                        [{ 'indent': '-1'}, { 'indent': '+1' }],
-                        [{ 'color': [] }, { 'background': [] }],
-                        [{ 'align': [] }],
-                        ['link', 'image'],
-                        ['clean'],
-                        ['code-block']
-                    ]
-                }
-            });
-
-            // Set initial content
-            const textContent = @this.text || '';
-            if (textContent) {
-                textQuill.root.innerHTML = textContent;
-            }
-
-            // Update Livewire on text change (debounced to avoid too many updates)
-            let textTimeout;
-            textQuill.on('text-change', function() {
-                clearTimeout(textTimeout);
-                textTimeout = setTimeout(() => {
-                    const content = textQuill.root.innerHTML;
-                    document.getElementById('text').value = content;
-                    @this.set('text', content, false); // false = don't update wire:model immediately
-                }, 300);
-            });
+    function initTextEditor() {
+        // Check if already initialized
+        if (textQuillInitialized) {
+            return;
         }
+
+        const textEl = document.getElementById('textEditor');
+        if (!textEl) {
+            return;
+        }
+
+        // Check if Quill container already exists
+        if (textEl.querySelector('.ql-container')) {
+            textQuillInitialized = true;
+            return;
+        }
+
+        // Initialize Quill
+        textQuill = new Quill('#textEditor', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'script': 'sub'}, { 'script': 'super' }],
+                    [{ 'indent': '-1'}, { 'indent': '+1' }],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'align': [] }],
+                    ['link', 'image'],
+                    ['clean'],
+                    ['code-block']
+                ]
+            }
+        });
+
+        textQuillInitialized = true;
+
+        // Set initial content
+        const textContent = @this.text || '';
+        if (textContent) {
+            textQuill.root.innerHTML = textContent;
+        }
+
+        // Update Livewire on text change (debounced)
+        let textTimeout;
+        textQuill.on('text-change', function() {
+            clearTimeout(textTimeout);
+            textTimeout = setTimeout(() => {
+                const content = textQuill.root.innerHTML;
+                document.getElementById('text').value = content;
+                @this.set('text', content, false);
+            }, 300);
+        });
     }
 
-    // Use Livewire hooks to properly initialize editors
+    // Initialize only once when Livewire is ready
     document.addEventListener('livewire:init', () => {
         setTimeout(() => {
-            initEditors();
+            initTextEditor();
         }, 300);
     });
 
-    document.addEventListener('livewire:load', () => {
-        setTimeout(() => {
-            initEditors();
-        }, 200);
-    });
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                initEditors();
-            }, 200);
-        });
-    } else {
-        setTimeout(() => {
-            initEditors();
-        }, 200);
-    }
-
+    // Sync content on updates (but don't reinitialize)
     document.addEventListener('livewire:update', () => {
         setTimeout(() => {
             if (textQuill && textQuill.root && !textQuill.hasFocus() && @this.text) {
