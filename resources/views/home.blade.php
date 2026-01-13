@@ -210,7 +210,8 @@
         <div class="container mx-auto">
             <h2 class="text-4xl md:text-5xl font-bold mb-12">Intra Mag</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                @forelse($magazineArticles as $article)
+                @if(isset($magazineArticles) && $magazineArticles->count() > 0)
+                    @foreach($magazineArticles as $article)
                     <a href="#" class="group cursor-pointer">
                         <div class="relative overflow-hidden rounded-lg mb-4">
                             @if($article->image)
@@ -230,7 +231,8 @@
                         </div>
                         <h3 class="text-lg font-medium">{{ $article->title }}</h3>
                     </a>
-                @empty
+                    @endforeach
+                @else
                     <!-- Fallback static content if no articles -->
                     <div class="group cursor-pointer">
                         <div class="relative overflow-hidden rounded-lg mb-4">

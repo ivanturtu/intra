@@ -12,12 +12,12 @@ Route::get('/', function () {
     
     $categories = \App\Models\Category::orderBy('order')->get();
     
-    // Get latest 2 magazine articles
+    // Get latest 2 magazine articles (published)
     $magazineArticles = \App\Models\MagazineArticle::where('is_published', true)
         ->with('category')
         ->orderBy('date', 'desc')
         ->orderBy('created_at', 'desc')
-        ->limit(2)
+        ->take(2)
         ->get();
     
     // Generate slugs for projects that don't have one
