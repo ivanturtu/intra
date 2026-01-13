@@ -8,9 +8,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        'dark-blue': '#1a304f',
-        'orange-brown': '#d39250',
-        'beige': '#f5e6d3',
+        'primary': '#1b304e',
+        'secondary': '#dfdfbb',
+        'tertiary': '#d3924f',
+        // Legacy colors for backward compatibility
+        'dark-blue': '#1b304e',
+        'orange-brown': '#d3924f',
+        'beige': '#dfdfbb',
       },
     },
   },
