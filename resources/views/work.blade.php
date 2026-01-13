@@ -31,11 +31,11 @@
                 <img src="{{ asset('images/INTRAstudio-logotype-beige.png') }}" alt="INTRA studio" class="h-full">
             </div>
             <nav class="hidden md:flex items-center gap-8">
-                <a href="/" class="hover:text-gray-300 transition">WORK</a>
-                <a href="#expertise" class="hover:text-gray-300 transition">EXPERTISE</a>
-                <a href="#story" class="hover:text-gray-300 transition">OUR STORY</a>
-                <a href="#mag" class="hover:text-gray-300 transition">MAG</a>
-                <a href="#contact" class="hover:text-gray-300 transition">CONTACT</a>
+                <a href="/" class="text-[#dfdfbb] hover:font-bold transition">WORK</a>
+                <a href="#expertise" class="text-[#dfdfbb] hover:font-bold transition">EXPERTISE</a>
+                <a href="#story" class="text-[#dfdfbb] hover:font-bold transition">OUR STORY</a>
+                <a href="#mag" class="text-[#dfdfbb] hover:font-bold transition">MAG</a>
+                <a href="#contact" class="text-[#dfdfbb] hover:font-bold transition">CONTACT</a>
             </nav>
             <button class="bg-[#d3924f] px-4 py-2 rounded hover:bg-[#d3924f]/90 transition">
                 SEE MORE
