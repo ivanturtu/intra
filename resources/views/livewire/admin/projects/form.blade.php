@@ -186,6 +186,18 @@
                 shortDescriptionQuill.root.innerHTML = shortDescContent;
             }
 
+            // Handle paste from Word - clean the content
+            shortDescriptionQuill.root.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const clipboardData = e.clipboardData || window.clipboardData;
+                const text = clipboardData.getData('text/plain');
+                const selection = shortDescriptionQuill.getSelection();
+                if (selection) {
+                    shortDescriptionQuill.insertText(selection.index, text, 'user');
+                    shortDescriptionQuill.setSelection(selection.index + text.length);
+                }
+            });
+
             // Update Livewire on text change
             shortDescriptionQuill.on('text-change', function() {
                 const content = shortDescriptionQuill.root.innerHTML;
@@ -219,6 +231,18 @@
             if (descContent) {
                 descriptionQuill.root.innerHTML = descContent;
             }
+
+            // Handle paste from Word - clean the content
+            descriptionQuill.root.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const clipboardData = e.clipboardData || window.clipboardData;
+                const text = clipboardData.getData('text/plain');
+                const selection = descriptionQuill.getSelection();
+                if (selection) {
+                    descriptionQuill.insertText(selection.index, text, 'user');
+                    descriptionQuill.setSelection(selection.index + text.length);
+                }
+            });
 
             // Update Livewire on text change
             descriptionQuill.on('text-change', function() {
