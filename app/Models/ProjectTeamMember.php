@@ -4,26 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Team extends Model
+class ProjectTeamMember extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'project_id',
         'name',
         'surname',
         'role',
         'description',
         'email',
         'photo',
+        'order',
     ];
 
     /**
-     * The projects that belong to the team member.
+     * Get the project that owns the team member.
      */
-    public function projects(): BelongsToMany
+    public function project(): BelongsTo
     {
-        return $this->belongsToMany(Project::class);
+        return $this->belongsTo(Project::class);
     }
 }

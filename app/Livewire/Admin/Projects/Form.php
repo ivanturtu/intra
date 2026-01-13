@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Projects;
 
 use App\Models\Category;
 use App\Models\Project;
+use App\Models\ProjectTeamMember;
 use App\Models\Team;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -78,7 +79,19 @@ class Form extends Component
             $this->imageGallery = $project->image_gallery ?? [];
             $this->description = $project->description;
             $this->selectedImagePath = $project->selected_image;
-            $this->teamMembers = $project->team_members ?? [];
+            // Load project team members
+            $this->teamMembers = $project->projectTeamMembers->map(function($member) {
+                return [
+                    'id' => $member->id,
+                    'name' => $member->name,
+                    'surname' => $member->surname,
+                    'role' => $member->role,
+                    'description' => $member->description,
+                    'email' => $member->email,
+                    'photo' => $member->photo,
+                    'order' => $member->order,
+                ];
+            })->toArray();
             $this->categoryId = $project->category_id;
             $this->order = $project->order;
             $this->isPublished = $project->is_published;
@@ -86,13 +99,31 @@ class Form extends Component
             $this->mainImagePath = $project->main_image;
             $this->teamLeads = $project->teamLeads->pluck('id')->toArray();
         } else {
-            $this->teamMembers = [['name' => '', 'role' => '']];
+            $this->teamMembers = [[
+                'id' => null,
+                'name' => '',
+                'surname' => '',
+                'role' => '',
+                'description' => '',
+                'email' => '',
+                'photo' => null,
+                'order' => 0,
+            ]];
         }
     }
 
     public function addTeamMember()
     {
-        $this->teamMembers[] = ['name' => '', 'role' => ''];
+        $this->teamMembers[] = [
+            'id' => null,
+            'name' => '',
+            'surname' => '',
+            'role' => '',
+            'description' => '',
+            'email' => '',
+            'photo' => null,
+            'order' => count($this->teamMembers),
+        ];
     }
 
     public function removeTeamMember($index)
@@ -130,9 +161,6 @@ class Form extends Component
             'order' => $this->order,
             'is_published' => $this->isPublished,
             'in_hero' => $this->inHero,
-            'team_members' => array_filter($this->teamMembers, function ($member) {
-                return !empty($member['name']) || !empty($member['role']);
-            }),
         ];
 
         // Handle main image upload
@@ -167,10 +195,41 @@ class Form extends Component
         if ($this->projectId) {
             $project = Project::findOrFail($this->projectId);
             $project->update($data);
+            
+            // Delete existing team members
+            $project->projectTeamMembers()->delete();
             session()->flash('message', 'Project updated successfully.');
         } else {
             $project = Project::create($data);
             session()->flash('message', 'Project created successfully.');
+        }
+
+        // Save project team members
+        foreach ($this->teamMembers as $index => $member) {
+            if (!empty($member['name']) || !empty($member['surname']) || !empty($member['role'])) {
+                $memberData = [
+                    'project_id' => $project->id,
+                    'name' => $member['name'] ?? '',
+                    'surname' => $member['surname'] ?? '',
+                    'role' => $member['role'] ?? '',
+                    'description' => $member['description'] ?? '',
+                    'email' => $member['email'] ?? '',
+                    'order' => $member['order'] ?? $index,
+                ];
+                
+                // Handle photo upload for this team member
+                if (isset($this->teamMemberPhotos[$index]) && $this->teamMemberPhotos[$index]) {
+                    // Delete old photo if exists
+                    if (isset($member['photo']) && $member['photo'] && Storage::disk('public')->exists($member['photo'])) {
+                        Storage::disk('public')->delete($member['photo']);
+                    }
+                    $memberData['photo'] = $this->teamMemberPhotos[$index]->store('team-members', 'public');
+                } elseif (isset($member['photo']) && $member['photo']) {
+                    $memberData['photo'] = $member['photo'];
+                }
+                
+                ProjectTeamMember::create($memberData);
+            }
         }
 
         // Sync team leads

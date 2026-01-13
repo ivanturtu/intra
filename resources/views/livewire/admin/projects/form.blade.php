@@ -96,17 +96,60 @@
 
                 <!-- Team Members (Dynamic) -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Team Members</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-4">Team Members</label>
                     @foreach($teamMembers as $index => $member)
-                        <div class="flex gap-4 mb-2">
-                            <input type="text" wire:model="teamMembers.{{ $index }}.name" placeholder="Name" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            <input type="text" wire:model="teamMembers.{{ $index }}.role" placeholder="Role" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            @if(count($teamMembers) > 1)
-                                <button type="button" wire:click="removeTeamMember({{ $index }})" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">Remove</button>
-                            @endif
+                        <div class="border border-gray-300 rounded-lg p-4 mb-4 bg-gray-50">
+                            <div class="flex justify-between items-center mb-4">
+                                <h4 class="font-semibold text-gray-700">Team Member #{{ $index + 1 }}</h4>
+                                @if(count($teamMembers) > 1)
+                                    <button type="button" wire:click="removeTeamMember({{ $index }})" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm">Remove</button>
+                                @endif
+                            </div>
+                            
+                            <!-- Name and Surname -->
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">Name *</label>
+                                    <input type="text" wire:model="teamMembers.{{ $index }}.name" placeholder="Name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">Surname</label>
+                                    <input type="text" wire:model="teamMembers.{{ $index }}.surname" placeholder="Surname" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                </div>
+                            </div>
+                            
+                            <!-- Role and Email -->
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">Role</label>
+                                    <input type="text" wire:model="teamMembers.{{ $index }}.role" placeholder="Role" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">Email</label>
+                                    <input type="email" wire:model="teamMembers.{{ $index }}.email" placeholder="email@example.com" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                </div>
+                            </div>
+                            
+                            <!-- Photo -->
+                            <div class="mb-4">
+                                <label class="block text-xs font-medium text-gray-600 mb-1">Photo</label>
+                                @if(isset($member['photo']) && $member['photo'])
+                                    <div class="mb-2">
+                                        <img src="{{ asset('storage/' . $member['photo']) }}" alt="Team member photo" class="h-24 w-24 object-cover rounded">
+                                    </div>
+                                @endif
+                                <input type="file" wire:model="teamMemberPhotos.{{ $index }}" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            </div>
+                            
+                            <!-- Description with Editor -->
+                            <div>
+                                <label class="block text-xs font-medium text-gray-600 mb-1">Description</label>
+                                <div id="teamMemberDescriptionEditor{{ $index }}" style="height: 200px;" class="mb-2"></div>
+                                <textarea wire:model="teamMembers.{{ $index }}.description" id="teamMemberDescription{{ $index }}" style="display: none;"></textarea>
+                            </div>
                         </div>
                     @endforeach
-                    <button type="button" wire:click="addTeamMember" class="mt-2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">Add Team Member</button>
+                    <button type="button" wire:click="addTeamMember" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">Add Team Member</button>
                 </div>
 
                 <!-- INTRAstudio Team Leads (Multiselect) -->
@@ -162,6 +205,7 @@
 <script>
     let shortDescriptionQuill = null;
     let descriptionQuill = null;
+    let teamMemberQuills = {};
 
     function initEditors() {
         // Initialize Quill for Short Description if not already initialized
