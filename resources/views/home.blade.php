@@ -208,31 +208,28 @@
     <!-- Intra Mag Section -->
     <section id="mag" class="bg-white py-20 px-8">
         <div class="container mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold mb-12 text-[#d3924f]">Intra Mag</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 @if(isset($magazineArticles) && $magazineArticles->count() > 0)
                     @foreach($magazineArticles as $article)
                     <a href="#" class="group cursor-pointer">
-                        <div class="relative overflow-hidden mb-4">
-                            <!-- Background color extending 9/10 of image height -->
+                        <div class="relative overflow-hidden mb-4 h-[500px]">
+                            <!-- Background color extending 9/10 of image height (90%) -->
                             <div class="absolute inset-0 bg-[#d3924f] z-0" style="height: 90%;"></div>
                             <!-- Image -->
-                            <div class="relative z-10">
+                            <div class="relative z-10 h-full">
                                 @if($article->image)
                                     <img src="{{ asset('storage/' . $article->image) }}" 
                                          alt="{{ $article->title }}" 
-                                         class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                                         class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                                 @else
                                     <img src="https://via.placeholder.com/800x600/8B7355/FFFFFF?text={{ urlencode($article->title) }}" 
                                          alt="{{ $article->title }}" 
-                                         class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                                         class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                                 @endif
                             </div>
-                            <!-- Title overlay on background -->
-                            <div class="absolute bottom-0 left-0 right-0 z-20 bg-[#d3924f] px-8 py-6" style="height: 10%;">
-                                <h2 class="text-4xl md:text-5xl font-bold text-white">Intra Mag</h2>
-                            </div>
                             @if($article->category)
-                                <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2 z-30" style="bottom: 10%;">
+                                <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2 z-20" style="bottom: 10%;">
                                     <span class="text-xs uppercase text-white">{{ strtoupper($article->category->name) }}</span>
                                 </div>
                             @endif
@@ -243,40 +240,32 @@
                 @else
                     <!-- Fallback static content if no articles -->
                     <div class="group cursor-pointer">
-                        <div class="relative overflow-hidden mb-4">
-                            <!-- Background color extending 9/10 of image height -->
+                        <div class="relative overflow-hidden mb-4 h-[500px]">
+                            <!-- Background color extending 9/10 of image height (90%) -->
                             <div class="absolute inset-0 bg-[#d3924f] z-0" style="height: 90%;"></div>
                             <!-- Image -->
-                            <div class="relative z-10">
+                            <div class="relative z-10 h-full">
                                 <img src="https://via.placeholder.com/800x600/8B7355/FFFFFF?text=Parthenon+Ruins" 
                                      alt="L'antico tempio della Grecia" 
-                                     class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                                     class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                             </div>
-                            <!-- Title overlay on background -->
-                            <div class="absolute bottom-0 left-0 right-0 z-20 bg-[#d3924f] px-8 py-6" style="height: 10%;">
-                                <h2 class="text-4xl md:text-5xl font-bold text-white">Intra Mag</h2>
-                            </div>
-                            <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2 z-30" style="bottom: 10%;">
+                            <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2 z-20" style="bottom: 10%;">
                                 <span class="text-xs uppercase text-white">BENI CULTURALI</span>
                             </div>
                         </div>
                         <h3 class="text-lg font-medium text-[#1b304e]">L'antico tempio della Grecia</h3>
                     </div>
                     <div class="group cursor-pointer">
-                        <div class="relative overflow-hidden mb-4">
-                            <!-- Background color extending 9/10 of image height -->
+                        <div class="relative overflow-hidden mb-4 h-[500px]">
+                            <!-- Background color extending 9/10 of image height (90%) -->
                             <div class="absolute inset-0 bg-[#d3924f] z-0" style="height: 90%;"></div>
                             <!-- Image -->
-                            <div class="relative z-10">
+                            <div class="relative z-10 h-full">
                                 <img src="https://via.placeholder.com/800x600/2C2C2C/FFFFFF?text=Giovanni+Muzio+Book" 
                                      alt="Giovanni Muzio" 
-                                     class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                                     class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                             </div>
-                            <!-- Title overlay on background -->
-                            <div class="absolute bottom-0 left-0 right-0 z-20 bg-[#d3924f] px-8 py-6" style="height: 10%;">
-                                <h2 class="text-4xl md:text-5xl font-bold text-white">Intra Mag</h2>
-                            </div>
-                            <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2 z-30" style="bottom: 10%;">
+                            <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2 z-20" style="bottom: 10%;">
                                 <span class="text-xs uppercase text-white">SOSTENIBILITÀ</span>
                             </div>
                         </div>
