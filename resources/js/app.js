@@ -1,5 +1,3 @@
 import './bootstrap';
-import Alpine from 'alpinejs';
-
-window.Alpine = Alpine;
-Alpine.start();
+// Alpine.js is already included by Livewire, so we don't need to start it again
+// This prevents "multiple instances of Alpine running" warning

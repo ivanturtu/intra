@@ -244,44 +244,71 @@
                 }
             });
 
-            // Update Livewire on text change
+            // Update Livewire on text change (debounced to avoid too many updates)
+            let descTimeout;
             descriptionQuill.on('text-change', function() {
-                const content = descriptionQuill.root.innerHTML;
-                document.getElementById('description').value = content;
-                @this.set('description', content);
+                clearTimeout(descTimeout);
+                descTimeout = setTimeout(() => {
+                    const content = descriptionQuill.root.innerHTML;
+                    document.getElementById('description').value = content;
+                    @this.set('description', content, false); // false = don't update wire:model immediately
+                }, 300);
             });
         }
     }
 
+    // Use Livewire hooks to properly initialize editors
     document.addEventListener('livewire:init', () => {
-        setTimeout(() => {
-            initEditors();
-        }, 100);
+        Livewire.hook('morph.updated', ({ el, component }) => {
+            // Reinitialize editors if they were destroyed
+            setTimeout(() => {
+                if (!shortDescriptionQuill && document.getElementById('shortDescriptionEditor')) {
+                    initEditors();
+                }
+                if (!descriptionQuill && document.getElementById('descriptionEditor')) {
+                    initEditors();
+                }
+            }, 50);
+        });
     });
 
+    // Initialize editors when component is loaded
     document.addEventListener('livewire:load', () => {
         setTimeout(() => {
             initEditors();
-        }, 100);
+        }, 200);
     });
 
-    // Reinitialize after Livewire updates
-    document.addEventListener('livewire:update', () => {
+    // Also initialize on initial page load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                initEditors();
+            }, 200);
+        });
+    } else {
         setTimeout(() => {
-            if (shortDescriptionQuill && @this.shortDescription) {
-                const currentContent = shortDescriptionQuill.root.innerHTML;
-                const livewireContent = @this.shortDescription;
-                if (currentContent !== livewireContent) {
-                    shortDescriptionQuill.root.innerHTML = livewireContent;
-                }
+            initEditors();
+        }, 200);
+    }
+
+    // Prevent Livewire from updating editor content unnecessarily
+    document.addEventListener('livewire:update', () => {
+        // Don't update editor content on every Livewire update
+        // Only sync if the editor is not focused (user is not typing)
+        if (shortDescriptionQuill && !shortDescriptionQuill.hasFocus() && @this.shortDescription) {
+            const currentContent = shortDescriptionQuill.root.innerHTML;
+            const livewireContent = @this.shortDescription;
+            if (currentContent !== livewireContent && livewireContent !== '') {
+                shortDescriptionQuill.root.innerHTML = livewireContent;
             }
-            if (descriptionQuill && @this.description) {
-                const currentContent = descriptionQuill.root.innerHTML;
-                const livewireContent = @this.description;
-                if (currentContent !== livewireContent) {
-                    descriptionQuill.root.innerHTML = livewireContent;
-                }
+        }
+        if (descriptionQuill && !descriptionQuill.hasFocus() && @this.description) {
+            const currentContent = descriptionQuill.root.innerHTML;
+            const livewireContent = @this.description;
+            if (currentContent !== livewireContent && livewireContent !== '') {
+                descriptionQuill.root.innerHTML = livewireContent;
             }
-        }, 100);
+        }
     });
 </script>
