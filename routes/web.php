@@ -10,6 +10,8 @@ Route::get('/', function () {
         ->orderBy('order')
         ->get();
     
+    $categories = \App\Models\Category::orderBy('order')->get();
+    
     // Generate slugs for projects that don't have one
     foreach ($heroProjects as $project) {
         if (empty($project->slug)) {
@@ -18,7 +20,7 @@ Route::get('/', function () {
         }
     }
     
-    return view('home', ['heroProjects' => $heroProjects]);
+    return view('home', ['heroProjects' => $heroProjects, 'categories' => $categories]);
 });
 
 Route::get('/work', function () {
@@ -47,7 +49,8 @@ Route::get('/work/{project:slug}', function (\App\Models\Project $project) {
     }
     // Load relationships
     $project->load(['category', 'projectTeamMembers', 'intraStudioTeamLeads']);
-    return view('work', ['project' => $project]);
+    $categories = \App\Models\Category::orderBy('order')->get();
+    return view('work', ['project' => $project, 'categories' => $categories]);
 })->name('work.show');
 
 // Authentication Routes

@@ -11,7 +11,23 @@
             </div>
             <nav class="hidden md:flex items-center gap-8">
                 <a href="/work" class="text-[#dfdfbb] hover:font-bold transition">WORKS</a>
-                <a href="#expertise" class="text-[#dfdfbb] hover:font-bold transition">EXPERTISE</a>
+                <div class="relative group" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                    <a href="#expertise" class="text-[#dfdfbb] hover:font-bold transition cursor-pointer">EXPERTISE</a>
+                    <div x-show="open" 
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0 transform translate-y-2"
+                         x-transition:enter-end="opacity-100 transform translate-y-0"
+                         x-transition:leave="transition ease-in duration-150"
+                         x-transition:leave-start="opacity-100 transform translate-y-0"
+                         x-transition:leave-end="opacity-0 transform translate-y-2"
+                         class="absolute top-full left-0 mt-2 bg-white shadow-lg min-w-[200px] py-2 z-50">
+                        @foreach($categories as $category)
+                            <a href="/work?category={{ $category->id }}" class="block px-4 py-2 text-[#1b304e] hover:bg-gray-100 transition">
+                                {{ $category->name }}
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
                 <a href="#story" class="text-[#dfdfbb] hover:font-bold transition">OUR STORY</a>
                 <a href="#mag" class="text-[#dfdfbb] hover:font-bold transition">MAG</a>
                 <a href="#contact" class="text-[#dfdfbb] hover:font-bold transition">CONTACT</a>
