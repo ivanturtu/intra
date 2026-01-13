@@ -12,6 +12,14 @@ Route::get('/', function () {
     
     $categories = \App\Models\Category::orderBy('order')->get();
     
+    // Get latest 2 magazine articles
+    $magazineArticles = \App\Models\MagazineArticle::where('is_published', true)
+        ->with('category')
+        ->orderBy('date', 'desc')
+        ->orderBy('created_at', 'desc')
+        ->limit(2)
+        ->get();
+    
     // Generate slugs for projects that don't have one
     foreach ($heroProjects as $project) {
         if (empty($project->slug)) {
@@ -20,7 +28,11 @@ Route::get('/', function () {
         }
     }
     
-    return view('home', ['heroProjects' => $heroProjects, 'categories' => $categories]);
+    return view('home', [
+        'heroProjects' => $heroProjects, 
+        'categories' => $categories,
+        'magazineArticles' => $magazineArticles
+    ]);
 });
 
 Route::get('/work', function () {
