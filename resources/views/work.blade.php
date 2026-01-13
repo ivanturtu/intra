@@ -31,7 +31,7 @@
                 <img src="{{ asset('images/INTRAstudio-logotype-beige.png') }}" alt="INTRA studio" class="h-full">
             </div>
             <nav class="hidden md:flex items-center gap-8">
-                <a href="/" class="text-[#dfdfbb] hover:font-bold transition">WORK</a>
+                <a href="/" class="text-[#dfdfbb] hover:font-bold transition">WORKS</a>
                 <a href="#expertise" class="text-[#dfdfbb] hover:font-bold transition">EXPERTISE</a>
                 <a href="#story" class="text-[#dfdfbb] hover:font-bold transition">OUR STORY</a>
                 <a href="#mag" class="text-[#dfdfbb] hover:font-bold transition">MAG</a>
