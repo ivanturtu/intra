@@ -62,7 +62,7 @@
                             </p>
                         @endif
                         @if($project->slug)
-                            <a href="{{ route('work.show', $project->slug) }}" class="inline-block border-2 border-white px-8 py-3 rounded hover:bg-white hover:text-primary transition">
+                            <a href="{{ route('work.show', $project->slug) }}" class="inline-block border-2 border-white px-8 py-3 rounded hover:bg-white hover:text-[#1b304e] transition">
                                 VIEW PROJECT
                             </a>
                         @endif
@@ -107,7 +107,7 @@
                 <h2 class="text-4xl md:text-6xl font-bold mb-8 max-w-4xl mx-auto">
                     The Delight Factor. A New Metric of Your Workplace.
                 </h2>
-                <a href="/work" class="inline-block border-2 border-white px-8 py-3 rounded hover:bg-white hover:text-primary transition">
+                <a href="/work" class="inline-block border-2 border-white px-8 py-3 rounded hover:bg-white hover:text-[#1b304e] transition">
                     TAG WORK
                 </a>
             </div>
@@ -170,11 +170,11 @@
     </section>
 
     <!-- Services Section -->
-    <section class="bg-primary text-white py-20 px-8">
+    <section class="bg-[#1b304e] text-white py-20 px-8">
         <div class="container mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
                 <div>
-                    <h2 class="text-4xl md:text-5xl font-bold text-tertiary mb-8">Our Services</h2>
+                    <h2 class="text-4xl md:text-5xl font-bold text-[#d3924f] mb-8">Our Services</h2>
                 </div>
                 <div>
                     <ul class="space-y-0">
@@ -209,7 +209,7 @@
     </section>
 
     <!-- Intra Mag Section -->
-    <section id="mag" class="bg-tertiary text-white py-20 px-8">
+    <section id="mag" class="bg-[#d3924f] text-white py-20 px-8">
         <div class="container mx-auto">
             <h2 class="text-4xl md:text-5xl font-bold mb-12">Intra Mag</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -219,7 +219,7 @@
                         <img src="https://via.placeholder.com/800x600/8B7355/FFFFFF?text=Parthenon+Ruins" 
                              alt="L'antico tempio della Grecia" 
                              class="w-full h-[400px] object-cover group-hover:scale-105 transition duration-300">
-                        <div class="absolute top-0 right-0 bg-primary px-4 py-2">
+                        <div class="absolute top-0 right-0 bg-[#1b304e] px-4 py-2">
                             <span class="text-xs uppercase">BENI CULTURALI</span>
                         </div>
                     </div>
@@ -232,7 +232,7 @@
                         <img src="https://via.placeholder.com/800x600/2C2C2C/FFFFFF?text=Giovanni+Muzio+Book" 
                              alt="Giovanni Muzio" 
                              class="w-full h-[400px] object-cover group-hover:scale-105 transition duration-300">
-                        <div class="absolute top-0 right-0 bg-primary px-4 py-2">
+                        <div class="absolute top-0 right-0 bg-[#1b304e] px-4 py-2">
                             <span class="text-xs uppercase">SOSTENIBILITÀ</span>
                         </div>
                     </div>
@@ -243,7 +243,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-primary text-white py-12 px-8">
+    <footer class="bg-[#1b304e] text-white py-12 px-8">
         <div class="container mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-8">
                 <!-- Company Info -->
@@ -255,16 +255,16 @@
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     </p>
                     <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center hover:bg-white hover:text-primary transition">
+                        <a href="#" class="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center hover:bg-white hover:text-[#1b304e] transition">
                             <span class="text-sm">f</span>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center hover:bg-white hover:text-primary transition">
+                        <a href="#" class="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center hover:bg-white hover:text-[#1b304e] transition">
                             <span class="text-sm">in</span>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center hover:bg-white hover:text-primary transition">
+                        <a href="#" class="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center hover:bg-white hover:text-[#1b304e] transition">
                             <span class="text-sm">ig</span>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center hover:bg-white hover:text-primary transition">
+                        <a href="#" class="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center hover:bg-white hover:text-[#1b304e] transition">
                             <span class="text-sm">📞</span>
                         </a>
                     </div>

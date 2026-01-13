@@ -37,7 +37,7 @@
                 <a href="#mag" class="hover:text-gray-300 transition">MAG</a>
                 <a href="#contact" class="hover:text-gray-300 transition">CONTACT</a>
             </nav>
-            <button class="bg-tertiary px-4 py-2 rounded hover:bg-tertiary/90 transition">
+            <button class="bg-[#d3924f] px-4 py-2 rounded hover:bg-[#d3924f]/90 transition">
                 SEE MORE
             </button>
         </div>
@@ -50,7 +50,7 @@
             <div class="flex justify-between items-center mb-8">
                 <div class="text-sm text-gray-500">Projects</div>
                 @if($project->category)
-                    <button class="bg-tertiary text-white px-4 py-2 text-sm font-medium">
+                    <button class="bg-[#d3924f] text-white px-4 py-2 text-sm font-medium">
                         {{ strtoupper($project->category->name) }}
                     </button>
                 @endif
@@ -70,7 +70,7 @@
             </div>
             
             <!-- Title -->
-            <h1 class="text-4xl font-bold mb-8 text-primary leading-tight">{{ $project->title }}</h1>
+            <h1 class="text-4xl font-bold mb-8 text-[#1b304e] leading-tight">{{ $project->title }}</h1>
             
             <!-- Content Grid: Description Left, Metadata Right -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -81,7 +81,7 @@
                             {!! $project->short_description !!}
                         </div>
                     @endif
-                    <a href="#workflow" class="text-tertiary font-semibold hover:underline inline-flex items-center gap-2">
+                    <a href="#workflow" class="text-[#d3924f] font-semibold hover:underline inline-flex items-center gap-2">
                         GO TO
                         <span>Project Workflow</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -123,10 +123,10 @@
 
     <!-- Quote Section -->
     @if($project->quote)
-        <section class="bg-secondary py-12 px-8">
+        <section class="bg-[#dfdfbb] py-12 px-8">
             <div class="container mx-auto">
-                <div class="bg-secondary p-8">
-                    <p class="text-lg md:text-xl text-primary leading-relaxed">
+                <div class="bg-[#dfdfbb] p-8">
+                    <p class="text-lg md:text-xl text-[#1b304e] leading-relaxed">
                         {{ $project->quote }}
                     </p>
                 </div>
@@ -300,7 +300,7 @@
     <!-- Footer -->
     <footer>
         <!-- Workflow Section -->
-        <div class="bg-tertiary text-white py-16 px-8">
+        <div class="bg-[#d3924f] text-white py-16 px-8">
             <div class="container mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div>
@@ -308,7 +308,7 @@
                     </div>
                     <div>
                         <ul class="space-y-4">
-                            <li class="bg-tertiary/80 px-4 py-3 rounded">
+                            <li class="bg-[#d3924f]/80 px-4 py-3 rounded">
                                 <span class="font-semibold">Preliminary Analysis and Research</span>
                             </li>
                             <li class="px-4 py-3">Assessment and Diagnosis</li>
@@ -323,7 +323,7 @@
         </div>
 
         <!-- Footer Bottom -->
-        <div class="bg-primary text-white py-12 px-8">
+        <div class="bg-[#1b304e] text-white py-12 px-8">
             <div class="container mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-8">
                     <!-- Company Info -->
