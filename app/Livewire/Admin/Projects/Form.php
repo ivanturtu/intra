@@ -139,6 +139,7 @@ class Form extends Component
 
         $data = [
             'title' => $this->title,
+            'slug' => \Illuminate\Support\Str::slug($this->title),
             'short_description' => $this->shortDescription,
             'sector' => $this->sector,
             'client' => $this->client,

@@ -18,6 +18,8 @@ Route::get('/work/{project:slug}', function (\App\Models\Project $project) {
     if (!$project->is_published) {
         abort(404);
     }
+    // Load relationships
+    $project->load(['category', 'projectTeamMembers', 'intraStudioTeamLeads']);
     return view('work', ['project' => $project]);
 })->name('work.show');
 
