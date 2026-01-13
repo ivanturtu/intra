@@ -25,10 +25,12 @@ class Form extends Component
             // Updating existing user - password is optional
             if (!empty($this->password)) {
                 $rules['password'] = 'required|string|min:8|same:passwordConfirmation';
+                $rules['passwordConfirmation'] = 'required|string|min:8';
             }
         } else {
             // Creating new user - password is required
             $rules['password'] = 'required|string|min:8|same:passwordConfirmation';
+            $rules['passwordConfirmation'] = 'required|string|min:8';
         }
 
         return $rules;
