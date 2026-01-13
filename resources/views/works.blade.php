@@ -65,14 +65,14 @@
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         @endif
                         <!-- Overlay Gradient -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent group-hover:opacity-0 transition-opacity duration-300"></div>
                         <!-- Title and Location Overlay -->
-                        <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
-                            <h3 class="text-xl font-bold mb-1">{{ $project->title }}</h3>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 text-white group-hover:text-[#1b304e] transition-colors duration-300">
+                            <h3 class="text-xl font-bold mb-1 group-hover:bg-white group-hover:px-4 group-hover:py-2 group-hover:-mx-4 group-hover:-my-2 group-hover:inline-block transition-all duration-300">{{ $project->title }}</h3>
                             @if($project->location)
-                                <p class="text-gray-300 text-sm">{{ strtoupper($project->location) }}</p>
+                                <p class="text-gray-300 text-sm group-hover:text-gray-600">{{ strtoupper($project->location) }}</p>
                             @elseif($project->category)
-                                <p class="text-gray-300 text-sm">{{ strtoupper($project->category->name) }}</p>
+                                <p class="text-gray-300 text-sm group-hover:text-gray-600">{{ strtoupper($project->category->name) }}</p>
                             @endif
                         </div>
                     </a>
