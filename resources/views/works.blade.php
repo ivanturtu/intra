@@ -5,7 +5,9 @@
     <header class="bg-[#1b304e] text-white px-8 py-0">
         <div class="container mx-auto flex items-center justify-between header-logo-container">
             <div class="flex items-center h-full">
-                <img src="{{ asset('images/INTRAstudio-logotype-beige.png') }}" alt="INTRA studio" class="h-full">
+                <a href="/">
+                    <img src="{{ asset('images/INTRAstudio-logotype-beige.png') }}" alt="INTRA studio" class="h-full">
+                </a>
             </div>
             <nav class="hidden md:flex items-center gap-8">
                 <a href="/work" class="text-[#dfdfbb] hover:font-bold transition">WORKS</a>
