@@ -27,6 +27,16 @@
                 <h1 class="text-2xl font-bold">INTRA Studio</h1>
                 <p class="text-gray-400 text-sm mt-1">Admin Panel</p>
             </div>
+            <div class="px-6 py-4 border-t border-gray-700">
+                <div class="text-sm text-gray-400 mb-2">{{ Auth::user()->name }}</div>
+                <div class="text-xs text-gray-500 mb-3">{{ Auth::user()->email }}</div>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 rounded">
+                        Logout
+                    </button>
+                </form>
+            </div>
             <nav class="mt-6">
                 <a href="{{ route('admin.projects.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.projects.*') ? 'bg-gray-700' : '' }}">
                     Projects

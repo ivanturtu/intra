@@ -17,8 +17,13 @@ Route::get('/work', function () {
     return view('work');
 });
 
-// Admin Routes
-Route::prefix('admin')->name('admin.')->group(function () {
+// Authentication Routes
+Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+
+// Admin Routes (Protected)
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // Projects
     Route::get('/projects', function () {
         return view('admin.projects.index');
