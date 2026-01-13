@@ -74,9 +74,9 @@
             </div>
             
             <!-- Content Grid: Description Left, Metadata Right -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                <!-- Description - Left Side (2/3) -->
-                <div class="lg:col-span-2">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <!-- Description - Left Side (6 columns / 50%) -->
+                <div class="lg:col-span-6">
                     @if($project->short_description)
                         <div class="text-gray-700 mb-6 prose max-w-none text-base leading-relaxed">
                             {!! $project->short_description !!}
@@ -91,8 +91,8 @@
                     </a>
                 </div>
                 
-                <!-- Project Metadata - Right Side (1/3) -->
-                <div class="space-y-4">
+                <!-- Project Metadata - Right Side (6 columns / 50%) -->
+                <div class="lg:col-span-6 space-y-4">
                     @if($project->sector)
                         <div>
                             <span class="text-sm text-gray-500">Sector:</span>
