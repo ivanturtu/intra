@@ -18,22 +18,99 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="relative h-[80vh] min-h-[600px] flex items-center justify-center">
-        <div class="absolute inset-0 z-0">
-            <img src="https://via.placeholder.com/1920x1080/87CEEB/FFFFFF?text=Ornate+Interior+Design" 
-                 alt="Hero Background" 
-                 class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black/40"></div>
-        </div>
-        <div class="relative z-10 text-center text-white px-8">
-            <h2 class="text-4xl md:text-6xl font-bold mb-8 max-w-4xl mx-auto">
-                The Delight Factor. A New Metric of Your Workplace.
-            </h2>
-            <a href="/work" class="inline-block border-2 border-white px-8 py-3 rounded hover:bg-white hover:text-[#1a304f] transition">
-                TAG WORK
-            </a>
-        </div>
-    </section>
+    @if($heroProjects->count() > 0)
+        <section class="relative h-[80vh] min-h-[600px]" 
+                 x-data="{ 
+                     currentSlide: 0, 
+                     slides: {{ $heroProjects->count() }},
+                     init() {
+                         if (this.slides > 1) {
+                             setInterval(() => {
+                                 this.currentSlide = (this.currentSlide + 1) % this.slides;
+                             }, 5000);
+                         }
+                     }
+                 }">
+            @foreach($heroProjects as $index => $project)
+                <div x-show="currentSlide === {{ $index }}" 
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0"
+                     x-transition:enter-end="opacity-100"
+                     x-transition:leave="transition ease-in duration-300"
+                     x-transition:leave-start="opacity-100"
+                     x-transition:leave-end="opacity-0"
+                     class="absolute inset-0 flex items-center justify-center">
+                    <div class="absolute inset-0 z-0">
+                        @if($project->main_image)
+                            <img src="{{ asset('storage/' . $project->main_image) }}" 
+                                 alt="{{ $project->title }}" 
+                                 class="w-full h-full object-cover">
+                        @else
+                            <img src="https://via.placeholder.com/1920x1080/87CEEB/FFFFFF?text={{ urlencode($project->title) }}" 
+                                 alt="{{ $project->title }}" 
+                                 class="w-full h-full object-cover">
+                        @endif
+                        <div class="absolute inset-0 bg-black/40"></div>
+                    </div>
+                    <div class="relative z-10 text-center text-white px-8">
+                        <h2 class="text-4xl md:text-6xl font-bold mb-8 max-w-4xl mx-auto">
+                            {{ $project->title }}
+                        </h2>
+                        @if($project->short_description)
+                            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+                                {{ $project->short_description }}
+                            </p>
+                        @endif
+                        <a href="/work" class="inline-block border-2 border-white px-8 py-3 rounded hover:bg-white hover:text-[#1a304f] transition">
+                            VIEW PROJECT
+                        </a>
+                    </div>
+                </div>
+            @endforeach
+            
+            @if($heroProjects->count() > 1)
+                <!-- Navigation Buttons -->
+                <button @click="currentSlide = (currentSlide - 1 + slides) % slides" 
+                        class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                <button @click="currentSlide = (currentSlide + 1) % slides" 
+                        class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                
+                <!-- Dots Indicator -->
+                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+                    @foreach($heroProjects as $index => $project)
+                        <button @click="currentSlide = {{ $index }}" 
+                                :class="currentSlide === {{ $index }} ? 'bg-white' : 'bg-white/50'"
+                                class="w-3 h-3 rounded-full transition"></button>
+                    @endforeach
+                </div>
+            @endif
+        </section>
+    @else
+        <section class="relative h-[80vh] min-h-[600px] flex items-center justify-center">
+            <div class="absolute inset-0 z-0">
+                <img src="https://via.placeholder.com/1920x1080/87CEEB/FFFFFF?text=Ornate+Interior+Design" 
+                     alt="Hero Background" 
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/40"></div>
+            </div>
+            <div class="relative z-10 text-center text-white px-8">
+                <h2 class="text-4xl md:text-6xl font-bold mb-8 max-w-4xl mx-auto">
+                    The Delight Factor. A New Metric of Your Workplace.
+                </h2>
+                <a href="/work" class="inline-block border-2 border-white px-8 py-3 rounded hover:bg-white hover:text-[#1a304f] transition">
+                    TAG WORK
+                </a>
+            </div>
+        </section>
+    @endif
 
     <!-- Project Showcase -->
     <section class="py-16 px-8 bg-white">

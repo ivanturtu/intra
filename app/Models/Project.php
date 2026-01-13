@@ -27,6 +27,7 @@ class Project extends Model
         'category_id',
         'order',
         'is_published',
+        'in_hero',
     ];
 
     protected $casts = [
@@ -35,6 +36,7 @@ class Project extends Model
         'year' => 'integer',
         'order' => 'integer',
         'is_published' => 'boolean',
+        'in_hero' => 'boolean',
     ];
 
     /**

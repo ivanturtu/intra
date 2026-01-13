@@ -5,7 +5,12 @@ use App\Livewire\Admin\Projects\Index as ProjectsIndex;
 use App\Livewire\Admin\Projects\Form as ProjectsForm;
 
 Route::get('/', function () {
-    return view('home');
+    $heroProjects = \App\Models\Project::where('in_hero', true)
+        ->where('is_published', true)
+        ->orderBy('order')
+        ->get();
+    
+    return view('home', ['heroProjects' => $heroProjects]);
 });
 
 Route::get('/work', function () {

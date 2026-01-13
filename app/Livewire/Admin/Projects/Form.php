@@ -34,6 +34,7 @@ class Form extends Component
     public $categoryId = null;
     public $order = 0;
     public $isPublished = false;
+    public $inHero = false;
 
     public $allTeams = [];
     public $allCategories = [];
@@ -52,6 +53,7 @@ class Form extends Component
             'categoryId' => 'nullable|exists:categories,id',
             'order' => 'nullable|integer',
             'isPublished' => 'boolean',
+            'inHero' => 'boolean',
             'mainImage' => 'nullable|image|max:10240',
             'selectedImage' => 'nullable|image|max:10240',
             'imageGalleryFiles.*' => 'nullable|image|max:10240',
@@ -80,6 +82,7 @@ class Form extends Component
             $this->categoryId = $project->category_id;
             $this->order = $project->order;
             $this->isPublished = $project->is_published;
+            $this->inHero = $project->in_hero;
             $this->mainImagePath = $project->main_image;
             $this->teamLeads = $project->teamLeads->pluck('id')->toArray();
         } else {
@@ -126,6 +129,7 @@ class Form extends Component
             'category_id' => $this->categoryId,
             'order' => $this->order,
             'is_published' => $this->isPublished,
+            'in_hero' => $this->inHero,
             'team_members' => array_filter($this->teamMembers, function ($member) {
                 return !empty($member['name']) || !empty($member['role']);
             }),
