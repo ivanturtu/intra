@@ -198,11 +198,15 @@
                 }
             });
 
-            // Update Livewire on text change
+            // Update Livewire on text change (debounced to avoid too many updates)
+            let shortDescTimeout;
             shortDescriptionQuill.on('text-change', function() {
-                const content = shortDescriptionQuill.root.innerHTML;
-                document.getElementById('shortDescription').value = content;
-                @this.set('shortDescription', content);
+                clearTimeout(shortDescTimeout);
+                shortDescTimeout = setTimeout(() => {
+                    const content = shortDescriptionQuill.root.innerHTML;
+                    document.getElementById('shortDescription').value = content;
+                    @this.set('shortDescription', content, false); // false = don't update wire:model immediately
+                }, 300);
             });
         }
 
