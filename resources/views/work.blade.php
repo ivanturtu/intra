@@ -68,7 +68,7 @@
                          class="w-full h-full object-cover object-center">
                 @endif
                 <!-- Title Overlay - Bottom Left -->
-                <div class="absolute bottom-0 left-0 bg-white px-6 py-4">
+                <div class="absolute bottom-0 left-0 bg-white px-6 py-4 w-1/2">
                     <h1 class="text-4xl font-bold text-[#1b304e] leading-tight">{{ $project->title }}</h1>
                 </div>
             </div>
