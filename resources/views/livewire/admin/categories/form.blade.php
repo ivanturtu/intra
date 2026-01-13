@@ -22,10 +22,23 @@
                 @error('slug') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>
 
+            <!-- Cover Image -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Cover Image</label>
+                @if($coverImagePath)
+                    <div class="mb-2">
+                        <img src="{{ asset('storage/' . $coverImagePath) }}" alt="Cover image" class="h-32 w-auto rounded">
+                    </div>
+                @endif
+                <input type="file" wire:model="coverImage" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                @error('coverImage') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
+
             <!-- Description -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
-                <textarea wire:model="description" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                <div id="categoryDescriptionEditor" style="height: 300px;" class="mb-2"></div>
+                <textarea wire:model="description" id="categoryDescription" style="display: none;"></textarea>
             </div>
 
             <!-- Order -->
@@ -44,3 +57,64 @@
         </div>
     </form>
 </div>
+
+<script>
+    let categoryDescriptionQuill = null;
+
+    function initCategoryEditor() {
+        // Initialize Quill for Category Description if not already initialized
+        if (!categoryDescriptionQuill && document.getElementById('categoryDescriptionEditor')) {
+            categoryDescriptionQuill = new Quill('#categoryDescriptionEditor', {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        [{ 'script': 'sub'}, { 'script': 'super' }],
+                        [{ 'indent': '-1'}, { 'indent': '+1' }],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'align': [] }],
+                        ['link', 'image'],
+                        ['clean'],
+                        ['code-block']
+                    ]
+                }
+            });
+
+            // Set initial content
+            const descContent = @this.description || '';
+            if (descContent) {
+                categoryDescriptionQuill.root.innerHTML = descContent;
+            }
+
+            // Update Livewire on text change
+            categoryDescriptionQuill.on('text-change', function() {
+                const content = categoryDescriptionQuill.root.innerHTML;
+                document.getElementById('categoryDescription').value = content;
+                @this.set('description', content);
+            });
+        }
+    }
+
+    document.addEventListener('livewire:init', () => {
+        setTimeout(initCategoryEditor, 100);
+    });
+
+    document.addEventListener('livewire:load', () => {
+        setTimeout(initCategoryEditor, 100);
+    });
+
+    // Reinitialize after Livewire updates
+    document.addEventListener('livewire:update', () => {
+        setTimeout(() => {
+            if (categoryDescriptionQuill && @this.description) {
+                const currentContent = categoryDescriptionQuill.root.innerHTML;
+                const livewireContent = @this.description;
+                if (currentContent !== livewireContent) {
+                    categoryDescriptionQuill.root.innerHTML = livewireContent;
+                }
+            }
+        }, 100);
+    });
+</script>

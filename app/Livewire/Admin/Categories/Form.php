@@ -4,14 +4,20 @@ namespace App\Livewire\Admin\Categories;
 
 use App\Models\Category;
 use Livewire\Component;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Form extends Component
 {
+    use WithFileUploads;
+
     public $categoryId = null;
     public $name = '';
     public $slug = '';
     public $description = '';
+    public $coverImage;
+    public $coverImagePath;
     public $order = 0;
 
     protected function rules()
@@ -20,6 +26,7 @@ class Form extends Component
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:categories,slug,' . $this->categoryId,
             'description' => 'nullable|string',
+            'coverImage' => 'nullable|image|max:10240',
             'order' => 'nullable|integer',
         ];
     }
@@ -32,6 +39,7 @@ class Form extends Component
             $this->name = $category->name;
             $this->slug = $category->slug;
             $this->description = $category->description;
+            $this->coverImagePath = $category->cover_image;
             $this->order = $category->order;
         }
     }
@@ -53,6 +61,16 @@ class Form extends Component
             'description' => $this->description,
             'order' => $this->order,
         ];
+
+        // Handle cover image upload
+        if ($this->coverImage) {
+            if ($this->coverImagePath && Storage::disk('public')->exists($this->coverImagePath)) {
+                Storage::disk('public')->delete($this->coverImagePath);
+            }
+            $data['cover_image'] = $this->coverImage->store('categories', 'public');
+        } elseif ($this->coverImagePath) {
+            $data['cover_image'] = $this->coverImagePath;
+        }
 
         if ($this->categoryId) {
             $category = Category::findOrFail($this->categoryId);
