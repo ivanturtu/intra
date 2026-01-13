@@ -24,6 +24,17 @@ class Form extends Component
     public $phone = '';
     public $email = '';
     public $privacyPolicy = '';
+    public $metaTitle = '';
+    public $metaDescription = '';
+    public $metaKeywords = '';
+    public $ogTitle = '';
+    public $ogDescription = '';
+    public $ogImage;
+    public $ogImagePath;
+    public $twitterCardTitle = '';
+    public $twitterCardDescription = '';
+    public $twitterCardImage;
+    public $twitterCardImagePath;
 
     protected function rules()
     {
@@ -39,6 +50,15 @@ class Form extends Component
             'phone' => 'nullable|string|max:50',
             'email' => 'nullable|email|max:255',
             'privacyPolicy' => 'nullable|string',
+            'metaTitle' => 'nullable|string|max:255',
+            'metaDescription' => 'nullable|string|max:500',
+            'metaKeywords' => 'nullable|string|max:500',
+            'ogTitle' => 'nullable|string|max:255',
+            'ogDescription' => 'nullable|string|max:500',
+            'ogImage' => 'nullable|image|max:10240',
+            'twitterCardTitle' => 'nullable|string|max:255',
+            'twitterCardDescription' => 'nullable|string|max:500',
+            'twitterCardImage' => 'nullable|image|max:10240',
         ];
     }
 
@@ -56,6 +76,15 @@ class Form extends Component
         $this->phone = $settings->phone ?? '';
         $this->email = $settings->email ?? '';
         $this->privacyPolicy = $settings->privacy_policy ?? '';
+        $this->metaTitle = $settings->meta_title ?? '';
+        $this->metaDescription = $settings->meta_description ?? '';
+        $this->metaKeywords = $settings->meta_keywords ?? '';
+        $this->ogTitle = $settings->og_title ?? '';
+        $this->ogDescription = $settings->og_description ?? '';
+        $this->ogImagePath = $settings->og_image;
+        $this->twitterCardTitle = $settings->twitter_card_title ?? '';
+        $this->twitterCardDescription = $settings->twitter_card_description ?? '';
+        $this->twitterCardImagePath = $settings->twitter_card_image;
     }
 
     public function save()
@@ -74,6 +103,13 @@ class Form extends Component
             'phone' => $this->phone,
             'email' => $this->email,
             'privacy_policy' => $this->privacyPolicy,
+            'meta_title' => $this->metaTitle,
+            'meta_description' => $this->metaDescription,
+            'meta_keywords' => $this->metaKeywords,
+            'og_title' => $this->ogTitle,
+            'og_description' => $this->ogDescription,
+            'twitter_card_title' => $this->twitterCardTitle,
+            'twitter_card_description' => $this->twitterCardDescription,
         ];
 
         // Handle logo upload
@@ -94,6 +130,26 @@ class Form extends Component
             $data['favicon'] = $this->favicon->store('settings', 'public');
         } elseif ($this->faviconPath) {
             $data['favicon'] = $this->faviconPath;
+        }
+
+        // Handle OG image upload
+        if ($this->ogImage) {
+            if ($this->ogImagePath && Storage::disk('public')->exists($this->ogImagePath)) {
+                Storage::disk('public')->delete($this->ogImagePath);
+            }
+            $data['og_image'] = $this->ogImage->store('settings', 'public');
+        } elseif ($this->ogImagePath) {
+            $data['og_image'] = $this->ogImagePath;
+        }
+
+        // Handle Twitter Card image upload
+        if ($this->twitterCardImage) {
+            if ($this->twitterCardImagePath && Storage::disk('public')->exists($this->twitterCardImagePath)) {
+                Storage::disk('public')->delete($this->twitterCardImagePath);
+            }
+            $data['twitter_card_image'] = $this->twitterCardImage->store('settings', 'public');
+        } elseif ($this->twitterCardImagePath) {
+            $data['twitter_card_image'] = $this->twitterCardImagePath;
         }
 
         $settings->update($data);

@@ -94,6 +94,100 @@
                 </div>
             </div>
 
+            <!-- SEO Settings -->
+            <div class="border-t pt-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">SEO Settings</h3>
+                
+                <div class="space-y-4">
+                    <!-- Meta Tags -->
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="text-md font-semibold text-gray-700 mb-3">Meta Tags</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Meta Title</label>
+                                <input type="text" wire:model="metaTitle" placeholder="Page title for search engines" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <p class="mt-1 text-xs text-gray-500">Recommended: 50-60 characters</p>
+                                @error('metaTitle') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Meta Description</label>
+                                <textarea wire:model="metaDescription" rows="3" placeholder="Brief description for search engines" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                                <p class="mt-1 text-xs text-gray-500">Recommended: 150-160 characters</p>
+                                @error('metaDescription') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Meta Keywords</label>
+                                <input type="text" wire:model="metaKeywords" placeholder="keyword1, keyword2, keyword3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <p class="mt-1 text-xs text-gray-500">Comma-separated keywords</p>
+                                @error('metaKeywords') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Open Graph -->
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="text-md font-semibold text-gray-700 mb-3">Open Graph (Facebook, LinkedIn)</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">OG Title</label>
+                                <input type="text" wire:model="ogTitle" placeholder="Title for social media sharing" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                @error('ogTitle') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">OG Description</label>
+                                <textarea wire:model="ogDescription" rows="3" placeholder="Description for social media sharing" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                                @error('ogDescription') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">OG Image</label>
+                                @if($ogImagePath)
+                                    <div class="mb-2">
+                                        <img src="{{ asset('storage/' . $ogImagePath) }}" alt="OG Image" class="h-32 w-auto rounded">
+                                    </div>
+                                @endif
+                                <input type="file" wire:model="ogImage" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                <p class="mt-1 text-xs text-gray-500">Recommended: 1200x630px</p>
+                                @error('ogImage') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Twitter Card -->
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="text-md font-semibold text-gray-700 mb-3">Twitter Card</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Twitter Card Title</label>
+                                <input type="text" wire:model="twitterCardTitle" placeholder="Title for Twitter sharing" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                @error('twitterCardTitle') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Twitter Card Description</label>
+                                <textarea wire:model="twitterCardDescription" rows="3" placeholder="Description for Twitter sharing" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                                @error('twitterCardDescription') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Twitter Card Image</label>
+                                @if($twitterCardImagePath)
+                                    <div class="mb-2">
+                                        <img src="{{ asset('storage/' . $twitterCardImagePath) }}" alt="Twitter Card Image" class="h-32 w-auto rounded">
+                                    </div>
+                                @endif
+                                <input type="file" wire:model="twitterCardImage" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                <p class="mt-1 text-xs text-gray-500">Recommended: 1200x675px</p>
+                                @error('twitterCardImage') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Privacy Policy -->
             <div class="border-t pt-6">
                 <h3 class="text-lg font-semibold text-gray-800 mb-4">Privacy Policy</h3>

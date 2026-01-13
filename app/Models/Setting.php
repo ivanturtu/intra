@@ -18,6 +18,15 @@ class Setting extends Model
         'phone',
         'email',
         'privacy_policy',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
+        'og_title',
+        'og_description',
+        'og_image',
+        'twitter_card_title',
+        'twitter_card_description',
+        'twitter_card_image',
     ];
 
     /**
