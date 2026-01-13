@@ -60,7 +60,6 @@ class Form extends Component
             'mainImage' => 'nullable|image|max:10240',
             'selectedImage' => 'nullable|image|max:10240',
             'imageGalleryFiles.*' => 'nullable|image|max:10240',
-            'teamMemberPhotos.*' => 'nullable|image|max:10240',
         ];
     }
 
@@ -82,16 +81,12 @@ class Form extends Component
             $this->imageGallery = $project->image_gallery ?? [];
             $this->description = $project->description;
             $this->selectedImagePath = $project->selected_image;
-            // Load project team members
+            // Load project team members (simplified - only 2 fields)
             $this->teamMembers = $project->projectTeamMembers->map(function($member) {
                 return [
                     'id' => $member->id,
-                    'name' => $member->name,
-                    'surname' => $member->surname,
-                    'role' => $member->role,
-                    'description' => $member->description,
-                    'email' => $member->email,
-                    'photo' => $member->photo,
+                    'field1' => $member->name ?? '',
+                    'field2' => $member->role ?? '',
                     'order' => $member->order,
                 ];
             })->toArray();
@@ -104,12 +99,8 @@ class Form extends Component
         } else {
             $this->teamMembers = [[
                 'id' => null,
-                'name' => '',
-                'surname' => '',
-                'role' => '',
-                'description' => '',
-                'email' => '',
-                'photo' => null,
+                'field1' => '',
+                'field2' => '',
                 'order' => 0,
             ]];
         }
@@ -119,12 +110,8 @@ class Form extends Component
     {
         $this->teamMembers[] = [
             'id' => null,
-            'name' => '',
-            'surname' => '',
-            'role' => '',
-            'description' => '',
-            'email' => '',
-            'photo' => null,
+            'field1' => '',
+            'field2' => '',
             'order' => count($this->teamMembers),
         ];
     }
@@ -207,29 +194,19 @@ class Form extends Component
             session()->flash('message', 'Project created successfully.');
         }
 
-        // Save project team members
+        // Save project team members (simplified - only 2 fields)
         foreach ($this->teamMembers as $index => $member) {
-            if (!empty($member['name']) || !empty($member['surname']) || !empty($member['role'])) {
+            if (!empty($member['field1']) || !empty($member['field2'])) {
                 $memberData = [
                     'project_id' => $project->id,
-                    'name' => $member['name'] ?? '',
-                    'surname' => $member['surname'] ?? '',
-                    'role' => $member['role'] ?? '',
-                    'description' => $member['description'] ?? '',
-                    'email' => $member['email'] ?? '',
+                    'name' => $member['field1'] ?? '',
+                    'role' => $member['field2'] ?? '',
+                    'surname' => '',
+                    'description' => '',
+                    'email' => '',
+                    'photo' => null,
                     'order' => $member['order'] ?? $index,
                 ];
-                
-                // Handle photo upload for this team member
-                if (isset($this->teamMemberPhotos[$index]) && $this->teamMemberPhotos[$index]) {
-                    // Delete old photo if exists
-                    if (isset($member['photo']) && $member['photo'] && Storage::disk('public')->exists($member['photo'])) {
-                        Storage::disk('public')->delete($member['photo']);
-                    }
-                    $memberData['photo'] = $this->teamMemberPhotos[$index]->store('team-members', 'public');
-                } elseif (isset($member['photo']) && $member['photo']) {
-                    $memberData['photo'] = $member['photo'];
-                }
                 
                 ProjectTeamMember::create($memberData);
             }
