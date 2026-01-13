@@ -5,8 +5,9 @@
     <header class="bg-[#1a304f] text-white px-8 py-4">
         <div class="container mx-auto flex items-center justify-between">
             <div class="flex items-center">
-                <div class="text-white">
+                <div class="text-white flex items-baseline">
                     <div class="text-2xl font-bold">INTRA</div>
+                    <div class="w-px h-6 bg-white mx-2"></div>
                     <div class="text-sm font-light">studio</div>
                 </div>
             </div>
@@ -21,79 +22,80 @@
     </header>
 
     <!-- Project Overview Section -->
-    <section class="bg-white py-12 px-8">
+    <section class="bg-white py-8 px-8">
         <div class="container mx-auto">
-            <div class="text-sm text-gray-500 mb-6">Projects</div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                <!-- Main Image - Left Side (2/3) -->
-                <div class="lg:col-span-2">
-                    @if($project->main_image)
-                        <img src="{{ asset('storage/' . $project->main_image) }}" 
-                             alt="{{ $project->title }}" 
-                             class="w-full h-auto">
-                    @else
-                        <img src="https://via.placeholder.com/800x600/87CEEB/FFFFFF?text={{ urlencode($project->title) }}" 
-                             alt="{{ $project->title }}" 
-                             class="w-full h-auto">
-                    @endif
-                </div>
-                
-                <!-- Project Details - Right Side (1/3) -->
-                <div class="space-y-6">
-                    <div>
-                        <h1 class="text-4xl font-bold mb-6 leading-tight">{{ $project->title }}</h1>
-                        @if($project->short_description)
-                            <div class="text-gray-700 mb-6 prose max-w-none text-base leading-relaxed">
-                                {!! $project->short_description !!}
-                            </div>
-                        @endif
-                        <a href="#workflow" class="text-[#d39250] font-semibold hover:underline inline-flex items-center gap-2 mb-6">
-                            GO TO Project Workflow
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                            </svg>
-                        </a>
-                    </div>
-                    
-                    <!-- Project Metadata -->
-                    <div class="border-t border-gray-200 pt-6 space-y-4">
-                        @if($project->sector)
-                            <div>
-                                <span class="text-sm text-gray-500">Sector:</span>
-                                <p class="font-medium text-gray-900">{{ $project->sector }}</p>
-                            </div>
-                        @endif
-                        @if($project->client)
-                            <div>
-                                <span class="text-sm text-gray-500">Client:</span>
-                                <p class="font-medium text-gray-900">{{ $project->client }}</p>
-                            </div>
-                        @endif
-                        @if($project->location)
-                            <div>
-                                <span class="text-sm text-gray-500">Location:</span>
-                                <p class="font-medium text-gray-900">{{ $project->location }}</p>
-                            </div>
-                        @endif
-                        @if($project->year)
-                            <div>
-                                <span class="text-sm text-gray-500">Year:</span>
-                                <p class="font-medium text-gray-900">{{ $project->year }}</p>
-                            </div>
-                        @endif
-                    </div>
-                </div>
+            <!-- Top Bar -->
+            <div class="flex justify-between items-center mb-8">
+                <div class="text-sm text-gray-500">Projects</div>
+                @if($project->category)
+                    <button class="bg-[#d39250] text-white px-4 py-2 text-sm font-medium">
+                        {{ strtoupper($project->category->name) }}
+                    </button>
+                @endif
             </div>
             
-            <!-- Quote Box -->
-            @if($project->quote)
-                <div class="mt-8 bg-[#e8d5c4] p-8">
-                    <p class="text-lg text-gray-800 leading-relaxed">
-                        {{ $project->quote }}
-                    </p>
+            <!-- Main Image - Full Width -->
+            <div class="mb-8">
+                @if($project->main_image)
+                    <img src="{{ asset('storage/' . $project->main_image) }}" 
+                         alt="{{ $project->title }}" 
+                         class="w-full h-auto">
+                @else
+                    <img src="https://via.placeholder.com/1200x600/87CEEB/FFFFFF?text={{ urlencode($project->title) }}" 
+                         alt="{{ $project->title }}" 
+                         class="w-full h-auto">
+                @endif
+            </div>
+            
+            <!-- Title -->
+            <h1 class="text-4xl font-bold mb-8 text-[#1a304f] leading-tight">{{ $project->title }}</h1>
+            
+            <!-- Content Grid: Description Left, Metadata Right -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <!-- Description - Left Side (2/3) -->
+                <div class="lg:col-span-2">
+                    @if($project->short_description)
+                        <div class="text-gray-700 mb-6 prose max-w-none text-base leading-relaxed">
+                            {!! $project->short_description !!}
+                        </div>
+                    @endif
+                    <a href="#workflow" class="text-[#d39250] font-semibold hover:underline inline-flex items-center gap-2">
+                        GO TO
+                        <span>Project Workflow</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </a>
                 </div>
-            @endif
+                
+                <!-- Project Metadata - Right Side (1/3) -->
+                <div class="space-y-4">
+                    @if($project->sector)
+                        <div>
+                            <span class="text-sm text-gray-500">Sector:</span>
+                            <p class="font-medium text-gray-900">{{ $project->sector }}</p>
+                        </div>
+                    @endif
+                    @if($project->client)
+                        <div>
+                            <span class="text-sm text-gray-500">Client:</span>
+                            <p class="font-medium text-gray-900">{{ $project->client }}</p>
+                        </div>
+                    @endif
+                    @if($project->location)
+                        <div>
+                            <span class="text-sm text-gray-500">Location:</span>
+                            <p class="font-medium text-gray-900">{{ $project->location }}</p>
+                        </div>
+                    @endif
+                    @if($project->year)
+                        <div>
+                            <span class="text-sm text-gray-500">Year:</span>
+                            <p class="font-medium text-gray-900">{{ $project->year }}</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
         </div>
     </section>
 
