@@ -47,6 +47,9 @@
                 <a href="{{ route('admin.intra-studio-team-leads.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.intra-studio-team-leads.*') ? 'bg-gray-700' : '' }}">
                     Team Leads
                 </a>
+                <a href="{{ route('admin.magazine.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.magazine.*') ? 'bg-gray-700' : '' }}">
+                    Magazine
+                </a>
                 <a href="/" class="block px-6 py-3 hover:bg-gray-700" target="_blank">
                     View Site
                 </a>

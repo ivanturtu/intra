@@ -92,4 +92,15 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/intra-studio-team-leads/{id}/edit', function ($id) {
         return view('admin.intra-studio-team-leads.form', ['id' => $id]);
     })->name('intra-studio-team-leads.edit');
+
+    // Magazine
+    Route::get('/magazine', function () {
+        return view('admin.magazine.index');
+    })->name('magazine.index');
+    Route::get('/magazine/create', function () {
+        return view('admin.magazine.form');
+    })->name('magazine.create');
+    Route::get('/magazine/{id}/edit', function ($id) {
+        return view('admin.magazine.form', ['id' => $id]);
+    })->name('magazine.edit');
 });
