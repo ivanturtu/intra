@@ -99,29 +99,6 @@
 
     <!-- Footer -->
     <footer>
-        <!-- Workflow Section -->
-        <div id="workflow" class="bg-[#d3924f] text-white py-16 px-8">
-            <div class="container mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div>
-                        <h3 class="text-2xl font-bold mb-8">Project Workflow</h3>
-                    </div>
-                    <div>
-                        <ul class="space-y-4">
-                            <li class="bg-[#d3924f]/80 px-4 py-3 rounded">
-                                <span class="font-semibold">Preliminary Analysis and Research</span>
-                            </li>
-                            <li class="px-4 py-3">Assessment and Diagnosis</li>
-                            <li class="px-4 py-3">Concept Design</li>
-                            <li class="px-4 py-3">Design Development</li>
-                            <li class="px-4 py-3">Construction Documentation</li>
-                            <li class="px-4 py-3">Project Management</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Footer Content -->
         <div class="bg-[#1b304e] text-white py-12 px-8">
             <div class="container mx-auto">
