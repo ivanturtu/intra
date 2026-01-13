@@ -11,6 +11,10 @@
 }
 
 /* Custom styles */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Ubuntu', ui-sans-serif, system-ui, sans-serif;
 }
