@@ -229,7 +229,7 @@
                                 @endif
                             </div>
                             @if($article->category)
-                                <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2 z-20" style="bottom: 10%;">
+                                <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2 z-20">
                                     <span class="text-xs uppercase text-white">{{ strtoupper($article->category->name) }}</span>
                                 </div>
                             @endif
@@ -249,7 +249,7 @@
                                      alt="L'antico tempio della Grecia" 
                                      class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                             </div>
-                            <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2 z-20" style="bottom: 10%;">
+                            <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2 z-20">
                                 <span class="text-xs uppercase text-white">BENI CULTURALI</span>
                             </div>
                         </div>
@@ -265,7 +265,7 @@
                                      alt="Giovanni Muzio" 
                                      class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                             </div>
-                            <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2 z-20" style="bottom: 10%;">
+                            <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2 z-20">
                                 <span class="text-xs uppercase text-white">SOSTENIBILITÀ</span>
                             </div>
                         </div>
