@@ -36,22 +36,25 @@ class Form extends Component
 
     public $allTeams = [];
 
-    protected $rules = [
-        'title' => 'required|string|max:255',
-        'shortDescription' => 'nullable|string',
-        'sector' => 'nullable|string|max:255',
-        'client' => 'nullable|string|max:255',
-        'location' => 'nullable|string|max:255',
-        'year' => 'nullable|integer|min:1900|max:' . (date('Y') + 10),
-        'quote' => 'nullable|string',
-        'description' => 'nullable|string',
-        'category' => 'nullable|string|max:255',
-        'order' => 'nullable|integer',
-        'isPublished' => 'boolean',
-        'mainImage' => 'nullable|image|max:10240',
-        'selectedImage' => 'nullable|image|max:10240',
-        'imageGalleryFiles.*' => 'nullable|image|max:10240',
-    ];
+    protected function rules()
+    {
+        return [
+            'title' => 'required|string|max:255',
+            'shortDescription' => 'nullable|string',
+            'sector' => 'nullable|string|max:255',
+            'client' => 'nullable|string|max:255',
+            'location' => 'nullable|string|max:255',
+            'year' => 'nullable|integer|min:1900|max:' . (date('Y') + 10),
+            'quote' => 'nullable|string',
+            'description' => 'nullable|string',
+            'category' => 'nullable|string|max:255',
+            'order' => 'nullable|integer',
+            'isPublished' => 'boolean',
+            'mainImage' => 'nullable|image|max:10240',
+            'selectedImage' => 'nullable|image|max:10240',
+            'imageGalleryFiles.*' => 'nullable|image|max:10240',
+        ];
+    }
 
     public function mount($id = null)
     {
