@@ -256,7 +256,7 @@
                         </div>
                         <h3 class="text-lg font-medium">Giovanni Muzio, Casa dei giornalisti (Milano 1936).</h3>
                     </div>
-                @endforelse
+                @endif
             </div>
         </div>
     </section>
