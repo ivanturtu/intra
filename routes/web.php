@@ -126,4 +126,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/magazine-categories/{id}/edit', function ($id) {
         return view('admin.magazine-categories.form', ['id' => $id]);
     })->name('magazine-categories.edit');
+
+    // Settings
+    Route::get('/settings', function () {
+        return view('admin.settings.form');
+    })->name('settings.index');
 });

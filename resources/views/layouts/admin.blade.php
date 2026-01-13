@@ -53,6 +53,9 @@
                 <a href="{{ route('admin.magazine-categories.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.magazine-categories.*') ? 'bg-gray-700' : '' }}">
                     Magazine Categories
                 </a>
+                <a href="{{ route('admin.settings.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.settings.*') ? 'bg-gray-700' : '' }}">
+                    Settings
+                </a>
                 <a href="/" class="block px-6 py-3 hover:bg-gray-700" target="_blank">
                     View Site
                 </a>
