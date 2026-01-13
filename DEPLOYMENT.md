@@ -279,13 +279,21 @@ eval "$(nodenv init -)"
 
 **Soluzione**:
 ```bash
-# 1. Verifica se il symlink esiste
+# 1. Verifica se il symlink esiste o se è una directory
 ls -la public/storage
 
-# 2. Se non esiste o è rotto, rimuovilo
+# 2. Se è una directory (non un symlink), rimuovila completamente
+# ATTENZIONE: Questo rimuoverà tutti i file nella directory public/storage
+# Assicurati che le immagini siano già in storage/app/public
+rm -rf public/storage
+
+# 3. Se è un symlink rotto, rimuovilo
 rm -f public/storage
 
-# 3. Crea il symlink corretto
+# 4. Usa PHP 8.2 (se necessario in Plesk)
+alias php='/opt/plesk/php/8.2/bin/php'
+
+# 5. Crea il symlink corretto
 php artisan storage:link
 
 # 4. Verifica che sia stato creato correttamente
