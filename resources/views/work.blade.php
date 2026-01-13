@@ -103,11 +103,11 @@
                 </div>
                 
                 <!-- Right Side - Split into 2 sections of 3 columns each -->
-                <!-- First section (3 columns) - GO TO Project Workflow -->
+                <!-- First section (3 columns) - GO TO Project Development -->
                 <div class="lg:col-span-3">
-                    <a href="#workflow" class="text-[#d3924f] font-semibold hover:underline inline-flex items-center gap-2">
+                    <a href="#development" class="text-[#d3924f] font-semibold hover:underline inline-flex items-center gap-2">
                         GO TO
-                        <span>Project Workflow</span>
+                        <span>Project Development</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
@@ -234,7 +234,7 @@
 
     <!-- Project Development Section -->
     @if($project->description)
-        <section class="py-12 px-8 bg-white">
+        <section id="development" class="py-12 px-8 bg-white">
             <div class="container mx-auto">
                 <h2 class="text-3xl font-bold mb-8">Project development</h2>
                 <div class="mb-12">
@@ -323,29 +323,6 @@
 
     <!-- Footer -->
     <footer>
-        <!-- Workflow Section -->
-        <div id="workflow" class="bg-[#d3924f] text-white py-16 px-8">
-            <div class="container mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div>
-                        <h3 class="text-2xl font-bold mb-8">Project Workflow</h3>
-                    </div>
-                    <div>
-                        <ul class="space-y-4">
-                            <li class="bg-[#d3924f]/80 px-4 py-3 rounded">
-                                <span class="font-semibold">Preliminary Analysis and Research</span>
-                            </li>
-                            <li class="px-4 py-3">Assessment and Diagnosis</li>
-                            <li class="px-4 py-3">Concept Design</li>
-                            <li class="px-4 py-3">Design Development</li>
-                            <li class="px-4 py-3">Construction Documentation</li>
-                            <li class="px-4 py-3">Restoration Execution</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Footer Bottom -->
         <div class="bg-[#1b304e] text-white py-12 px-8">
             <div class="container mx-auto">
