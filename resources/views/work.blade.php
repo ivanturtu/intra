@@ -242,7 +242,7 @@
     @if($project->description)
         <section id="development" class="py-12 px-8 bg-white border-b" style="border-bottom-color: #dfdfbb;">
             <div class="container mx-auto">
-                <h2 class="text-3xl font-bold mb-8 border-b" style="border-bottom-color: #dfdfbb; padding-bottom: 2.5rem;">Project development</h2>
+                <h2 class="text-3xl font-bold mb-8 border-b" style="border-bottom-color: #dfdfbb; padding-bottom: 1.5rem;">Project development</h2>
                 <div class="mb-12">
                     <div class="description-column text-gray-700 text-base leading-relaxed">
                         {!! $project->description !!}
