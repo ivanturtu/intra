@@ -104,10 +104,10 @@
                          currentIndex: 0,
                          totalProjects: {{ $sliderProjects->count() }},
                          get totalSlides() {
-                             return Math.max(1, this.totalProjects - 1);
+                             return Math.ceil(this.totalProjects / 2);
                          },
                          nextSlide() {
-                             if (this.currentIndex < this.totalSlides) {
+                             if (this.currentIndex < this.totalSlides - 1) {
                                  this.currentIndex++;
                              } else {
                                  this.currentIndex = 0;
@@ -117,47 +117,79 @@
                              if (this.currentIndex > 0) {
                                  this.currentIndex--;
                              } else {
-                                 this.currentIndex = this.totalSlides;
+                                 this.currentIndex = this.totalSlides - 1;
                              }
                          }
                      }">
                     <!-- Slider Container -->
                     <div class="overflow-hidden">
                         <div class="flex transition-transform duration-500 ease-in-out" 
-                             :style="`transform: translateX(calc(-${currentIndex} * 70%))`">
-                            @foreach($sliderProjects as $index => $project)
-                                <div class="flex-shrink-0 w-[70%] pr-4">
-                                    <a href="{{ route('work.show', $project->slug) }}" class="group cursor-pointer block">
-                                        <div class="relative overflow-hidden mb-4">
-                                            @if($project->main_image)
-                                                <img src="{{ asset('storage/' . $project->main_image) }}" 
-                                                     alt="{{ $project->title }}" 
-                                                     class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
-                                            @else
-                                                <img src="https://via.placeholder.com/600x800/CCCCCC/FFFFFF?text={{ urlencode($project->title) }}" 
-                                                     alt="{{ $project->title }}" 
-                                                     class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
-                                            @endif
+                             :style="`transform: translateX(-${currentIndex * 100}%)`">
+                            @for($i = 0; $i < $sliderProjects->count(); $i += 2)
+                                <div class="w-full flex-shrink-0 flex gap-4">
+                                    @if(isset($sliderProjects[$i]))
+                                        <div class="w-1/2">
+                                            <a href="{{ route('work.show', $sliderProjects[$i]->slug) }}" class="group cursor-pointer block">
+                                                <div class="relative overflow-hidden mb-4">
+                                                    @if($sliderProjects[$i]->main_image)
+                                                        <img src="{{ asset('storage/' . $sliderProjects[$i]->main_image) }}" 
+                                                             alt="{{ $sliderProjects[$i]->title }}" 
+                                                             class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                                                    @else
+                                                        <img src="https://via.placeholder.com/600x800/CCCCCC/FFFFFF?text={{ urlencode($sliderProjects[$i]->title) }}" 
+                                                             alt="{{ $sliderProjects[$i]->title }}" 
+                                                             class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                                                    @endif
+                                                </div>
+                                                <div class="flex justify-between items-start">
+                                                    <div>
+                                                        <h3 class="font-semibold text-sm uppercase mb-1">{{ strtoupper($sliderProjects[$i]->title) }}</h3>
+                                                        @if($sliderProjects[$i]->location)
+                                                            <p class="text-xs text-gray-600 uppercase">{{ strtoupper($sliderProjects[$i]->location) }}</p>
+                                                        @endif
+                                                    </div>
+                                                    @if($sliderProjects[$i]->category)
+                                                        <span class="text-xs text-gray-500 uppercase">{{ strtoupper($sliderProjects[$i]->category->name) }}</span>
+                                                    @endif
+                                                </div>
+                                            </a>
                                         </div>
-                                        <div class="flex justify-between items-start">
-                                            <div>
-                                                <h3 class="font-semibold text-sm uppercase mb-1">{{ strtoupper($project->title) }}</h3>
-                                                @if($project->location)
-                                                    <p class="text-xs text-gray-600 uppercase">{{ strtoupper($project->location) }}</p>
-                                                @endif
-                                            </div>
-                                            @if($project->category)
-                                                <span class="text-xs text-gray-500 uppercase">{{ strtoupper($project->category->name) }}</span>
-                                            @endif
+                                    @endif
+                                    @if(isset($sliderProjects[$i + 1]))
+                                        <div class="w-1/2">
+                                            <a href="{{ route('work.show', $sliderProjects[$i + 1]->slug) }}" class="group cursor-pointer block">
+                                                <div class="relative overflow-hidden mb-4">
+                                                    @if($sliderProjects[$i + 1]->main_image)
+                                                        <img src="{{ asset('storage/' . $sliderProjects[$i + 1]->main_image) }}" 
+                                                             alt="{{ $sliderProjects[$i + 1]->title }}" 
+                                                             class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                                                    @else
+                                                        <img src="https://via.placeholder.com/600x800/CCCCCC/FFFFFF?text={{ urlencode($sliderProjects[$i + 1]->title) }}" 
+                                                             alt="{{ $sliderProjects[$i + 1]->title }}" 
+                                                             class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                                                    @endif
+                                                </div>
+                                                <div class="flex justify-between items-start">
+                                                    <div>
+                                                        <h3 class="font-semibold text-sm uppercase mb-1">{{ strtoupper($sliderProjects[$i + 1]->title) }}</h3>
+                                                        @if($sliderProjects[$i + 1]->location)
+                                                            <p class="text-xs text-gray-600 uppercase">{{ strtoupper($sliderProjects[$i + 1]->location) }}</p>
+                                                        @endif
+                                                    </div>
+                                                    @if($sliderProjects[$i + 1]->category)
+                                                        <span class="text-xs text-gray-500 uppercase">{{ strtoupper($sliderProjects[$i + 1]->category->name) }}</span>
+                                                    @endif
+                                                </div>
+                                            </a>
                                         </div>
-                                    </a>
+                                    @endif
                                 </div>
-                            @endforeach
+                            @endfor
                         </div>
                     </div>
                     
                     <!-- Navigation Buttons -->
-                    @if($sliderProjects->count() > 1)
+                    @if($sliderProjects->count() > 2)
                         <button @click="prevSlide()" 
                                 class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-[#1b304e] p-3 rounded-full shadow-lg transition z-10">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,15 +202,6 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                             </svg>
                         </button>
-                        
-                        <!-- Dots Indicator -->
-                        <div class="flex justify-center gap-2 mt-8">
-                            <template x-for="(slide, index) in totalSlides" :key="index">
-                                <button @click="currentIndex = index" 
-                                        :class="currentIndex === index ? 'bg-[#1b304e]' : 'bg-gray-300'"
-                                        class="w-3 h-3 rounded-full transition"></button>
-                            </template>
-                        </div>
                     @endif
                 </div>
             </div>
