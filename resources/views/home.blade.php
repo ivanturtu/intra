@@ -119,13 +119,6 @@
                              } else {
                                  this.currentIndex = this.totalSlides - 1;
                              }
-                         },
-                         init() {
-                             if (this.totalSlides > 1) {
-                                 setInterval(() => {
-                                     this.nextSlide();
-                                 }, 5000);
-                             }
                          }
                      }">
                     <!-- Slider Container -->
