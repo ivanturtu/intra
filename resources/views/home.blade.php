@@ -104,10 +104,10 @@
                          currentIndex: 0,
                          totalProjects: {{ $sliderProjects->count() }},
                          get totalSlides() {
-                             return Math.ceil(this.totalProjects / 2);
+                             return Math.max(1, this.totalProjects - 1);
                          },
                          nextSlide() {
-                             if (this.currentIndex < this.totalSlides - 1) {
+                             if (this.currentIndex < this.totalSlides) {
                                  this.currentIndex++;
                              } else {
                                  this.currentIndex = 0;
@@ -117,18 +117,18 @@
                              if (this.currentIndex > 0) {
                                  this.currentIndex--;
                              } else {
-                                 this.currentIndex = this.totalSlides - 1;
+                                 this.currentIndex = this.totalSlides;
                              }
                          }
                      }">
                     <!-- Slider Container -->
                     <div class="overflow-hidden">
                         <div class="flex transition-transform duration-500 ease-in-out" 
-                             :style="`transform: translateX(-${currentIndex * 50}%)`">
-                            @foreach($sliderProjects as $project)
-                                <div class="w-1/2 flex-shrink-0 px-4">
+                             :style="`transform: translateX(-${currentIndex * 70}%)`">
+                            @foreach($sliderProjects as $index => $project)
+                                <div class="flex-shrink-0 {{ $index === 0 ? 'w-[70%] pr-2' : 'w-[30%] pl-2' }}">
                                     <a href="{{ route('work.show', $project->slug) }}" class="group cursor-pointer block">
-                                        <div class="relative overflow-hidden rounded-lg mb-4">
+                                        <div class="relative overflow-hidden mb-4">
                                             @if($project->main_image)
                                                 <img src="{{ asset('storage/' . $project->main_image) }}" 
                                                      alt="{{ $project->title }}" 
@@ -157,7 +157,7 @@
                     </div>
                     
                     <!-- Navigation Buttons -->
-                    @if($sliderProjects->count() > 2)
+                    @if($sliderProjects->count() > 1)
                         <button @click="prevSlide()" 
                                 class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-[#1b304e] p-3 rounded-full shadow-lg transition z-10">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
