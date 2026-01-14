@@ -96,7 +96,7 @@
     @endif
 
     <!-- Project Showcase Slider -->
-    @if(isset($sliderProjects) && $sliderProjects->count() > 0)
+    @if(isset($sliderProjects) && $sliderProjects && $sliderProjects->count() > 0)
         <section class="py-16 px-8 bg-white">
             <div class="container mx-auto">
                 <div class="relative" 
