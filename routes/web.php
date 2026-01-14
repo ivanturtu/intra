@@ -10,6 +10,30 @@ Route::get('/', function () {
         ->orderBy('order')
         ->get();
     
+    // Get 3 projects for slider (excluding hero projects)
+    $heroProjectIds = $heroProjects->pluck('id')->toArray();
+    $sliderProjects = \App\Models\Project::where('is_published', true)
+        ->whereNotIn('id', $heroProjectIds)
+        ->with('category')
+        ->orderBy('order')
+        ->orderBy('created_at', 'desc')
+        ->take(3)
+        ->get();
+    
+    // Generate slugs for projects that don't have one
+    foreach ($heroProjects as $project) {
+        if (empty($project->slug)) {
+            $project->slug = \Illuminate\Support\Str::slug($project->title);
+            $project->save();
+        }
+    }
+    foreach ($sliderProjects as $project) {
+        if (empty($project->slug)) {
+            $project->slug = \Illuminate\Support\Str::slug($project->title);
+            $project->save();
+        }
+    }
+    
     $categories = \App\Models\Category::orderBy('order')->get();
     
     // Get latest 2 magazine articles (published)
@@ -20,16 +44,9 @@ Route::get('/', function () {
         ->take(2)
         ->get();
     
-    // Generate slugs for projects that don't have one
-    foreach ($heroProjects as $project) {
-        if (empty($project->slug)) {
-            $project->slug = \Illuminate\Support\Str::slug($project->title);
-            $project->save();
-        }
-    }
-    
     return view('home', [
-        'heroProjects' => $heroProjects, 
+        'heroProjects' => $heroProjects,
+        'sliderProjects' => $sliderProjects,
         'categories' => $categories,
         'magazineArticles' => $magazineArticles
     ]);

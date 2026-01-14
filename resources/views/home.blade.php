@@ -95,60 +95,91 @@
         </section>
     @endif
 
-    <!-- Project Showcase -->
-    <section class="py-16 px-8 bg-white">
-        <div class="container mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Project Card 1 -->
-                <div class="group cursor-pointer">
-                    <div class="relative overflow-hidden rounded-lg mb-4">
-                        <img src="https://via.placeholder.com/600x800/CCCCCC/FFFFFF?text=Palazzo+Staircase" 
-                             alt="Palazzo Visconte Rinascimentale" 
-                             class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="font-semibold text-sm uppercase mb-1">PALAZZO VISCONTE RINASCIMENTALE</h3>
-                            <p class="text-xs text-gray-600 uppercase">VERONA</p>
+    <!-- Project Showcase Slider -->
+    @if(isset($sliderProjects) && $sliderProjects->count() > 0)
+        <section class="py-16 px-8 bg-white">
+            <div class="container mx-auto">
+                <div class="relative" 
+                     x-data="{ 
+                         currentIndex: 0,
+                         totalSlides: {{ $sliderProjects->count() }},
+                         nextSlide() {
+                             this.currentIndex = (this.currentIndex + 1) % this.totalSlides;
+                         },
+                         prevSlide() {
+                             this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
+                         },
+                         init() {
+                             if (this.totalSlides > 1) {
+                                 setInterval(() => {
+                                     this.nextSlide();
+                                 }, 5000);
+                             }
+                         }
+                     }">
+                    <!-- Slider Container -->
+                    <div class="overflow-hidden">
+                        <div class="flex transition-transform duration-500 ease-in-out" 
+                             :style="`transform: translateX(-${currentIndex * 100}%)`">
+                            @foreach($sliderProjects as $project)
+                                <div class="w-full flex-shrink-0 px-4">
+                                    <a href="{{ route('work.show', $project->slug) }}" class="group cursor-pointer block">
+                                        <div class="relative overflow-hidden rounded-lg mb-4">
+                                            @if($project->main_image)
+                                                <img src="{{ asset('storage/' . $project->main_image) }}" 
+                                                     alt="{{ $project->title }}" 
+                                                     class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                                            @else
+                                                <img src="https://via.placeholder.com/600x800/CCCCCC/FFFFFF?text={{ urlencode($project->title) }}" 
+                                                     alt="{{ $project->title }}" 
+                                                     class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                                            @endif
+                                        </div>
+                                        <div class="flex justify-between items-start">
+                                            <div>
+                                                <h3 class="font-semibold text-sm uppercase mb-1">{{ strtoupper($project->title) }}</h3>
+                                                @if($project->location)
+                                                    <p class="text-xs text-gray-600 uppercase">{{ strtoupper($project->location) }}</p>
+                                                @endif
+                                            </div>
+                                            @if($project->category)
+                                                <span class="text-xs text-gray-500 uppercase">{{ strtoupper($project->category->name) }}</span>
+                                            @endif
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
                         </div>
-                        <span class="text-xs text-gray-500 uppercase">RESTAURO ARTISTICO</span>
                     </div>
-                </div>
-
-                <!-- Project Card 2 -->
-                <div class="group cursor-pointer">
-                    <div class="relative overflow-hidden rounded-lg mb-4">
-                        <img src="https://via.placeholder.com/600x800/DDDDDD/FFFFFF?text=Heritage+Building" 
-                             alt="Project 2" 
-                             class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="font-semibold text-sm uppercase mb-1">PROJECT TITLE</h3>
-                            <p class="text-xs text-gray-600 uppercase">LOCATION</p>
+                    
+                    <!-- Navigation Buttons -->
+                    @if($sliderProjects->count() > 1)
+                        <button @click="prevSlide()" 
+                                class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-[#1b304e] p-3 rounded-full shadow-lg transition z-10">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                        </button>
+                        <button @click="nextSlide()" 
+                                class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-[#1b304e] p-3 rounded-full shadow-lg transition z-10">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        
+                        <!-- Dots Indicator -->
+                        <div class="flex justify-center gap-2 mt-8">
+                            @foreach($sliderProjects as $index => $project)
+                                <button @click="currentIndex = {{ $index }}" 
+                                        :class="currentIndex === {{ $index }} ? 'bg-[#1b304e]' : 'bg-gray-300'"
+                                        class="w-3 h-3 rounded-full transition"></button>
+                            @endforeach
                         </div>
-                        <span class="text-xs text-gray-500 uppercase">TAG</span>
-                    </div>
-                </div>
-
-                <!-- Project Card 3 -->
-                <div class="group cursor-pointer">
-                    <div class="relative overflow-hidden rounded-lg mb-4">
-                        <img src="https://via.placeholder.com/600x800/FFA500/FFFFFF?text=Historic+Facade" 
-                             alt="Palazzo Visconte Rinascimentale" 
-                             class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="font-semibold text-sm uppercase mb-1">PALAZZO VISCONTE RINASCIMEN</h3>
-                            <p class="text-xs text-gray-600 uppercase">VERONA</p>
-                        </div>
-                        <span class="text-xs text-gray-500 uppercase">TAG</span>
-                    </div>
+                    @endif
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <!-- Expertise Section -->
     <section id="expertise" class="bg-[#1b304e] text-white py-20 px-8">
