@@ -10,7 +10,7 @@ Route::get('/', function () {
         ->orderBy('order')
         ->get();
     
-    // Get 3 projects for slider (excluding hero projects)
+    // Get 3 projects for slider (excluding hero projects, or all if no non-hero projects exist)
     $heroProjectIds = $heroProjects->pluck('id')->toArray();
     $sliderProjects = \App\Models\Project::where('is_published', true)
         ->whereNotIn('id', $heroProjectIds)
@@ -19,6 +19,16 @@ Route::get('/', function () {
         ->orderBy('created_at', 'desc')
         ->take(3)
         ->get();
+    
+    // If we don't have 3 projects (all might be in hero), get any 3 published projects
+    if ($sliderProjects->count() < 3) {
+        $sliderProjects = \App\Models\Project::where('is_published', true)
+            ->with('category')
+            ->orderBy('order')
+            ->orderBy('created_at', 'desc')
+            ->take(3)
+            ->get();
+    }
     
     // Generate slugs for projects that don't have one
     foreach ($heroProjects as $project) {
