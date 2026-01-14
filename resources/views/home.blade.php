@@ -126,7 +126,7 @@
                         <div class="flex transition-transform duration-500 ease-in-out" 
                              :style="`transform: translateX(-${currentIndex * 70}%)`">
                             @foreach($sliderProjects as $index => $project)
-                                <div class="flex-shrink-0 {{ $index === 0 ? 'w-[70%] pr-2' : 'w-[30%] pl-2' }}">
+                                <div class="flex-shrink-0 w-[70%] {{ $index > 0 ? 'pr-2' : 'pr-2' }}">
                                     <a href="{{ route('work.show', $project->slug) }}" class="group cursor-pointer block">
                                         <div class="relative overflow-hidden mb-4">
                                             @if($project->main_image)
