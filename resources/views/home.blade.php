@@ -102,12 +102,23 @@
                 <div class="relative" 
                      x-data="{ 
                          currentIndex: 0,
-                         totalSlides: {{ $sliderProjects->count() }},
+                         totalProjects: {{ $sliderProjects->count() }},
+                         get totalSlides() {
+                             return Math.ceil(this.totalProjects / 2);
+                         },
                          nextSlide() {
-                             this.currentIndex = (this.currentIndex + 1) % this.totalSlides;
+                             if (this.currentIndex < this.totalSlides - 1) {
+                                 this.currentIndex++;
+                             } else {
+                                 this.currentIndex = 0;
+                             }
                          },
                          prevSlide() {
-                             this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
+                             if (this.currentIndex > 0) {
+                                 this.currentIndex--;
+                             } else {
+                                 this.currentIndex = this.totalSlides - 1;
+                             }
                          },
                          init() {
                              if (this.totalSlides > 1) {
@@ -120,9 +131,9 @@
                     <!-- Slider Container -->
                     <div class="overflow-hidden">
                         <div class="flex transition-transform duration-500 ease-in-out" 
-                             :style="`transform: translateX(-${currentIndex * 100}%)`">
+                             :style="`transform: translateX(-${currentIndex * 50}%)`">
                             @foreach($sliderProjects as $project)
-                                <div class="w-full flex-shrink-0 px-4">
+                                <div class="w-1/2 flex-shrink-0 px-4">
                                     <a href="{{ route('work.show', $project->slug) }}" class="group cursor-pointer block">
                                         <div class="relative overflow-hidden rounded-lg mb-4">
                                             @if($project->main_image)
@@ -153,7 +164,7 @@
                     </div>
                     
                     <!-- Navigation Buttons -->
-                    @if($sliderProjects->count() > 1)
+                    @if($sliderProjects->count() > 2)
                         <button @click="prevSlide()" 
                                 class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-[#1b304e] p-3 rounded-full shadow-lg transition z-10">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -169,11 +180,11 @@
                         
                         <!-- Dots Indicator -->
                         <div class="flex justify-center gap-2 mt-8">
-                            @foreach($sliderProjects as $index => $project)
-                                <button @click="currentIndex = {{ $index }}" 
-                                        :class="currentIndex === {{ $index }} ? 'bg-[#1b304e]' : 'bg-gray-300'"
+                            <template x-for="(slide, index) in totalSlides" :key="index">
+                                <button @click="currentIndex = index" 
+                                        :class="currentIndex === index ? 'bg-[#1b304e]' : 'bg-gray-300'"
                                         class="w-3 h-3 rounded-full transition"></button>
-                            @endforeach
+                            </template>
                         </div>
                     @endif
                 </div>
