@@ -240,7 +240,7 @@
                                         x-transition:leave="transition ease-in duration-150"
                                         x-transition:leave-start="opacity-100 translate-y-0"
                                         x-transition:leave-end="opacity-0 -translate-y-1"
-                                        class="mt-2 text-sm text-[#dfdfbb]"
+                                        class="mt-2 text-lg md:text-xl text-[#dfdfbb]"
                                         style="display: none;"
                                     >
                                         <a href="/work?category={{ $category->id }}" class="inline-flex items-baseline hover:underline">
