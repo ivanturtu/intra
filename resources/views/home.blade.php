@@ -218,7 +218,7 @@
                 <div class="md:col-span-9">
                     <ul class="space-y-0" x-data="{ openId: null }">
                         @foreach($categories as $index => $category)
-                            <li class="py-4 {{ $index < $categories->count() - 1 ? 'border-b border-white/10' : '' }}">
+                            <li class="py-8 {{ $index < $categories->count() - 1 ? 'border-b border-white/10' : '' }}">
                                 <button
                                     type="button"
                                     class="w-full text-left leading-tight flex items-center justify-between gap-6 cursor-pointer group"
