@@ -33,6 +33,9 @@
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm font-medium text-gray-900">{{ $category->name }}</div>
+                            @if($category->subtitle)
+                                <div class="text-xs text-gray-500">{{ $category->subtitle }}</div>
+                            @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $category->slug }}</td>
                         <td class="px-6 py-4 text-sm text-gray-500">

@@ -14,6 +14,13 @@
                 @error('name') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>
 
+            <!-- Subtitle -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Subtitle</label>
+                <input type="text" wire:model="subtitle" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                @error('subtitle') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
+
             <!-- Slug -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Slug</label>

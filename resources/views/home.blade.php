@@ -219,7 +219,12 @@
                     <ul class="space-y-0">
                         @foreach($categories as $index => $category)
                             <li class="py-4 {{ $index < $categories->count() - 1 ? 'border-b border-white/10' : '' }}">
-                                <span class="text-lg">{{ $category->name }}</span>
+                                <div class="leading-tight">
+                                    <div class="text-lg">{{ $category->name }}</div>
+                                    @if(!empty($category->subtitle))
+                                        <div class="text-sm text-white/70">{{ $category->subtitle }}</div>
+                                    @endif
+                                </div>
                             </li>
                         @endforeach
                     </ul>

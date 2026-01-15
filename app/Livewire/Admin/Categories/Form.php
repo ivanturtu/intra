@@ -14,6 +14,7 @@ class Form extends Component
 
     public $categoryId = null;
     public $name = '';
+    public $subtitle = '';
     public $slug = '';
     public $description = '';
     public $coverImage;
@@ -24,6 +25,7 @@ class Form extends Component
     {
         return [
             'name' => 'required|string|max:255',
+            'subtitle' => 'nullable|string|max:255',
             'slug' => 'nullable|string|max:255|unique:categories,slug,' . $this->categoryId,
             'description' => 'nullable|string',
             'coverImage' => 'nullable|image|max:10240',
@@ -37,6 +39,7 @@ class Form extends Component
             $category = Category::findOrFail($id);
             $this->categoryId = $category->id;
             $this->name = $category->name;
+            $this->subtitle = $category->subtitle;
             $this->slug = $category->slug;
             $this->description = $category->description;
             $this->coverImagePath = $category->cover_image;
@@ -57,6 +60,7 @@ class Form extends Component
 
         $data = [
             'name' => $this->name,
+            'subtitle' => $this->subtitle,
             'slug' => $this->slug ?: Str::slug($this->name),
             'description' => $this->description,
             'order' => $this->order,

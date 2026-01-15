@@ -20,7 +20,12 @@
                      class="absolute top-full left-0 mt-2 bg-white shadow-lg min-w-[200px] py-2 z-50">
                     @foreach($categories as $category)
                         <a href="/work?category={{ $category->id }}" class="block px-4 py-2 text-[#1b304e] hover:bg-gray-100 transition">
-                            {{ $category->name }}
+                            <div class="leading-tight">
+                                <div>{{ $category->name }}</div>
+                                @if(!empty($category->subtitle))
+                                    <div class="text-xs text-gray-500">{{ $category->subtitle }}</div>
+                                @endif
+                            </div>
                         </a>
                     @endforeach
                 </div>
