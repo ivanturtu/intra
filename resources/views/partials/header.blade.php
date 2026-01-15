@@ -8,7 +8,7 @@
         </div>
         <nav class="hidden md:flex items-center gap-8">
             <a href="/work" class="text-[#dfdfbb] transition hover:[text-shadow:0.03em_0_0_currentColor,-0.03em_0_0_currentColor]">WORKS</a>
-            <div class="relative group" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+            <div class="relative group h-full flex items-center" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
                 <a href="#expertise" class="text-[#dfdfbb] transition cursor-pointer hover:[text-shadow:0.03em_0_0_currentColor,-0.03em_0_0_currentColor]">EXPERTISE</a>
                 <div x-show="open" 
                      x-transition:enter="transition ease-out duration-200"
@@ -17,7 +17,7 @@
                      x-transition:leave="transition ease-in duration-150"
                      x-transition:leave-start="opacity-100 transform translate-y-0"
                      x-transition:leave-end="opacity-0 transform translate-y-2"
-                     class="absolute top-full left-0 mt-0 bg-white shadow-lg min-w-[260px] py-1 z-50">
+                     class="fixed left-auto top-[100px] bg-white shadow-lg min-w-[260px] py-1 z-50">
                     @foreach($categories as $category)
                         <a href="/work?category={{ $category->id }}" class="block px-4 py-1.5 text-[#1b304e] hover:bg-gray-100 transition whitespace-nowrap text-xs uppercase tracking-wider">
                             | {{ $category->name }}
