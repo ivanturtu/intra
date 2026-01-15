@@ -96,6 +96,16 @@
                     });
                 });
             });
+
+            // Apply filter from query param (?category=ID)
+            const params = new URLSearchParams(window.location.search);
+            const initialCategoryId = params.get('category');
+            if (initialCategoryId) {
+                const initialBtn = document.querySelector(`.category-filter[data-category="${initialCategoryId}"]`);
+                if (initialBtn) {
+                    initialBtn.click();
+                }
+            }
         });
     </script>
 @endsection
