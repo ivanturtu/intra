@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer class="bg-[#1b304e] text-white py-12 px-8">
+<footer class="bg-[#1b304e] text-white py-12 px-8 mt-auto">
     <div class="container mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-8">
             <!-- Company Info -->
@@ -26,25 +26,29 @@
                 </div>
             </div>
 
-            <!-- Products -->
+            <!-- Menu -->
             <div>
-                <h5 class="font-semibold mb-4">Products</h5>
+                <h5 class="font-semibold mb-4">Menu</h5>
                 <ul class="space-y-2 text-sm text-gray-400">
-                    <li><a href="#" class="hover:text-white transition">Product 1</a></li>
-                    <li><a href="#" class="hover:text-white transition">Product 2</a></li>
-                    <li><a href="#" class="hover:text-white transition">Product 3</a></li>
-                    <li><a href="#" class="hover:text-white transition">Product 4</a></li>
+                    <li><a href="{{ url('/work') }}" class="hover:text-white transition">Works</a></li>
+                    <li><a href="{{ url('/#expertise') }}" class="hover:text-white transition">Expertise</a></li>
+                    <li><a href="{{ url('/#story') }}" class="hover:text-white transition">Our story</a></li>
+                    <li><a href="{{ url('/#mag') }}" class="hover:text-white transition">Mag</a></li>
+                    <li><a href="{{ url('/#contact') }}" class="hover:text-white transition">Contact</a></li>
                 </ul>
             </div>
 
-            <!-- Services -->
+            <!-- Expertise -->
             <div>
-                <h5 class="font-semibold mb-4">Services</h5>
+                <h5 class="font-semibold mb-4">Expertise</h5>
                 <ul class="space-y-2 text-sm text-gray-400">
-                    <li><a href="#" class="hover:text-white transition">Service 1</a></li>
-                    <li><a href="#" class="hover:text-white transition">Service 2</a></li>
-                    <li><a href="#" class="hover:text-white transition">Service 3</a></li>
-                    <li><a href="#" class="hover:text-white transition">Service 4</a></li>
+                    @foreach(($categories ?? collect()) as $category)
+                        <li>
+                            <a href="{{ url('/work?category=' . $category->id) }}" class="hover:text-white transition">
+                                {{ $category->name }}
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
 
@@ -52,10 +56,8 @@
             <div>
                 <h5 class="font-semibold mb-4">Resources</h5>
                 <ul class="space-y-2 text-sm text-gray-400">
-                    <li><a href="#" class="hover:text-white transition">News</a></li>
-                    <li><a href="#" class="hover:text-white transition">Blog</a></li>
-                    <li><a href="#" class="hover:text-white transition">Videos</a></li>
-                    <li><a href="#" class="hover:text-white transition">FAQs</a></li>
+                    <li><a href="{{ url('/#contact') }}" class="hover:text-white transition">Contact</a></li>
+                    <li><a href="{{ url('/#mag') }}" class="hover:text-white transition">Mag</a></li>
                 </ul>
             </div>
         </div>

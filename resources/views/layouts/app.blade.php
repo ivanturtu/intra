@@ -17,9 +17,11 @@
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body class="font-sans antialiased">
+<body class="font-sans antialiased min-h-screen flex flex-col">
     @livewireScripts
-    @yield('content')
+    <main class="flex-1">
+        @yield('content')
+    </main>
 </body>
 </html>
 

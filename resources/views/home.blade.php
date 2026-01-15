@@ -5,7 +5,7 @@
 
     <!-- Hero Section -->
     @if($heroProjects->count() > 0)
-        <section class="relative h-[80vh] min-h-[600px]" 
+        <section class="relative h-[60vh] min-h-[450px]" 
                  x-data="{ 
                      currentSlide: 0, 
                      slides: {{ $heroProjects->count() }},
@@ -41,12 +41,12 @@
                     <div class="relative z-10 text-left text-white px-8 container mx-auto">
                         @if($project->slug)
                             <a href="{{ route('work.show', $project->slug) }}" class="block">
-                                <h2 class="text-4xl md:text-6xl font-light">
+                                <h2 class="text-6xl md:text-8xl font-light">
                                     {{ $project->title }}
                                 </h2>
                             </a>
                         @else
-                            <h2 class="text-4xl md:text-6xl font-light">
+                            <h2 class="text-6xl md:text-8xl font-light">
                                 {{ $project->title }}
                             </h2>
                         @endif
@@ -57,30 +57,30 @@
             @if($heroProjects->count() > 1)
                 <!-- Navigation Buttons -->
                 <button @click="currentSlide = (currentSlide - 1 + slides) % slides" 
-                        class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        class="absolute left-4 top-1/2 -translate-y-1/2 z-20 text-white/90 hover:text-white transition">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path>
                     </svg>
                 </button>
                 <button @click="currentSlide = (currentSlide + 1) % slides" 
-                        class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        class="absolute right-4 top-1/2 -translate-y-1/2 z-20 text-white/90 hover:text-white transition">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path>
                     </svg>
                 </button>
                 
                 <!-- Dots Indicator -->
-                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
                     @foreach($heroProjects as $index => $project)
                         <button @click="currentSlide = {{ $index }}" 
-                                :class="currentSlide === {{ $index }} ? 'bg-white' : 'bg-white/50'"
-                                class="w-3 h-3 rounded-full transition"></button>
+                                :class="currentSlide === {{ $index }} ? 'bg-white' : 'bg-white/40'"
+                                class="h-px w-16 transition"></button>
                     @endforeach
                 </div>
             @endif
         </section>
     @else
-        <section class="relative h-[80vh] min-h-[600px] flex items-center">
+        <section class="relative h-[60vh] min-h-[450px] flex items-center">
             <div class="absolute inset-0 z-0">
                 <img src="https://via.placeholder.com/1920x1080/87CEEB/FFFFFF?text=Ornate+Interior+Design" 
                      alt="Hero Background" 
@@ -88,7 +88,7 @@
                 <div class="absolute inset-0 bg-black/40"></div>
             </div>
             <div class="relative z-10 text-left text-white px-8 container mx-auto">
-                <h2 class="text-4xl md:text-6xl font-light">
+                <h2 class="text-6xl md:text-8xl font-light">
                     The Delight Factor. A New Metric of Your Workplace.
                 </h2>
             </div>
@@ -211,11 +211,11 @@
     <!-- Expertise Section -->
     <section id="expertise" class="bg-[#1b304e] text-white py-20 px-8">
         <div class="container mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
-                <div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-16">
+                <div class="md:col-span-3">
                     <h2 class="text-4xl md:text-5xl font-bold text-[#d3924f] mb-8">Expertise</h2>
                 </div>
-                <div>
+                <div class="md:col-span-9">
                     <ul class="space-y-0" x-data="{ openId: null }">
                         @foreach($categories as $index => $category)
                             <li class="py-4 {{ $index < $categories->count() - 1 ? 'border-b border-white/10' : '' }}">
@@ -225,7 +225,7 @@
                                     @click="openId === {{ $category->id }} ? openId = null : openId = {{ $category->id }}"
                                     :aria-expanded="openId === {{ $category->id }}"
                                 >
-                                    <span class="text-lg">{{ $category->name }}</span>
+                                    <span class="text-3xl md:text-4xl font-light">{{ $category->name }}</span>
                                     @if(!empty($category->subtitle))
                                         <span class="text-[#dfdfbb] opacity-80 text-sm"
                                               x-text="openId === {{ $category->id }} ? '−' : '+'"></span>
@@ -293,7 +293,7 @@
                                 </div>
                             @endif
                         </div>
-                        <h3 class="text-lg font-medium text-[#1b304e]">{{ $article->title }}</h3>
+                        <h3 class="text-lg font-light text-[#1b304e]">{{ $article->title }}</h3>
                     </a>
                     @endforeach
                 @else
@@ -312,7 +312,7 @@
                                 <span class="text-xs uppercase text-white">BENI CULTURALI</span>
                             </div>
                         </div>
-                        <h3 class="text-lg font-medium text-[#1b304e]">L'antico tempio della Grecia</h3>
+                        <h3 class="text-lg font-light text-[#1b304e]">L'antico tempio della Grecia</h3>
                     </div>
                     <div class="group cursor-pointer">
                         <div class="relative overflow-hidden mb-4 h-[500px]">
@@ -328,7 +328,7 @@
                                 <span class="text-xs uppercase text-white">SOSTENIBILITÀ</span>
                             </div>
                         </div>
-                        <h3 class="text-lg font-medium text-[#1b304e]">Giovanni Muzio, Casa dei giornalisti (Milano 1936).</h3>
+                        <h3 class="text-lg font-light text-[#1b304e]">Giovanni Muzio, Casa dei giornalisti (Milano 1936).</h3>
                     </div>
                 @endif
             </div>

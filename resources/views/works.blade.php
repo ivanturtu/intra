@@ -9,14 +9,14 @@
             <!-- Title with vertical line -->
             <div class="flex items-center gap-4 mb-8">
                 <div class="w-1 h-16 bg-[#1b304e]"></div>
-                <h1 class="text-4xl md:text-5xl font-bold text-[#1b304e]">Selected Works</h1>
+                <h1 class="text-6xl md:text-7xl font-bold text-[#1b304e]">Selected Works</h1>
             </div>
 
             <!-- Category Filters -->
             <div class="flex flex-wrap gap-3 mb-8">
                 @foreach($categories as $category)
                     <button 
-                        class="category-filter bg-[#dfdfbb] text-[#1b304e] px-4 py-2 rounded hover:bg-[#d3924f] hover:text-white transition"
+                        class="category-filter bg-transparent text-[#d3924f] px-0 py-1 border-b border-transparent hover:border-[#d3924f] transition"
                         data-category="{{ $category->id }}">
                         {{ $category->name }}
                     </button>
@@ -46,7 +46,7 @@
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         @endif
                         <!-- Overlay Gradient -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent group-hover:opacity-0 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:opacity-0 transition-opacity duration-300"></div>
                         <!-- Title and Location Overlay -->
                         <div class="absolute bottom-0 left-0 right-0 p-6 text-white group-hover:bg-white group-hover:text-[#1b304e] transition-all duration-300">
                             <h3 class="text-xl font-bold mb-1">{{ $project->title }}</h3>
@@ -76,13 +76,13 @@
                     
                     // Toggle active state
                     filterButtons.forEach(btn => {
-                        btn.classList.remove('bg-[#d3924f]', 'text-white');
-                        btn.classList.add('bg-[#dfdfbb]', 'text-[#1b304e]');
+                        btn.classList.remove('border-[#d3924f]');
+                        btn.classList.add('border-transparent');
                     });
                     
                     if (categoryId) {
-                        this.classList.remove('bg-[#dfdfbb]', 'text-[#1b304e]');
-                        this.classList.add('bg-[#d3924f]', 'text-white');
+                        this.classList.remove('border-transparent');
+                        this.classList.add('border-[#d3924f]');
                     }
 
                     // Filter projects
