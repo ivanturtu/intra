@@ -221,11 +221,11 @@
                             <li class="py-4 {{ $index < $categories->count() - 1 ? 'border-b border-white/10' : '' }}">
                                 <button
                                     type="button"
-                                    class="w-full text-left leading-tight flex items-center justify-between gap-6"
+                                    class="w-full text-left leading-tight flex items-center justify-between gap-6 cursor-pointer group"
                                     @click="openId === {{ $category->id }} ? openId = null : openId = {{ $category->id }}"
                                     :aria-expanded="openId === {{ $category->id }}"
                                 >
-                                    <span class="text-3xl md:text-4xl font-light">{{ $category->name }}</span>
+                                    <span class="text-3xl md:text-4xl font-light group-hover:text-[#d3924f] transition-colors">{{ $category->name }}</span>
                                     @if(!empty($category->subtitle))
                                         <span class="text-[#dfdfbb] opacity-80 text-sm"
                                               x-text="openId === {{ $category->id }} ? '−' : '+'"></span>
