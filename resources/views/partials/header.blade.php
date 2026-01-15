@@ -17,7 +17,7 @@
                      x-transition:leave="transition ease-in duration-150"
                      x-transition:leave-start="opacity-100 transform translate-y-0"
                      x-transition:leave-end="opacity-0 transform translate-y-2"
-                     class="absolute top-full left-0 mt-2 bg-white shadow-lg min-w-[260px] py-1 z-50">
+                     class="absolute top-full left-0 mt-0 bg-white shadow-lg min-w-[260px] py-1 z-50">
                     @foreach($categories as $category)
                         <a href="/work?category={{ $category->id }}" class="block px-4 py-1.5 text-[#1b304e] hover:bg-gray-100 transition whitespace-nowrap text-xs uppercase tracking-wider">
                             | {{ $category->name }}
