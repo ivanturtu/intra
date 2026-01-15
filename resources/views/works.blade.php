@@ -14,6 +14,11 @@
 
             <!-- Category Filters -->
             <div class="flex flex-wrap gap-3 mb-8">
+                <button 
+                    class="category-filter bg-transparent text-[#d3924f] px-0 py-1 border-b border-[#d3924f] transition"
+                    data-category="">
+                    All
+                </button>
                 @foreach($categories as $category)
                     <button 
                         class="category-filter bg-transparent text-[#d3924f] px-0 py-1 border-b border-transparent hover:border-[#d3924f] transition"
