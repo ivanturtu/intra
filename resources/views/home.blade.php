@@ -216,15 +216,36 @@
                     <h2 class="text-4xl md:text-5xl font-bold text-[#d3924f] mb-8">Expertise</h2>
                 </div>
                 <div>
-                    <ul class="space-y-0">
+                    <ul class="space-y-0" x-data="{ openId: null }">
                         @foreach($categories as $index => $category)
                             <li class="py-4 {{ $index < $categories->count() - 1 ? 'border-b border-white/10' : '' }}">
-                                <div class="leading-tight">
-                                    <div class="text-lg">{{ $category->name }}</div>
+                                <button
+                                    type="button"
+                                    class="w-full text-left leading-tight flex items-center justify-between gap-6"
+                                    @click="openId === {{ $category->id }} ? openId = null : openId = {{ $category->id }}"
+                                    :aria-expanded="openId === {{ $category->id }}"
+                                >
+                                    <span class="text-lg">{{ $category->name }}</span>
                                     @if(!empty($category->subtitle))
-                                        <div class="text-sm text-white/70">{{ $category->subtitle }}</div>
+                                        <span class="text-[#dfdfbb] opacity-80 text-sm"
+                                              x-text="openId === {{ $category->id }} ? '−' : '+'"></span>
                                     @endif
-                                </div>
+                                </button>
+                                @if(!empty($category->subtitle))
+                                    <div
+                                        x-show="openId === {{ $category->id }}"
+                                        x-transition:enter="transition ease-out duration-200"
+                                        x-transition:enter-start="opacity-0 -translate-y-1"
+                                        x-transition:enter-end="opacity-100 translate-y-0"
+                                        x-transition:leave="transition ease-in duration-150"
+                                        x-transition:leave-start="opacity-100 translate-y-0"
+                                        x-transition:leave-end="opacity-0 -translate-y-1"
+                                        class="mt-2 text-sm text-[#dfdfbb]"
+                                        style="display: none;"
+                                    >
+                                        {{ $category->subtitle }}
+                                    </div>
+                                @endif
                             </li>
                         @endforeach
                     </ul>
