@@ -226,10 +226,6 @@
                                     :aria-expanded="openId === {{ $category->id }}"
                                 >
                                     <span class="text-3xl md:text-4xl font-light group-hover:text-[#d3924f] transition-colors">{{ $category->name }}</span>
-                                    @if(!empty($category->subtitle))
-                                        <span class="text-[#dfdfbb] opacity-80 text-sm"
-                                              x-text="openId === {{ $category->id }} ? '−' : '+'"></span>
-                                    @endif
                                 </button>
                                 @if(!empty($category->subtitle))
                                     <div
