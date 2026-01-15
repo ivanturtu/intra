@@ -28,7 +28,7 @@
 
             <!-- Menu -->
             <div>
-                <h5 class="font-semibold mb-4">Menu</h5>
+                <h5 class="font-semibold mb-4 text-[#d3924f]">Menu</h5>
                 <ul class="space-y-2 text-sm text-gray-400">
                     <li><a href="{{ url('/work') }}" class="hover:text-white transition">Works</a></li>
                     <li><a href="{{ url('/#expertise') }}" class="hover:text-white transition">Expertise</a></li>
@@ -40,7 +40,7 @@
 
             <!-- Expertise -->
             <div>
-                <h5 class="font-semibold mb-4">Expertise</h5>
+                <h5 class="font-semibold mb-4 text-[#d3924f]">Expertise</h5>
                 <ul class="space-y-2 text-sm text-gray-400">
                     @foreach(($categories ?? collect()) as $category)
                         <li>
@@ -54,7 +54,7 @@
 
             <!-- Resources -->
             <div>
-                <h5 class="font-semibold mb-4">Resources</h5>
+                <h5 class="font-semibold mb-4 text-[#d3924f]">Resources</h5>
                 <ul class="space-y-2 text-sm text-gray-400">
                     <li><a href="{{ url('/#contact') }}" class="hover:text-white transition">Contact</a></li>
                     <li><a href="{{ url('/#mag') }}" class="hover:text-white transition">Mag</a></li>
