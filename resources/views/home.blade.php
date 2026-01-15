@@ -243,7 +243,10 @@
                                         class="mt-2 text-sm text-[#dfdfbb]"
                                         style="display: none;"
                                     >
-                                        <span class="mr-2 opacity-80">›</span>{{ $category->subtitle }}
+                                        <a href="/work?category={{ $category->id }}" class="inline-flex items-baseline hover:underline">
+                                            <span class="opacity-80">›</span>
+                                            <span class="ml-2">{{ $category->subtitle }}</span>
+                                        </a>
                                     </div>
                                 @endif
                             </li>
