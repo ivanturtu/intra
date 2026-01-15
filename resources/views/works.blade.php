@@ -24,8 +24,8 @@
             </div>
 
             <!-- Introductory Text -->
-            <div class="max-w-3xl mb-12">
-                <p class="text-gray-700 leading-relaxed">
+            <div class="w-full mb-12">
+                <p class="text-gray-700 leading-relaxed" style="font-size: clamp(1.25rem, 2vw, 2rem);">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                 </p>
             </div>

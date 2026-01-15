@@ -81,24 +81,24 @@
         </section>
     @else
         <section class="relative h-[80vh] min-h-[600px] flex items-center" style="height: 60vh; min-height: 450px;">
-            <div class="absolute inset-0 z-0">
-                <img src="https://via.placeholder.com/1920x1080/87CEEB/FFFFFF?text=Ornate+Interior+Design" 
-                     alt="Hero Background" 
-                     class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black/40"></div>
-            </div>
+        <div class="absolute inset-0 z-0">
+            <img src="https://via.placeholder.com/1920x1080/87CEEB/FFFFFF?text=Ornate+Interior+Design" 
+                 alt="Hero Background" 
+                 class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/40"></div>
+        </div>
             <div class="relative z-10 text-left text-white px-8 container mx-auto">
                 <h2 class="font-light leading-[1.05]" style="font-size: clamp(3rem, 6vw, 6rem);">
-                    The Delight Factor. A New Metric of Your Workplace.
-                </h2>
-            </div>
-        </section>
+                The Delight Factor. A New Metric of Your Workplace.
+            </h2>
+        </div>
+    </section>
     @endif
 
     <!-- Project Showcase Slider -->
     @if(isset($sliderProjects) && $sliderProjects && $sliderProjects->count() > 0)
-        <section class="py-16 px-8 bg-white">
-            <div class="container mx-auto">
+    <section class="py-16 px-8 bg-white">
+        <div class="container mx-auto">
                 <div class="relative" 
                      x-data="{ 
                          currentIndex: 0,
@@ -138,22 +138,22 @@
                                                     @else
                                                         <img src="https://via.placeholder.com/600x800/CCCCCC/FFFFFF?text={{ urlencode($sliderProjects[$i]->title) }}" 
                                                              alt="{{ $sliderProjects[$i]->title }}" 
-                                                             class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                             class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
                                                     @endif
-                                                </div>
-                                                <div class="flex justify-between items-start">
-                                                    <div>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
                                                         <h3 class="font-semibold text-sm uppercase mb-1">{{ strtoupper($sliderProjects[$i]->title) }}</h3>
                                                         @if($sliderProjects[$i]->location)
                                                             <p class="text-xs text-gray-600 uppercase">{{ strtoupper($sliderProjects[$i]->location) }}</p>
                                                         @endif
-                                                    </div>
+                        </div>
                                                     @if($sliderProjects[$i]->category)
                                                         <span class="text-xs text-gray-500 uppercase">{{ strtoupper($sliderProjects[$i]->category->name) }}</span>
                                                     @endif
-                                                </div>
+                    </div>
                                             </a>
-                                        </div>
+                </div>
                                     @endif
                                     @if(isset($sliderProjects[$i + 1]))
                                         <div class="w-1/2">
@@ -166,24 +166,24 @@
                                                     @else
                                                         <img src="https://via.placeholder.com/600x800/CCCCCC/FFFFFF?text={{ urlencode($sliderProjects[$i + 1]->title) }}" 
                                                              alt="{{ $sliderProjects[$i + 1]->title }}" 
-                                                             class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                             class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
                                                     @endif
-                                                </div>
-                                                <div class="flex justify-between items-start">
-                                                    <div>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
                                                         <h3 class="font-semibold text-sm uppercase mb-1">{{ strtoupper($sliderProjects[$i + 1]->title) }}</h3>
                                                         @if($sliderProjects[$i + 1]->location)
                                                             <p class="text-xs text-gray-600 uppercase">{{ strtoupper($sliderProjects[$i + 1]->location) }}</p>
                                                         @endif
-                                                    </div>
+                        </div>
                                                     @if($sliderProjects[$i + 1]->category)
                                                         <span class="text-xs text-gray-500 uppercase">{{ strtoupper($sliderProjects[$i + 1]->category->name) }}</span>
                                                     @endif
-                                                </div>
+                    </div>
                                             </a>
-                                        </div>
+                </div>
                                     @endif
-                                </div>
+                    </div>
                             @endfor
                         </div>
                     </div>
@@ -203,9 +203,9 @@
                             </svg>
                         </button>
                     @endif
-                </div>
             </div>
-        </section>
+        </div>
+    </section>
     @endif
 
     <!-- Expertise Section -->
@@ -249,7 +249,7 @@
                                         </a>
                                     </div>
                                 @endif
-                            </li>
+                        </li>
                         @endforeach
                     </ul>
                 </div>
@@ -298,14 +298,14 @@
                     @endforeach
                 @else
                     <!-- Fallback static content if no articles -->
-                    <div class="group cursor-pointer">
+                <div class="group cursor-pointer">
                         <div class="relative overflow-hidden mb-4 h-[500px]">
                             <!-- Background color extending 9/10 of image height (90%) -->
                             <div class="absolute inset-0 bg-[#d3924f] z-0" style="height: 90%;"></div>
                             <!-- Image -->
                             <div class="relative z-10 h-full">
-                                <img src="https://via.placeholder.com/800x600/8B7355/FFFFFF?text=Parthenon+Ruins" 
-                                     alt="L'antico tempio della Grecia" 
+                        <img src="https://via.placeholder.com/800x600/8B7355/FFFFFF?text=Parthenon+Ruins" 
+                             alt="L'antico tempio della Grecia" 
                                      class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                             </div>
                             <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2 z-20">
@@ -314,14 +314,14 @@
                         </div>
                         <h3 class="text-lg font-light text-[#1b304e]">L'antico tempio della Grecia</h3>
                     </div>
-                    <div class="group cursor-pointer">
+                <div class="group cursor-pointer">
                         <div class="relative overflow-hidden mb-4 h-[500px]">
                             <!-- Background color extending 9/10 of image height (90%) -->
                             <div class="absolute inset-0 bg-[#d3924f] z-0" style="height: 90%;"></div>
                             <!-- Image -->
                             <div class="relative z-10 h-full">
-                                <img src="https://via.placeholder.com/800x600/2C2C2C/FFFFFF?text=Giovanni+Muzio+Book" 
-                                     alt="Giovanni Muzio" 
+                        <img src="https://via.placeholder.com/800x600/2C2C2C/FFFFFF?text=Giovanni+Muzio+Book" 
+                             alt="Giovanni Muzio" 
                                      class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                             </div>
                             <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2 z-20">
