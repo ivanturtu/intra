@@ -33,9 +33,9 @@
             <div class="flex justify-between items-center mb-8">
                 <div class="text-sm text-gray-500">Projects</div>
                 @if($project->category)
-                    <button class="bg-[#d3924f] text-white px-4 py-2 text-sm font-medium">
+                    <a href="/work?category={{ $project->category->id }}" class="bg-[#d3924f] text-white px-4 py-2 text-sm font-medium hover:bg-[#b87a3d] transition">
                         {{ strtoupper($project->category->name) }}
-                    </button>
+                    </a>
                 @endif
             </div>
             
