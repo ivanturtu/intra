@@ -39,7 +39,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid">
                 @foreach($projects as $project)
                     <a href="{{ route('work.show', $project->slug) }}" 
-                       class="project-card group relative overflow-hidden h-[400px] transition-all duration-300"
+                       class="project-card group relative overflow-hidden h-[400px] transition-opacity duration-200"
                        data-category="{{ $project->category_id ?? '' }}">
                         @if($project->main_image)
                             <img src="{{ asset('storage/' . $project->main_image) }}" 
@@ -90,23 +90,19 @@
                         this.classList.add('border-[#d3924f]');
                     }
 
-                    // Filter projects with animation
+                    // Filter projects with simple fade
                     projectCards.forEach(card => {
                         const cardCategory = card.getAttribute('data-category');
-                        if (!categoryId || cardCategory === categoryId) {
-                            card.style.opacity = '0';
-                            card.style.transform = 'scale(0.9)';
+                        const shouldShow = !categoryId || cardCategory === categoryId;
+                        
+                        if (shouldShow) {
                             card.style.display = 'block';
-                            setTimeout(() => {
+                            requestAnimationFrame(() => {
                                 card.style.opacity = '1';
-                                card.style.transform = 'scale(1)';
-                            }, 50);
+                            });
                         } else {
                             card.style.opacity = '0';
-                            card.style.transform = 'scale(0.9)';
-                            setTimeout(() => {
-                                card.style.display = 'none';
-                            }, 300);
+                            card.style.display = 'none';
                         }
                     });
                 });
