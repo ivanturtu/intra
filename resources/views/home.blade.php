@@ -243,7 +243,7 @@
                                         class="mt-2 text-sm text-[#dfdfbb]"
                                         style="display: none;"
                                     >
-                                        {{ $category->subtitle }}
+                                        <span class="mr-2 opacity-80">›</span>{{ $category->subtitle }}
                                     </div>
                                 @endif
                             </li>
