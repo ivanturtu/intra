@@ -9,7 +9,7 @@
             <!-- Title with vertical line -->
             <div class="flex items-center gap-4 mb-8">
                 <div class="w-1 h-16 bg-[#1b304e]"></div>
-                <h1 class="text-6xl md:text-7xl font-bold text-[#1b304e]">Selected Works</h1>
+                <h1 class="font-bold text-[#1b304e]" style="font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.05;">Selected Works</h1>
             </div>
 
             <!-- Category Filters -->

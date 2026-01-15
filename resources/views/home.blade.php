@@ -41,12 +41,12 @@
                     <div class="relative z-10 text-left text-white px-8 container mx-auto">
                         @if($project->slug)
                             <a href="{{ route('work.show', $project->slug) }}" class="block">
-                                <h2 class="text-6xl md:text-8xl font-light">
+                                <h2 class="font-light leading-[1.05]" style="font-size: clamp(3rem, 6vw, 6rem);">
                                     {{ $project->title }}
                                 </h2>
                             </a>
                         @else
-                            <h2 class="text-6xl md:text-8xl font-light">
+                            <h2 class="font-light leading-[1.05]" style="font-size: clamp(3rem, 6vw, 6rem);">
                                 {{ $project->title }}
                             </h2>
                         @endif
@@ -88,7 +88,7 @@
                 <div class="absolute inset-0 bg-black/40"></div>
             </div>
             <div class="relative z-10 text-left text-white px-8 container mx-auto">
-                <h2 class="text-6xl md:text-8xl font-light">
+                <h2 class="font-light leading-[1.05]" style="font-size: clamp(3rem, 6vw, 6rem);">
                     The Delight Factor. A New Metric of Your Workplace.
                 </h2>
             </div>
