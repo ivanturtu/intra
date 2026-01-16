@@ -19,7 +19,7 @@
                      x-transition:leave-end="opacity-0 transform translate-y-2"
                      class="fixed left-auto top-[100px] bg-white shadow-lg min-w-[260px] py-1 z-50">
                     @foreach($categories as $category)
-                        <a href="/work?category={{ $category->id }}" class="block px-4 py-1.5 text-[#1b304e] hover:bg-gray-100 transition whitespace-nowrap text-xs uppercase tracking-wider">
+                        <a href="/work?category={{ $category->id }}" class="block px-4 py-5 text-[#1b304e] hover:bg-gray-100 hover:font-bold transition whitespace-nowrap text-xs uppercase tracking-wider">
                             | {{ $category->name }}
                         </a>
                     @endforeach
