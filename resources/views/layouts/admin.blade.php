@@ -19,47 +19,47 @@
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 </head>
-<body class="font-sans antialiased bg-gray-100">
+<body class="font-sans antialiased bg-[#dfdfbb]">
     <div class="min-h-screen flex">
         <!-- Sidebar -->
-        <aside class="w-64 bg-gray-800 text-white">
+        <aside class="w-64 bg-[#1b304e] text-white">
             <div class="p-6">
                 <h1 class="text-2xl font-bold">INTRA Studio</h1>
-                <p class="text-gray-400 text-sm mt-1">Admin Panel</p>
+                <p class="text-[#dfdfbb] text-sm mt-1">Admin Panel</p>
             </div>
-            <div class="px-6 py-4 border-t border-gray-700">
-                <div class="text-sm text-gray-400 mb-2">{{ Auth::user()->name }}</div>
-                <div class="text-xs text-gray-500 mb-3">{{ Auth::user()->email }}</div>
+            <div class="px-6 py-4 border-t border-white/10">
+                <div class="text-sm text-[#dfdfbb] mb-2">{{ Auth::user()->name }}</div>
+                <div class="text-xs text-[#dfdfbb]/70 mb-3">{{ Auth::user()->email }}</div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 rounded">
+                    <button type="submit" class="w-full text-left px-4 py-2 text-sm text-[#dfdfbb] hover:bg-white/10 rounded transition">
                         Logout
                     </button>
                 </form>
             </div>
             <nav class="mt-6">
-                <a href="{{ route('admin.projects.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.projects.*') ? 'bg-gray-700' : '' }}">
+                <a href="{{ route('admin.projects.index') }}" class="block px-6 py-3 hover:bg-white/10 transition {{ request()->routeIs('admin.projects.*') ? 'bg-white/10' : '' }}">
                     Projects
                 </a>
-                <a href="{{ route('admin.categories.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.categories.*') ? 'bg-gray-700' : '' }}">
+                <a href="{{ route('admin.categories.index') }}" class="block px-6 py-3 hover:bg-white/10 transition {{ request()->routeIs('admin.categories.*') ? 'bg-white/10' : '' }}">
                     Categories
                 </a>
-                <a href="{{ route('admin.intra-studio-team-leads.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.intra-studio-team-leads.*') ? 'bg-gray-700' : '' }}">
+                <a href="{{ route('admin.intra-studio-team-leads.index') }}" class="block px-6 py-3 hover:bg-white/10 transition {{ request()->routeIs('admin.intra-studio-team-leads.*') ? 'bg-white/10' : '' }}">
                     Team Leads
                 </a>
-                <a href="{{ route('admin.magazine.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.magazine.*') ? 'bg-gray-700' : '' }}">
+                <a href="{{ route('admin.magazine.index') }}" class="block px-6 py-3 hover:bg-white/10 transition {{ request()->routeIs('admin.magazine.*') ? 'bg-white/10' : '' }}">
                     Magazine
                 </a>
-                <a href="{{ route('admin.magazine-categories.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.magazine-categories.*') ? 'bg-gray-700' : '' }}">
+                <a href="{{ route('admin.magazine-categories.index') }}" class="block px-6 py-3 hover:bg-white/10 transition {{ request()->routeIs('admin.magazine-categories.*') ? 'bg-white/10' : '' }}">
                     Magazine Categories
                 </a>
-                <a href="{{ route('admin.settings.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.settings.*') ? 'bg-gray-700' : '' }}">
+                <a href="{{ route('admin.settings.index') }}" class="block px-6 py-3 hover:bg-white/10 transition {{ request()->routeIs('admin.settings.*') ? 'bg-white/10' : '' }}">
                     Settings
                 </a>
-                <a href="{{ route('admin.users.index') }}" class="block px-6 py-3 hover:bg-gray-700 {{ request()->routeIs('admin.users.*') ? 'bg-gray-700' : '' }}">
+                <a href="{{ route('admin.users.index') }}" class="block px-6 py-3 hover:bg-white/10 transition {{ request()->routeIs('admin.users.*') ? 'bg-white/10' : '' }}">
                     Users
                 </a>
-                <a href="/" class="block px-6 py-3 hover:bg-gray-700" target="_blank">
+                <a href="/" class="block px-6 py-3 hover:bg-white/10 transition" target="_blank">
                     View Site
                 </a>
             </nav>
@@ -69,7 +69,7 @@
         <main class="flex-1 overflow-x-hidden">
             <div class="p-8">
                 @if (session()->has('message'))
-                    <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                    <div class="mb-4 bg-[#d3924f]/20 border border-[#d3924f] text-[#1b304e] px-4 py-3 rounded relative" role="alert">
                         <span class="block sm:inline">{{ session('message') }}</span>
                     </div>
                 @endif
