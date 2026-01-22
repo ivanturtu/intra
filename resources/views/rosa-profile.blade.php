@@ -128,7 +128,7 @@
 
     <!-- Young Works Section - Full Width -->
     @if($youngWorks && $youngWorks->count() > 0)
-    <section id="young-works" class="bg-[#dfdfbb] pt-4 pb-12 px-8 w-full">
+    <section id="young-works" class="bg-[#dfdfbb] py-12 px-8 w-full">
         <div class="container mx-auto">
             <div class="space-y-0">
                 @foreach($youngWorks as $index => $youngWork)
