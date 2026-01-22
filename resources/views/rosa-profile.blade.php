@@ -112,7 +112,7 @@
 
                     <!-- Young Works Section -->
                     @if($youngWorks && $youngWorks->count() > 0)
-                    <div id="young-works" class="mt-12">
+                    <div id="young-works" class="mt-12 bg-[#dfdfbb] -mx-8 px-8 py-12">
                         <div class="mb-8">
                             <h2 class="text-xl md:text-2xl font-bold text-[#d3924f] inline-flex items-center">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -153,14 +153,16 @@
                                                 <p class="text-xs text-[#1b304e] mb-4">Courtesy {{ $youngWork->client }}©</p>
                                             @endif
                                         </div>
-                                        <div class="mt-auto relative">
-                                            <a href="{{ route('work.show', $youngWork->slug) }}" class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition relative group">
-                                                <span class="mr-2">GO TO THE PROJECT</span>
-                                                <svg class="w-4 h-4 text-[#d3924f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                                                </svg>
-                                            </a>
-                                            <div class="border-b border-[#d3924f] mt-1"></div>
+                                        <div class="mt-auto">
+                                            <div class="flex justify-end">
+                                                <a href="{{ route('work.show', $youngWork->slug) }}" class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition">
+                                                    <span class="mr-2">GO TO THE PROJECT</span>
+                                                    <svg class="w-4 h-4 text-[#d3924f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                            <div class="border-b border-[#d3924f] mt-2"></div>
                                         </div>
                                     </div>
                                 </div>
