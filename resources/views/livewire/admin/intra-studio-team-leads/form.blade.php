@@ -92,11 +92,13 @@
 
 <script>
     let teamLeadDescriptionQuill = null;
+    let teamLeadDescriptionQuillInitialized = false;
 
     function initTeamLeadEditor() {
         // Initialize Quill for Description if not already initialized
         const descEl = document.getElementById('teamLeadDescriptionEditor');
-        if (descEl && !descEl.querySelector('.ql-container')) {
+        if (descEl && !descEl.querySelector('.ql-container') && !teamLeadDescriptionQuillInitialized) {
+            teamLeadDescriptionQuillInitialized = true;
             // Destroy existing instance if any
             if (teamLeadDescriptionQuill) {
                 try {

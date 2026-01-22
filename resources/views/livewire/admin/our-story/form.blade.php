@@ -43,11 +43,15 @@
     let introQuill = null;
     let descriptionQuill = null;
     let highlightQuill = null;
+    let introQuillInitialized = false;
+    let descriptionQuillInitialized = false;
+    let highlightQuillInitialized = false;
 
     function initEditors() {
         // Initialize Quill for Intro if not already initialized
         const introEl = document.getElementById('introEditor');
-        if (introEl && !introEl.querySelector('.ql-container')) {
+        if (introEl && !introEl.querySelector('.ql-container') && !introQuillInitialized) {
+            introQuillInitialized = true;
             if (introQuill) {
                 try {
                     introQuill = null;
@@ -84,7 +88,8 @@
 
         // Initialize Quill for Description if not already initialized
         const descEl = document.getElementById('descriptionEditor');
-        if (descEl && !descEl.querySelector('.ql-container')) {
+        if (descEl && !descEl.querySelector('.ql-container') && !descriptionQuillInitialized) {
+            descriptionQuillInitialized = true;
             if (descriptionQuill) {
                 try {
                     descriptionQuill = null;
@@ -126,7 +131,8 @@
 
         // Initialize Quill for Highlight if not already initialized
         const highlightEl = document.getElementById('highlightEditor');
-        if (highlightEl && !highlightEl.querySelector('.ql-container')) {
+        if (highlightEl && !highlightEl.querySelector('.ql-container') && !highlightQuillInitialized) {
+            highlightQuillInitialized = true;
             if (highlightQuill) {
                 try {
                     highlightQuill = null;
