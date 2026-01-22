@@ -22,7 +22,7 @@
             </div>
 
             <!-- Main Content: Profile + Biography -->
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
                 <!-- Left Column: Rosa's Profile (3 columns) -->
                 <div class="md:col-span-3">
                     @if($rosa->photo)
