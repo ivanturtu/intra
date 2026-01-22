@@ -108,6 +108,8 @@
 <script>
     let teamLeadDescriptionQuill = null;
     let teamLeadDescriptionQuillInitialized = false;
+    let quoteQuill = null;
+    let quoteQuillInitialized = false;
 
     function initTeamLeadEditor() {
         // Initialize Quill for Description if not already initialized
@@ -152,6 +154,44 @@
                     const content = teamLeadDescriptionQuill.root.innerHTML;
                     document.getElementById('teamLeadDescription').value = content;
                     @this.set('description', content, false); // false = don't update wire:model immediately
+                }, 300);
+            });
+        }
+
+        // Initialize Quill for Quote if not already initialized
+        const quoteEl = document.getElementById('quoteEditor');
+        if (quoteEl && !quoteEl.querySelector('.ql-container') && !quoteQuillInitialized) {
+            quoteQuillInitialized = true;
+            if (quoteQuill) {
+                try {
+                    quoteQuill = null;
+                } catch(e) {}
+            }
+            quoteQuill = new Quill('#quoteEditor', {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, false] }],
+                        ['bold', 'italic', 'underline'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        ['link'],
+                        ['clean']
+                    ]
+                }
+            });
+
+            const quoteContent = @this.quote || '';
+            if (quoteContent) {
+                quoteQuill.root.innerHTML = quoteContent;
+            }
+
+            let quoteTimeout;
+            quoteQuill.on('text-change', function() {
+                clearTimeout(quoteTimeout);
+                quoteTimeout = setTimeout(() => {
+                    const content = quoteQuill.root.innerHTML;
+                    document.getElementById('quote').value = content;
+                    @this.set('quote', content, false);
                 }, 300);
             });
         }
