@@ -43,6 +43,16 @@
                     @if($rosa->qualification)
                         <p class="text-sm text-[#1b304e]/70 mb-4 leading-relaxed">{{ $rosa->qualification }}</p>
                     @endif
+                    @if($rosa->full_resume)
+                        <div class="mb-6">
+                            <a href="{{ asset('storage/' . $rosa->full_resume) }}" target="_blank" class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition text-sm">
+                                <span class="mr-2">DOWNLOAD complete Resume</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    @endif
                     @if($rosa->email)
                         <p class="text-sm text-[#1b304e] mb-6">
                             <a href="mailto:{{ $rosa->email }}" class="hover:underline">{{ $rosa->email }}</a>
