@@ -236,12 +236,18 @@
                                         x-transition:leave="transition ease-in duration-150"
                                         x-transition:leave-start="opacity-100 translate-y-0"
                                         x-transition:leave-end="opacity-0 -translate-y-1"
-                                        class="mt-2 text-lg md:text-xl text-[#dfdfbb]"
+                                        class="mt-2 flex items-center justify-between"
                                         style="display: none;"
                                     >
-                                        <a href="/work?category={{ $category->id }}" class="inline-flex items-baseline hover:underline">
+                                        <a href="/work?category={{ $category->id }}" class="text-lg md:text-xl text-[#dfdfbb] inline-flex items-baseline hover:underline">
                                             <span class="opacity-80">›</span>
                                             <span class="ml-2">{{ $category->subtitle }}</span>
+                                        </a>
+                                        <a href="/work?category={{ $category->id }}" class="inline-flex items-center text-white hover:text-[#d3924f] transition">
+                                            <span class="mr-2">GO TO THE PROJECTS</span>
+                                            <svg class="w-4 h-4 text-[#d3924f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
                                         </a>
                                     </div>
                                 @endif
