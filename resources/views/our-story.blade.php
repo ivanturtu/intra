@@ -49,7 +49,7 @@
                 <!-- Intro and Description (Right) -->
                 <div class="space-y-6">
                     @if($ourStory->intro)
-                        <div class="prose prose-lg max-w-none">
+                        <div class="prose prose-lg max-w-none text-[#d3924f]" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">
                             {!! $ourStory->intro !!}
                         </div>
                     @endif
