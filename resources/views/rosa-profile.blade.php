@@ -46,7 +46,7 @@
                     @if($rosa->full_resume)
                         <div class="mb-6">
                             <a href="{{ asset('storage/' . $rosa->full_resume) }}" target="_blank" class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition text-sm">
-                                <span class="mr-2">DOWNLOAD complete Resume</span>
+                                <span class="mr-2">DOWNLOAD<br>complete Resume</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                                 </svg>
