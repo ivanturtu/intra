@@ -101,6 +101,39 @@ Route::get('/our-story', function () {
     ]);
 })->name('our-story');
 
+Route::get('/rosa-profile', function () {
+    // Get Rosa (team lead with order 0)
+    $rosa = \App\Models\IntraStudioTeamLead::where('order', 0)->first();
+    
+    if (!$rosa) {
+        abort(404);
+    }
+    
+    // Get Rosa's projects (recent projects where Rosa is a team lead)
+    $rosaProjects = $rosa->projects()
+        ->where('is_published', true)
+        ->orderBy('year', 'desc')
+        ->orderBy('created_at', 'desc')
+        ->take(5)
+        ->get();
+    
+    // Get Young Works (first published young work project)
+    $youngWork = \App\Models\Project::where('is_young_work', true)
+        ->where('is_published', true)
+        ->orderBy('order')
+        ->orderBy('created_at', 'desc')
+        ->first();
+    
+    $categories = \App\Models\Category::orderBy('order')->get();
+    
+    return view('rosa-profile', [
+        'rosa' => $rosa,
+        'rosaProjects' => $rosaProjects,
+        'youngWork' => $youngWork,
+        'categories' => $categories
+    ]);
+})->name('rosa-profile');
+
 // Authentication Routes
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);

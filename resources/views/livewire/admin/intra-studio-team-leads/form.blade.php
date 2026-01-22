@@ -59,6 +59,21 @@
                 @error('visionPhrase') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>
 
+            <!-- Quote -->
+            <div wire:ignore>
+                <label class="block text-sm font-medium text-[#1b304e] mb-2">Quote</label>
+                <div id="quoteEditor" style="height: 150px;" class="mb-2"></div>
+                <textarea wire:model="quote" id="quote" style="display: none;"></textarea>
+                @error('quote') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
+
+            <!-- Resume Link -->
+            <div>
+                <label class="block text-sm font-medium text-[#1b304e] mb-2">Resume Link</label>
+                <input type="url" wire:model="resumeLink" class="w-full px-4 py-2 border border-[#1b304e]/20 rounded-lg focus:ring-2 focus:ring-[#d3924f] focus:border-[#d3924f] bg-white" placeholder="https://...">
+                @error('resumeLink') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
+
             <!-- Email -->
             <div>
                 <label class="block text-sm font-medium text-[#1b304e] mb-2">Email</label>
@@ -142,15 +157,15 @@
         }
     }
 
-    // Use Livewire hooks to properly initialize editor
+    // Use Livewire hooks to properly initialize editors
     document.addEventListener('livewire:init', () => {
-        // Initialize editor once when Livewire is ready
+        // Initialize editors once when Livewire is ready
         setTimeout(() => {
             initTeamLeadEditor();
         }, 300);
     });
 
-    // Initialize editor when component is loaded
+    // Initialize editors when component is loaded
     document.addEventListener('livewire:load', () => {
         setTimeout(() => {
             initTeamLeadEditor();
@@ -181,6 +196,13 @@
                 const livewireContent = @this.description;
                 if (currentContent !== livewireContent && livewireContent !== '') {
                     teamLeadDescriptionQuill.root.innerHTML = livewireContent;
+                }
+            }
+            if (quoteQuill && quoteQuill.root && !quoteQuill.hasFocus() && @this.quote) {
+                const currentContent = quoteQuill.root.innerHTML;
+                const livewireContent = @this.quote;
+                if (currentContent !== livewireContent && livewireContent !== '') {
+                    quoteQuill.root.innerHTML = livewireContent;
                 }
             }
         }, 100);

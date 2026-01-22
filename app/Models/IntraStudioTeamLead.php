@@ -21,6 +21,8 @@ class IntraStudioTeamLead extends Model
         'email',
         'photo',
         'order',
+        'quote',
+        'resume_link',
     ];
 
     /**

@@ -1,0 +1,161 @@
+@extends('layouts.app')
+
+@section('content')
+    @include('partials.header')
+
+    <!-- Rosa's Profile Section -->
+    <section class="bg-white py-20 px-8">
+        <div class="container mx-auto">
+            <!-- Top Header with Navigation and Quote -->
+            <div class="mb-16">
+                <div class="flex items-center justify-between mb-8">
+                    <div class="flex items-center gap-4 text-[#1b304e]">
+                        <a href="{{ route('our-story') }}" class="text-sm hover:underline">| OUR STORY</a>
+                        <a href="{{ route('rosa-profile') }}" class="text-sm font-bold">| ROSA'S PROFILE</a>
+                    </div>
+                </div>
+                @if($rosa->quote)
+                    <div class="text-[#d3924f] text-right" style="font-size: clamp(1.5rem, 3vw, 2.5rem); line-height: 1.3;">
+                        {!! $rosa->quote !!}
+                    </div>
+                @endif
+            </div>
+
+            <!-- Main Content: Profile + Biography -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+                <!-- Left Column: Rosa's Profile (3 columns) -->
+                <div class="md:col-span-3">
+                    @if($rosa->photo)
+                        <img src="{{ asset('storage/' . $rosa->photo) }}" 
+                             alt="{{ $rosa->name }} {{ $rosa->surname }}" 
+                             class="w-48 h-48 object-cover rounded-full mb-6">
+                    @else
+                        <div class="w-48 h-48 bg-gray-200 rounded-full mb-6 flex items-center justify-center text-gray-400">
+                            No Photo
+                        </div>
+                    @endif
+                    <h1 class="text-3xl font-bold text-[#d3924f] mb-2">
+                        {{ $rosa->name }} {{ $rosa->surname }}
+                    </h1>
+                    @if($rosa->role)
+                        <p class="text-lg text-[#1b304e] mb-2">{{ $rosa->role }}</p>
+                    @endif
+                    @if($rosa->qualification)
+                        <p class="text-sm text-[#1b304e]/70 mb-4 leading-relaxed">{{ $rosa->qualification }}</p>
+                    @endif
+                    @if($rosa->email)
+                        <p class="text-sm text-[#1b304e] mb-6">
+                            <a href="mailto:{{ $rosa->email }}" class="hover:underline">{{ $rosa->email }}</a>
+                        </p>
+                    @endif
+                    <a href="#young-works" class="inline-flex items-center text-[#d3924f] hover:text-[#d3924f]/80 transition">
+                        <span class="mr-2">YOUNG WORKS</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Right Column: Biography and Projects (9 columns) -->
+                <div class="md:col-span-9 space-y-8">
+                    @if($rosa->description)
+                        <div class="prose prose-lg max-w-none text-[#1b304e]">
+                            {!! $rosa->description !!}
+                        </div>
+                    @endif
+
+                    @if($rosa->resume_link)
+                        <div class="text-right">
+                            <a href="{{ $rosa->resume_link }}" target="_blank" class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition text-sm">
+                                <span class="mr-2">DOWNLOAD complete Resume</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    @endif
+
+                    @if($rosaProjects->count() > 0)
+                        <div>
+                            <h3 class="text-xl font-semibold text-[#1b304e] mb-4">Her recent relevant projects include:</h3>
+                            <ul class="space-y-4 text-[#1b304e]">
+                                @foreach($rosaProjects as $project)
+                                <li class="flex flex-col">
+                                    <div class="font-semibold">{{ $project->title }}{!! $project->location ? ', ' . $project->location : '' !!}</div>
+                                    @if($project->short_description)
+                                        <div class="text-sm mt-1">{!! strip_tags($project->short_description) !!}</div>
+                                    @endif
+                                    <div class="text-sm mt-1">
+                                        @if($project->year)
+                                            {{ $project->year }}
+                                        @endif
+                                        @if($project->year && $project->sector)
+                                            -
+                                        @endif
+                                        @if($project->sector)
+                                            {{ $project->sector }}
+                                        @endif
+                                        @if($project->intraStudioTeamLeads->count() > 0)
+                                            . Role: {{ $project->intraStudioTeamLeads->pluck('role')->filter()->first() ?? 'Team Lead' }}
+                                        @endif
+                                    </div>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Young Works Section -->
+            @if($youngWork)
+            <div id="young-works" class="mt-20">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl md:text-5xl font-bold text-[#d3924f] inline-flex items-center">
+                        <svg class="w-8 h-8 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                        YOUNG WORKS
+                    </h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                    <div class="md:col-span-5">
+                        @if($youngWork->main_image)
+                            <img src="{{ asset('storage/' . $youngWork->main_image) }}" 
+                                 alt="{{ $youngWork->title }}" 
+                                 class="w-full h-[400px] object-cover">
+                        @else
+                            <div class="w-full h-[400px] bg-gray-200 flex items-center justify-center text-gray-400">
+                                No Image
+                            </div>
+                        @endif
+                    </div>
+                    <div class="md:col-span-7 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-2xl font-semibold text-[#1b304e] mb-4">{{ $youngWork->title }}</h3>
+                            @if($youngWork->short_description)
+                                <div class="prose prose-lg max-w-none text-[#1b304e] mb-4">
+                                    {!! $youngWork->short_description !!}
+                                </div>
+                            @endif
+                            @if($youngWork->client)
+                                <p class="text-sm text-[#1b304e]/70">Courtesy {{ $youngWork->client }}</p>
+                            @endif
+                        </div>
+                        <div class="mt-8">
+                            <a href="{{ route('work.show', $youngWork->slug) }}" class="inline-flex items-center text-[#d3924f] hover:text-[#d3924f]/80 transition">
+                                <span class="mr-2">GO TO THE PROJECT</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+        </div>
+    </section>
+
+    @include('partials.footer')
+@endsection

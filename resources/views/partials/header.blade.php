@@ -26,6 +26,7 @@
                 </div>
             </div>
             <a href="{{ route('our-story') }}" class="text-[#dfdfbb] transition hover:[text-shadow:0.03em_0_0_currentColor,-0.03em_0_0_currentColor]">OUR STORY</a>
+            <a href="{{ route('rosa-profile') }}" class="text-[#dfdfbb] transition hover:[text-shadow:0.03em_0_0_currentColor,-0.03em_0_0_currentColor]">ROSA'S PROFILE</a>
             <a href="#mag" class="text-[#dfdfbb] transition hover:[text-shadow:0.03em_0_0_currentColor,-0.03em_0_0_currentColor]">MAG</a>
             <a href="#contact" class="text-[#dfdfbb] transition hover:[text-shadow:0.03em_0_0_currentColor,-0.03em_0_0_currentColor]">CONTACT</a>
         </nav>

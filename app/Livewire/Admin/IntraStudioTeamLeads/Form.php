@@ -23,6 +23,8 @@ class Form extends Component
     public $photo;
     public $photoPath;
     public $order = 0;
+    public $quote = '';
+    public $resumeLink = '';
 
     protected function rules()
     {
@@ -35,6 +37,8 @@ class Form extends Component
             'visionPhrase' => 'nullable|string|max:500',
             'description' => 'nullable|string',
             'email' => 'nullable|email|max:255',
+            'quote' => 'nullable|string',
+            'resumeLink' => 'nullable|url|max:500',
             'photo' => 'nullable|image|max:10240',
             'order' => 'nullable|integer',
         ];
@@ -55,6 +59,8 @@ class Form extends Component
             $this->email = $teamLead->email;
             $this->photoPath = $teamLead->photo;
             $this->order = $teamLead->order;
+            $this->quote = $teamLead->quote ?? '';
+            $this->resumeLink = $teamLead->resume_link ?? '';
         }
     }
 
@@ -72,6 +78,8 @@ class Form extends Component
             'description' => $this->description,
             'email' => $this->email,
             'order' => $this->order,
+            'quote' => $this->quote,
+            'resume_link' => $this->resumeLink,
         ];
 
         // Handle photo upload
