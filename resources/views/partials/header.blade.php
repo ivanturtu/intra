@@ -6,7 +6,7 @@
                 <img src="{{ asset('images/INTRAstudio-logotype-beige.png') }}" alt="INTRA studio" class="h-full">
             </a>
         </div>
-        <nav class="hidden md:flex items-center gap-8">
+        <nav class="hidden md:flex items-center gap-8 absolute left-1/2 transform -translate-x-1/2">
             <a href="/work" class="text-[#dfdfbb] transition hover:[text-shadow:0.03em_0_0_currentColor,-0.03em_0_0_currentColor]">WORKS</a>
             <div class="relative group h-full flex items-center" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
                 <a href="#expertise" class="text-[#dfdfbb] transition cursor-pointer hover:[text-shadow:0.03em_0_0_currentColor,-0.03em_0_0_currentColor]">EXPERTISE</a>
