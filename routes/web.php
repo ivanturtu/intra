@@ -150,6 +150,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         return view('admin.settings.form');
     })->name('settings.index');
 
+    // Our Story
+    Route::get('/our-story', function () {
+        return view('admin.our-story.form');
+    })->name('our-story.index');
+
     // Users
     Route::get('/users', function () {
         return view('admin.users.index');

@@ -56,6 +56,9 @@
                 <a href="{{ route('admin.settings.index') }}" class="block px-6 py-3 hover:bg-white/10 transition {{ request()->routeIs('admin.settings.*') ? 'bg-white/10' : '' }}">
                     Settings
                 </a>
+                <a href="{{ route('admin.our-story.index') }}" class="block px-6 py-3 hover:bg-white/10 transition {{ request()->routeIs('admin.our-story.*') ? 'bg-white/10' : '' }}">
+                    Our Story
+                </a>
                 <a href="{{ route('admin.users.index') }}" class="block px-6 py-3 hover:bg-white/10 transition {{ request()->routeIs('admin.users.*') ? 'bg-white/10' : '' }}">
                     Users
                 </a>
