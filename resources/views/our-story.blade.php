@@ -53,11 +53,6 @@
                             {!! $ourStory->intro !!}
                         </div>
                     @endif
-                    @if($mainTeamLead && $mainTeamLead->incipit)
-                        <div class="prose prose-lg max-w-none text-[#dfdfbb]" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">
-                            {!! $mainTeamLead->incipit !!}
-                        </div>
-                    @endif
                     @if($ourStory->description)
                         <div class="prose prose-lg max-w-none">
                             {!! $ourStory->description !!}

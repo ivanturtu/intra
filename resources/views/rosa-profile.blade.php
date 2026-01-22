@@ -58,6 +58,11 @@
 
                 <!-- Right Column: Biography and Projects (9 columns) -->
                 <div class="md:col-span-9 space-y-8">
+                    @if($rosa->incipit)
+                        <div class="prose prose-lg max-w-none text-[#dfdfbb]" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">
+                            {!! $rosa->incipit !!}
+                        </div>
+                    @endif
                     @if($rosa->description)
                         <div class="prose prose-lg max-w-none text-[#1b304e]">
                             {!! $rosa->description !!}
