@@ -58,6 +58,11 @@
                             {!! $ourStory->description !!}
                         </div>
                     @endif
+                    <div>
+                        <a href="{{ route('works.index') }}" class="inline-block bg-[#1b304e] text-white px-6 py-3 font-semibold hover:bg-[#1b304e]/90 transition">
+                            VIEW OUR WORKS
+                        </a>
+                    </div>
                 </div>
             </div>
 
