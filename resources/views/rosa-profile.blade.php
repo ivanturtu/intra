@@ -109,72 +109,74 @@
                             </ul>
                         </div>
                     @endif
-
-                    <!-- Young Works Section -->
-                    @if($youngWorks && $youngWorks->count() > 0)
-                    <div id="young-works" class="mt-12 bg-[#dfdfbb] -mx-8 px-8 py-12">
-                        <div class="mb-8">
-                            <h2 class="text-xl md:text-2xl font-bold text-[#d3924f] inline-flex items-center">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                </svg>
-                                YOUNG WORKS
-                            </h2>
-                        </div>
-                        
-                        <div class="space-y-0">
-                            @foreach($youngWorks as $index => $youngWork)
-                            <div class="{{ $index > 0 ? 'border-t border-[#d3924f] pt-8 mt-8' : '' }}">
-                                <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-                                    <!-- Image (Left) -->
-                                    <div class="md:col-span-5">
-                                        @if($youngWork->main_image)
-                                            <img src="{{ asset('storage/' . $youngWork->main_image) }}" 
-                                                 alt="{{ $youngWork->title }}" 
-                                                 class="w-full h-[400px] object-cover">
-                                        @else
-                                            <div class="w-full h-[400px] bg-gray-200 flex items-center justify-center text-gray-400">
-                                                No Image
-                                            </div>
-                                        @endif
-                                    </div>
-                                    
-                                    <!-- Content (Right) -->
-                                    <div class="md:col-span-7 flex flex-col">
-                                        <div class="mb-4">
-                                            <h3 class="text-lg font-bold text-[#1b304e] mb-2">{{ $youngWork->title }}</h3>
-                                            <p class="text-xs text-[#1b304e] mb-2">Short description</p>
-                                            @if($youngWork->short_description)
-                                                <div class="prose prose-sm max-w-none text-[#1b304e] mb-3 text-sm">
-                                                    {!! $youngWork->short_description !!}
-                                                </div>
-                                            @endif
-                                            @if($youngWork->client)
-                                                <p class="text-xs text-[#1b304e] mb-4">Courtesy {{ $youngWork->client }}©</p>
-                                            @endif
-                                        </div>
-                                        <div class="mt-auto">
-                                            <div class="flex justify-end">
-                                                <a href="{{ route('work.show', $youngWork->slug) }}" class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition">
-                                                    <span class="mr-2">GO TO THE PROJECT</span>
-                                                    <svg class="w-4 h-4 text-[#d3924f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                            <div class="border-b border-[#d3924f] mt-2"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    @endif
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Young Works Section - Full Width -->
+    @if($youngWorks && $youngWorks->count() > 0)
+    <section id="young-works" class="bg-[#dfdfbb] py-12 px-8 w-full">
+        <div class="container mx-auto">
+            <div class="mb-8">
+                <h2 class="text-xl md:text-2xl font-bold text-[#d3924f] inline-flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                    YOUNG WORKS
+                </h2>
+            </div>
+            
+            <div class="space-y-0">
+                @foreach($youngWorks as $index => $youngWork)
+                <div class="{{ $index > 0 ? 'border-t border-[#d3924f] pt-8 mt-8' : '' }}">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                        <!-- Image (Left) -->
+                        <div class="md:col-span-5">
+                            @if($youngWork->main_image)
+                                <img src="{{ asset('storage/' . $youngWork->main_image) }}" 
+                                     alt="{{ $youngWork->title }}" 
+                                     class="w-full h-[400px] object-cover">
+                            @else
+                                <div class="w-full h-[400px] bg-gray-200 flex items-center justify-center text-gray-400">
+                                    No Image
+                                </div>
+                            @endif
+                        </div>
+                        
+                        <!-- Content (Right) -->
+                        <div class="md:col-span-7 flex flex-col">
+                            <div class="mb-4">
+                                <h3 class="text-lg font-bold text-[#1b304e] mb-2">{{ $youngWork->title }}</h3>
+                                <p class="text-xs text-[#1b304e] mb-2">Short description</p>
+                                @if($youngWork->short_description)
+                                    <div class="prose prose-sm max-w-none text-[#1b304e] mb-3 text-sm">
+                                        {!! $youngWork->short_description !!}
+                                    </div>
+                                @endif
+                                @if($youngWork->client)
+                                    <p class="text-xs text-[#1b304e] mb-4">Courtesy {{ $youngWork->client }}©</p>
+                                @endif
+                            </div>
+                            <div class="mt-auto">
+                                <div class="flex justify-end">
+                                    <a href="{{ route('work.show', $youngWork->slug) }}" class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition">
+                                        <span class="mr-2">GO TO THE PROJECT</span>
+                                        <svg class="w-4 h-4 text-[#d3924f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div class="border-b border-[#d3924f] mt-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    @endif
 
     @include('partials.footer')
 @endsection
