@@ -114,8 +114,8 @@
                     @if($youngWorks && $youngWorks->count() > 0)
                     <div id="young-works" class="mt-12">
                         <div class="mb-8">
-                            <h2 class="text-3xl md:text-4xl font-bold text-[#d3924f] inline-flex items-center">
-                                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <h2 class="text-xl md:text-2xl font-bold text-[#d3924f] inline-flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                                 YOUNG WORKS
