@@ -134,6 +134,16 @@ Route::get('/rosa-profile', function () {
     ]);
 })->name('rosa-profile');
 
+Route::get('/contact', function () {
+    $settings = \App\Models\Setting::getSettings();
+    $categories = \App\Models\Category::orderBy('order')->get();
+    
+    return view('contact', [
+        'settings' => $settings,
+        'categories' => $categories,
+    ]);
+})->name('contact');
+
 // Authentication Routes
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
