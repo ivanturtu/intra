@@ -117,19 +117,19 @@ Route::get('/rosa-profile', function () {
         ->take(5)
         ->get();
     
-    // Get Young Works (first published young work project)
-    $youngWork = \App\Models\Project::where('is_young_work', true)
+    // Get Young Works (all published young work projects)
+    $youngWorks = \App\Models\Project::where('is_young_work', true)
         ->where('is_published', true)
         ->orderBy('order')
         ->orderBy('created_at', 'desc')
-        ->first();
+        ->get();
     
     $categories = \App\Models\Category::orderBy('order')->get();
     
     return view('rosa-profile', [
         'rosa' => $rosa,
         'rosaProjects' => $rosaProjects,
-        'youngWork' => $youngWork,
+        'youngWorks' => $youngWorks,
         'categories' => $categories
     ]);
 })->name('rosa-profile');

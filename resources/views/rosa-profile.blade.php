@@ -109,56 +109,68 @@
                             </ul>
                         </div>
                     @endif
-                </div>
-            </div>
 
-            <!-- Young Works Section -->
-            @if($youngWork)
-            <div id="young-works" class="mt-20">
-                <div class="text-center mb-12">
-                    <h2 class="text-4xl md:text-5xl font-bold text-[#d3924f] inline-flex items-center">
-                        <svg class="w-8 h-8 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                        YOUNG WORKS
-                    </h2>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-                    <div class="md:col-span-5">
-                        @if($youngWork->main_image)
-                            <img src="{{ asset('storage/' . $youngWork->main_image) }}" 
-                                 alt="{{ $youngWork->title }}" 
-                                 class="w-full h-[400px] object-cover">
-                        @else
-                            <div class="w-full h-[400px] bg-gray-200 flex items-center justify-center text-gray-400">
-                                No Image
-                            </div>
-                        @endif
-                    </div>
-                    <div class="md:col-span-7 flex flex-col justify-between">
-                        <div>
-                            <h3 class="text-2xl font-semibold text-[#1b304e] mb-4">{{ $youngWork->title }}</h3>
-                            @if($youngWork->short_description)
-                                <div class="prose prose-lg max-w-none text-[#1b304e] mb-4">
-                                    {!! $youngWork->short_description !!}
-                                </div>
-                            @endif
-                            @if($youngWork->client)
-                                <p class="text-sm text-[#1b304e]/70">Courtesy {{ $youngWork->client }}</p>
-                            @endif
-                        </div>
-                        <div class="mt-8">
-                            <a href="{{ route('work.show', $youngWork->slug) }}" class="inline-flex items-center text-[#d3924f] hover:text-[#d3924f]/80 transition">
-                                <span class="mr-2">GO TO THE PROJECT</span>
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    <!-- Young Works Section -->
+                    @if($youngWorks && $youngWorks->count() > 0)
+                    <div id="young-works" class="mt-12">
+                        <div class="mb-8">
+                            <h2 class="text-3xl md:text-4xl font-bold text-[#d3924f] inline-flex items-center">
+                                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
-                            </a>
+                                YOUNG WORKS
+                            </h2>
+                        </div>
+                        
+                        <div class="space-y-0">
+                            @foreach($youngWorks as $index => $youngWork)
+                            <div class="{{ $index > 0 ? 'border-t border-[#d3924f] pt-8 mt-8' : '' }}">
+                                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                                    <!-- Image (Left) -->
+                                    <div class="md:col-span-4">
+                                        @if($youngWork->main_image)
+                                            <img src="{{ asset('storage/' . $youngWork->main_image) }}" 
+                                                 alt="{{ $youngWork->title }}" 
+                                                 class="w-full h-[250px] object-cover">
+                                        @else
+                                            <div class="w-full h-[250px] bg-gray-200 flex items-center justify-center text-gray-400">
+                                                No Image
+                                            </div>
+                                        @endif
+                                    </div>
+                                    
+                                    <!-- Content (Right) -->
+                                    <div class="md:col-span-8 flex flex-col">
+                                        <div class="mb-4">
+                                            <h3 class="text-lg font-bold text-[#1b304e] mb-2">{{ $youngWork->title }}</h3>
+                                            <p class="text-xs text-[#1b304e] mb-2">Short description</p>
+                                            @if($youngWork->short_description)
+                                                <div class="prose prose-sm max-w-none text-[#1b304e] mb-3 text-sm">
+                                                    {!! $youngWork->short_description !!}
+                                                </div>
+                                            @endif
+                                            @if($youngWork->client)
+                                                <p class="text-xs text-[#1b304e] mb-4">Courtesy {{ $youngWork->client }}©</p>
+                                            @endif
+                                        </div>
+                                        <div class="mt-auto relative">
+                                            <a href="{{ route('work.show', $youngWork->slug) }}" class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition relative group">
+                                                <span class="mr-2">GO TO THE PROJECT</span>
+                                                <svg class="w-4 h-4 text-[#d3924f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                                </svg>
+                                            </a>
+                                            <div class="border-b border-[#d3924f] mt-1"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
-            @endif
         </div>
     </section>
 
