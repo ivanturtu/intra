@@ -44,11 +44,21 @@ Route::get('/', function () {
         ->take(2)
         ->get();
     
+    // Get Our Story content
+    $ourStory = \App\Models\OurStory::getOurStory();
+    
+    // Get Team Leads (order 0 for top section, others for bottom)
+    $mainTeamLead = \App\Models\IntraStudioTeamLead::where('order', 0)->first();
+    $otherTeamLeads = \App\Models\IntraStudioTeamLead::where('order', '>', 0)->orderBy('order')->get();
+    
     return view('home', [
         'heroProjects' => $heroProjects,
         'sliderProjects' => $sliderProjects,
         'categories' => $categories,
-        'magazineArticles' => $magazineArticles
+        'magazineArticles' => $magazineArticles,
+        'ourStory' => $ourStory,
+        'mainTeamLead' => $mainTeamLead,
+        'otherTeamLeads' => $otherTeamLeads
     ]);
 });
 
