@@ -34,8 +34,8 @@
                             <a href="mailto:{{ $mainTeamLead->email }}" class="hover:underline">{{ $mainTeamLead->email }}</a>
                         </p>
                     @endif
-                    @if($mainTeamLead->description)
-                        <a href="#{{ strtolower(str_replace(' ', '-', $mainTeamLead->name)) }}-profile" 
+                    @if($mainTeamLead)
+                        <a href="{{ route('rosa-profile') }}" 
                            class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition">
                             <span class="mr-2">GO TO {{ strtoupper($mainTeamLead->name) }}'S PROFILE</span>
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
