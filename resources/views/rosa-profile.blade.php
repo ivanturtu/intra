@@ -125,22 +125,22 @@
                         <div class="space-y-0">
                             @foreach($youngWorks as $index => $youngWork)
                             <div class="{{ $index > 0 ? 'border-t border-[#d3924f] pt-8 mt-8' : '' }}">
-                                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                                <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
                                     <!-- Image (Left) -->
-                                    <div class="md:col-span-4">
+                                    <div class="md:col-span-5">
                                         @if($youngWork->main_image)
                                             <img src="{{ asset('storage/' . $youngWork->main_image) }}" 
                                                  alt="{{ $youngWork->title }}" 
-                                                 class="w-full h-[250px] object-cover">
+                                                 class="w-full h-[400px] object-cover">
                                         @else
-                                            <div class="w-full h-[250px] bg-gray-200 flex items-center justify-center text-gray-400">
+                                            <div class="w-full h-[400px] bg-gray-200 flex items-center justify-center text-gray-400">
                                                 No Image
                                             </div>
                                         @endif
                                     </div>
                                     
                                     <!-- Content (Right) -->
-                                    <div class="md:col-span-8 flex flex-col">
+                                    <div class="md:col-span-7 flex flex-col">
                                         <div class="mb-4">
                                             <h3 class="text-lg font-bold text-[#1b304e] mb-2">{{ $youngWork->title }}</h3>
                                             <p class="text-xs text-[#1b304e] mb-2">Short description</p>
