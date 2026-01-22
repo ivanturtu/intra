@@ -83,6 +83,24 @@ Route::get('/work/{project:slug}', function (\App\Models\Project $project) {
     return view('work', ['project' => $project, 'categories' => $categories]);
 })->name('work.show');
 
+Route::get('/our-story', function () {
+    // Get Our Story content
+    $ourStory = \App\Models\OurStory::getOurStory();
+    
+    // Get Team Leads (order 0 for top section, others for bottom)
+    $mainTeamLead = \App\Models\IntraStudioTeamLead::where('order', 0)->first();
+    $otherTeamLeads = \App\Models\IntraStudioTeamLead::where('order', '>', 0)->orderBy('order')->get();
+    
+    $categories = \App\Models\Category::orderBy('order')->get();
+    
+    return view('our-story', [
+        'ourStory' => $ourStory,
+        'mainTeamLead' => $mainTeamLead,
+        'otherTeamLeads' => $otherTeamLeads,
+        'categories' => $categories
+    ]);
+})->name('our-story');
+
 // Authentication Routes
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
