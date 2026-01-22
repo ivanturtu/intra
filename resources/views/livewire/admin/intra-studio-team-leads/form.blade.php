@@ -74,6 +74,21 @@
                 @error('resumeLink') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>
 
+            <!-- Full Resume PDF -->
+            <div>
+                <label class="block text-sm font-medium text-[#1b304e] mb-2">Full Resume (PDF)</label>
+                @if($fullResumePath)
+                    <div class="mb-2">
+                        <a href="{{ asset('storage/' . $fullResumePath) }}" target="_blank" class="text-[#d3924f] hover:underline text-sm">
+                            View current resume (PDF)
+                        </a>
+                    </div>
+                @endif
+                <input type="file" wire:model="fullResume" accept=".pdf" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#d3924f]/20 file:text-[#d3924f] hover:file:bg-[#d3924f]/30">
+                @error('fullResume') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                <p class="mt-1 text-xs text-gray-500">Upload a PDF file (max 10MB)</p>
+            </div>
+
             <!-- Email -->
             <div>
                 <label class="block text-sm font-medium text-[#1b304e] mb-2">Email</label>

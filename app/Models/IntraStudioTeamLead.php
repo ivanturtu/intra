@@ -23,6 +23,7 @@ class IntraStudioTeamLead extends Model
         'order',
         'quote',
         'resume_link',
+        'full_resume',
     ];
 
     /**

@@ -25,6 +25,8 @@ class Form extends Component
     public $order = 0;
     public $quote = '';
     public $resumeLink = '';
+    public $fullResume;
+    public $fullResumePath;
 
     protected function rules()
     {
@@ -39,6 +41,7 @@ class Form extends Component
             'email' => 'nullable|email|max:255',
             'quote' => 'nullable|string',
             'resumeLink' => 'nullable|url|max:500',
+            'fullResume' => 'nullable|mimes:pdf|max:10240',
             'photo' => 'nullable|image|max:10240',
             'order' => 'nullable|integer',
         ];
@@ -61,6 +64,7 @@ class Form extends Component
             $this->order = $teamLead->order;
             $this->quote = $teamLead->quote ?? '';
             $this->resumeLink = $teamLead->resume_link ?? '';
+            $this->fullResumePath = $teamLead->full_resume;
         }
     }
 
@@ -90,6 +94,16 @@ class Form extends Component
             $data['photo'] = $this->photo->store('intra-studio-team-leads', 'public');
         } elseif ($this->photoPath) {
             $data['photo'] = $this->photoPath;
+        }
+
+        // Handle full resume PDF upload
+        if ($this->fullResume) {
+            if ($this->fullResumePath && Storage::disk('public')->exists($this->fullResumePath)) {
+                Storage::disk('public')->delete($this->fullResumePath);
+            }
+            $data['full_resume'] = $this->fullResume->store('team-leads-resumes', 'public');
+        } elseif ($this->fullResumePath) {
+            $data['full_resume'] = $this->fullResumePath;
         }
 
         if ($this->teamLeadId) {
