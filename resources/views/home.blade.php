@@ -5,7 +5,7 @@
 
     <!-- Hero Section -->
     @if($heroProjects->count() > 0)
-        <section class="relative h-[80vh] min-h-[600px]" style="height: 60vh; min-height: 450px;"
+        <section class="relative h-[80vh] min-h-[600px]"
                  x-data="{ 
                      currentSlide: 0, 
                      slides: {{ $heroProjects->count() }},
@@ -80,7 +80,7 @@
             @endif
         </section>
     @else
-        <section class="relative h-[80vh] min-h-[600px] flex items-center" style="height: 60vh; min-height: 450px;">
+        <section class="relative h-[80vh] min-h-[600px] flex items-center">
         <div class="absolute inset-0 z-0">
             <img src="https://via.placeholder.com/1920x1080/87CEEB/FFFFFF?text=Ornate+Interior+Design" 
                  alt="Hero Background" 
