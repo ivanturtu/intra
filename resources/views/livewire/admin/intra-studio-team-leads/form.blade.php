@@ -67,7 +67,7 @@
             </div>
 
             <!-- Description with Editor -->
-            <div>
+            <div wire:ignore>
                 <label class="block text-sm font-medium text-[#1b304e] mb-2">Description</label>
                 <div id="teamLeadDescriptionEditor" style="height: 300px;" class="mb-2"></div>
                 <textarea wire:model="description" id="teamLeadDescription" style="display: none;"></textarea>
@@ -94,7 +94,15 @@
     let teamLeadDescriptionQuill = null;
 
     function initTeamLeadEditor() {
-        if (!teamLeadDescriptionQuill && document.getElementById('teamLeadDescriptionEditor')) {
+        // Initialize Quill for Description if not already initialized
+        const descEl = document.getElementById('teamLeadDescriptionEditor');
+        if (descEl && !descEl.querySelector('.ql-container')) {
+            // Destroy existing instance if any
+            if (teamLeadDescriptionQuill) {
+                try {
+                    teamLeadDescriptionQuill = null;
+                } catch(e) {}
+            }
             teamLeadDescriptionQuill = new Quill('#teamLeadDescriptionEditor', {
                 theme: 'snow',
                 modules: {
@@ -113,33 +121,63 @@
                 }
             });
 
+            // Set initial content
             const descContent = @this.description || '';
             if (descContent) {
                 teamLeadDescriptionQuill.root.innerHTML = descContent;
             }
 
+            // Update Livewire on text change (debounced to avoid too many updates)
+            let descTimeout;
             teamLeadDescriptionQuill.on('text-change', function() {
-                const content = teamLeadDescriptionQuill.root.innerHTML;
-                document.getElementById('teamLeadDescription').value = content;
-                @this.set('description', content);
+                clearTimeout(descTimeout);
+                descTimeout = setTimeout(() => {
+                    const content = teamLeadDescriptionQuill.root.innerHTML;
+                    document.getElementById('teamLeadDescription').value = content;
+                    @this.set('description', content, false); // false = don't update wire:model immediately
+                }, 300);
             });
         }
     }
 
+    // Use Livewire hooks to properly initialize editor
     document.addEventListener('livewire:init', () => {
-        setTimeout(initTeamLeadEditor, 100);
-    });
-
-    document.addEventListener('livewire:load', () => {
-        setTimeout(initTeamLeadEditor, 100);
-    });
-
-    document.addEventListener('livewire:update', () => {
+        // Initialize editor once when Livewire is ready
         setTimeout(() => {
-            if (teamLeadDescriptionQuill && @this.description) {
+            initTeamLeadEditor();
+        }, 300);
+    });
+
+    // Initialize editor when component is loaded
+    document.addEventListener('livewire:load', () => {
+        setTimeout(() => {
+            initTeamLeadEditor();
+        }, 200);
+    });
+
+    // Also initialize on initial page load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                initTeamLeadEditor();
+            }, 200);
+        });
+    } else {
+        setTimeout(() => {
+            initTeamLeadEditor();
+        }, 200);
+    }
+
+    // With wire:ignore, Livewire won't touch the editor container
+    // So we don't need to worry about it being destroyed
+    // Just sync content when needed (but not during typing)
+    document.addEventListener('livewire:update', () => {
+        // Only sync if editor exists and is not focused
+        setTimeout(() => {
+            if (teamLeadDescriptionQuill && teamLeadDescriptionQuill.root && !teamLeadDescriptionQuill.hasFocus() && @this.description) {
                 const currentContent = teamLeadDescriptionQuill.root.innerHTML;
                 const livewireContent = @this.description;
-                if (currentContent !== livewireContent) {
+                if (currentContent !== livewireContent && livewireContent !== '') {
                     teamLeadDescriptionQuill.root.innerHTML = livewireContent;
                 }
             }

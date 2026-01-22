@@ -140,7 +140,7 @@
                     </div>
                     <div class="flex items-center">
                         <input type="checkbox" wire:model="isPublished" id="isPublished" class="h-4 w-4 text-[#d3924f] focus:ring-[#d3924f] border-[#1b304e]/20 rounded">
-                        <label for="isPublished" class="ml-2 block text-sm text-gray-700">Published</label>
+                        <label for="isPublished" class="ml-2 block text-sm text-[#1b304e]">Published</label>
                     </div>
                     <div class="flex items-center">
                         <input type="checkbox" wire:model="inHero" id="inHero" class="h-4 w-4 text-[#d3924f] focus:ring-[#d3924f] border-[#1b304e]/20 rounded">
