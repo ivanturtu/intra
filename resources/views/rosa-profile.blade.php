@@ -4,7 +4,7 @@
     @include('partials.header')
 
     <!-- Rosa's Profile Section -->
-    <section class="bg-white py-20 px-8">
+    <section class="bg-white pt-20 pb-8 px-8">
         <div class="container mx-auto">
             <!-- Top Header with Navigation and Quote -->
             <div class="mb-16">
