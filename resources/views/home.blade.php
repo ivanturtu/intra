@@ -215,7 +215,7 @@
                 <div class="md:col-span-3">
                     <h2 class="text-4xl md:text-5xl font-bold text-[#d3924f] mb-8">Expertise</h2>
                 </div>
-                <div class="md:col-span-9">
+                <div class="md:col-span-9 -mt-4">
                     <ul class="space-y-0" x-data="{ openId: null }">
                         @foreach($categories as $index => $category)
                             <li class="py-8 {{ $index < $categories->count() - 1 ? 'border-b border-white/10' : '' }}">
