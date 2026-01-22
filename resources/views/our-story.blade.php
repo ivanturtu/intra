@@ -7,10 +7,10 @@
     <section class="bg-white py-20 px-8">
         <div class="container mx-auto">
             <!-- Top Section: Main Team Lead + Intro/Description -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
                 <!-- Main Team Lead (Left) -->
                 @if($mainTeamLead)
-                <div>
+                <div class="md:col-span-3">
                     @if($mainTeamLead->photo)
                         <img src="{{ asset('storage/' . $mainTeamLead->photo) }}" 
                              alt="{{ $mainTeamLead->name }} {{ $mainTeamLead->surname }}" 
@@ -47,7 +47,7 @@
                 @endif
 
                 <!-- Intro and Description (Right) -->
-                <div class="space-y-6">
+                <div class="md:col-span-9 space-y-6">
                     @if($ourStory->intro)
                         <div class="prose prose-lg max-w-none text-[#d3924f]" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">
                             {!! $ourStory->intro !!}
