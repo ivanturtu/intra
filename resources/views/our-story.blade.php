@@ -65,7 +65,7 @@
             @if($ourStory->highlight)
             <div class="bg-[#d3924f] text-white py-12 px-8 mb-16">
                 <div class="container mx-auto">
-                    <div class="prose prose-lg max-w-none text-white">
+                    <div class="prose prose-lg max-w-none text-white text-center" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">
                         {!! $ourStory->highlight !!}
                     </div>
                 </div>
