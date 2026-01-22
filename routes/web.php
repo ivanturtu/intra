@@ -7,12 +7,14 @@ use App\Livewire\Admin\Projects\Form as ProjectsForm;
 Route::get('/', function () {
     $heroProjects = \App\Models\Project::where('in_hero', true)
         ->where('is_published', true)
+        ->where('is_young_work', false)
         ->orderBy('order')
         ->get();
     
     // Get projects for slider (projects marked to show in slider)
     $sliderProjects = \App\Models\Project::where('is_published', true)
         ->where('in_slider', true)
+        ->where('is_young_work', false)
         ->with('category')
         ->orderBy('order')
         ->orderBy('created_at', 'desc')
@@ -53,6 +55,7 @@ Route::get('/', function () {
 Route::get('/work', function () {
     $categories = \App\Models\Category::orderBy('order')->get();
     $projects = \App\Models\Project::where('is_published', true)
+        ->where('is_young_work', false)
         ->with('category')
         ->orderBy('order')
         ->orderBy('created_at', 'desc')

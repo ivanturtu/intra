@@ -144,11 +144,15 @@
                     </div>
                     <div class="flex items-center">
                         <input type="checkbox" wire:model="inHero" id="inHero" class="h-4 w-4 text-[#d3924f] focus:ring-[#d3924f] border-[#1b304e]/20 rounded">
-                        <label for="inHero" class="ml-2 block text-sm text-gray-700">Show in Hero</label>
+                        <label for="inHero" class="ml-2 block text-sm text-[#1b304e]">Show in Hero</label>
                     </div>
                     <div class="flex items-center">
                         <input type="checkbox" wire:model="inSlider" id="inSlider" class="h-4 w-4 text-[#d3924f] focus:ring-[#d3924f] border-[#1b304e]/20 rounded">
                         <label for="inSlider" class="ml-2 block text-sm text-[#1b304e]">Show in Slider</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" wire:model="isYoungWork" id="isYoungWork" class="h-4 w-4 text-[#d3924f] focus:ring-[#d3924f] border-[#1b304e]/20 rounded">
+                        <label for="isYoungWork" class="ml-2 block text-sm text-[#1b304e]">Young Work</label>
                     </div>
                 </div>
 

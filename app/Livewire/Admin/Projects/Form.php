@@ -38,6 +38,7 @@ class Form extends Component
     public $isPublished = false;
     public $inHero = false;
     public $inSlider = false;
+    public $isYoungWork = false;
 
     public $allIntraStudioTeamLeads = [];
     public $allCategories = [];
@@ -58,6 +59,7 @@ class Form extends Component
             'isPublished' => 'boolean',
             'inHero' => 'boolean',
             'inSlider' => 'boolean',
+            'isYoungWork' => 'boolean',
             'mainImage' => 'nullable|image|max:10240',
             'selectedImage' => 'nullable|image|max:10240',
             'imageGalleryFiles.*' => 'nullable|image|max:10240',
@@ -96,6 +98,7 @@ class Form extends Component
             $this->isPublished = $project->is_published;
             $this->inHero = $project->in_hero;
             $this->inSlider = $project->in_slider ?? false;
+            $this->isYoungWork = $project->is_young_work ?? false;
             $this->mainImagePath = $project->main_image;
             $this->intraStudioTeamLeads = $project->intraStudioTeamLeads->pluck('id')->toArray();
         } else {
@@ -155,6 +158,7 @@ class Form extends Component
             'is_published' => $this->isPublished,
             'in_hero' => $this->inHero,
             'in_slider' => $this->inSlider,
+            'is_young_work' => $this->isYoungWork,
         ];
 
         // Handle main image upload
