@@ -34,7 +34,7 @@
                     <li><a href="{{ url('/#expertise') }}" class="hover:text-white transition">Expertise</a></li>
                     <li><a href="{{ route('our-story') }}" class="hover:text-white transition">Our story</a></li>
                     <li><a href="{{ url('/#mag') }}" class="hover:text-white transition">Mag</a></li>
-                    <li><a href="{{ url('/#contact') }}" class="hover:text-white transition">Contact</a></li>
+                    <li><a href="{{ route('contact') }}" class="hover:text-white transition">Contact</a></li>
                 </ul>
             </div>
 
@@ -56,7 +56,7 @@
             <div>
                 <h5 class="font-semibold mb-4 text-[#d3924f]">Resources</h5>
                 <ul class="space-y-2 text-sm text-gray-400">
-                    <li><a href="{{ url('/#contact') }}" class="hover:text-white transition">Contact</a></li>
+                    <li><a href="{{ route('contact') }}" class="hover:text-white transition">Contact</a></li>
                     <li><a href="{{ url('/#mag') }}" class="hover:text-white transition">Mag</a></li>
                 </ul>
             </div>

@@ -27,7 +27,7 @@
             </div>
             <a href="{{ route('our-story') }}" class="text-[#dfdfbb] transition hover:[text-shadow:0.03em_0_0_currentColor,-0.03em_0_0_currentColor]">OUR STORY</a>
             <a href="#mag" class="text-[#dfdfbb] transition hover:[text-shadow:0.03em_0_0_currentColor,-0.03em_0_0_currentColor]">MAG</a>
-            <a href="#contact" class="text-[#dfdfbb] transition hover:[text-shadow:0.03em_0_0_currentColor,-0.03em_0_0_currentColor]">CONTACT</a>
+            <a href="{{ route('contact') }}" class="text-[#dfdfbb] transition hover:[text-shadow:0.03em_0_0_currentColor,-0.03em_0_0_currentColor]">CONTACT</a>
         </nav>
         <div class="text-white">
             <span>ENG</span>
