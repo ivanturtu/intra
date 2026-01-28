@@ -33,7 +33,7 @@
             <div class="flex justify-between items-center mb-8">
                 <div class="text-sm text-gray-500">Projects</div>
                 @if($project->category)
-                    <a href="/work?category={{ $project->category->id }}" class="bg-[#d3924f] text-white px-4 py-2 text-sm font-medium hover:bg-[#b87a3d] transition">
+                    <a href="/work?category={{ $project->category->id }}" class="bg-[#d3924f] text-white px-4 py-2 text-sm font-medium hover:bg-[#b87a3d] transition cursor-pointer">
                         {{ strtoupper($project->category->name) }}
                     </a>
                 @endif
@@ -70,7 +70,7 @@
                 <!-- Right Side - Split into 2 sections of 3 columns each -->
                 <!-- First section (3 columns) - GO TO Project Development -->
                 <div class="lg:col-span-3">
-                    <a href="#development" class="text-[#1b304e] hover:opacity-80 transition inline-block">
+                    <a href="#development" class="text-[#1b304e] hover:opacity-80 transition inline-block cursor-pointer">
                         <div class="text-lg font-bold">GO TO</div>
                         <div class="flex items-center gap-2">
                             <span class="text-base font-normal">Project Development</span>
@@ -175,7 +175,7 @@
                         <div class="flex justify-between items-center mt-8">
                             <button @click="prevSlide()" 
                                     :disabled="currentIndex === 0"
-                                    class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed transition">
+                                    class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed transition cursor-pointer">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                                 </svg>
@@ -187,7 +187,7 @@
                             
                             <button @click="nextSlide()" 
                                     :disabled="currentIndex === totalSlides - 1"
-                                    class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed transition">
+                                    class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed transition cursor-pointer">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                                 </svg>

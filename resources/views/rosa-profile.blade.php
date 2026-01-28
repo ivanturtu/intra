@@ -10,8 +10,8 @@
             <div class="mb-16">
                 <div class="flex items-center justify-between mb-8">
                     <div class="flex items-center gap-4 text-[#1b304e]">
-                        <a href="{{ route('our-story') }}" class="text-sm hover:underline">| OUR STORY</a>
-                        <a href="{{ route('rosa-profile') }}" class="text-sm font-bold">| ROSA'S PROFILE</a>
+                        <a href="{{ route('our-story') }}" class="text-sm hover:underline cursor-pointer">| OUR STORY</a>
+                        <a href="{{ route('rosa-profile') }}" class="text-sm font-bold cursor-pointer">| ROSA'S PROFILE</a>
                     </div>
                 </div>
                 @if($rosa->quote)
@@ -45,7 +45,7 @@
                     @endif
                     @if($rosa->full_resume)
                         <div class="mb-6">
-                            <a href="{{ asset('storage/' . $rosa->full_resume) }}" target="_blank" class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition text-sm">
+                            <a href="{{ asset('storage/' . $rosa->full_resume) }}" target="_blank" class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition text-sm cursor-pointer">
                                 <span class="mr-2">DOWNLOAD<br>complete Resume</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
@@ -55,10 +55,10 @@
                     @endif
                     @if($rosa->email)
                         <p class="text-sm text-[#1b304e] mb-6">
-                            <a href="mailto:{{ $rosa->email }}" class="hover:underline">{{ $rosa->email }}</a>
+                            <a href="mailto:{{ $rosa->email }}" class="hover:underline cursor-pointer">{{ $rosa->email }}</a>
                         </p>
                     @endif
-                    <a href="#young-works" class="inline-flex items-center text-[#d3924f] hover:text-[#d3924f]/80 transition">
+                    <a href="#young-works" class="inline-flex items-center text-[#d3924f] hover:text-[#d3924f]/80 transition cursor-pointer">
                         <span class="mr-2">YOUNG WORKS</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
@@ -67,7 +67,7 @@
                 </div>
 
                 <!-- Right Column: Biography and Projects (9 columns) -->
-                <div class="md:col-span-9 space-y-8">
+                <div class="md:col-span-7 md:col-start-5 space-y-8">
                     @if($rosa->incipit)
                         <div class="prose prose-lg max-w-none text-[#dfdfbb]" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">
                             {!! $rosa->incipit !!}
@@ -81,7 +81,7 @@
 
                     @if($rosa->resume_link)
                         <div class="text-right">
-                            <a href="{{ $rosa->resume_link }}" target="_blank" class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition text-sm">
+                            <a href="{{ $rosa->resume_link }}" target="_blank" class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition text-sm cursor-pointer">
                                 <span class="mr-2">DOWNLOAD complete Resume</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
@@ -173,7 +173,7 @@
                             </div>
                             <div class="mt-auto">
                                 <div class="flex justify-end">
-                                    <a href="{{ route('work.show', $youngWork->slug) }}" class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition">
+                                    <a href="{{ route('work.show', $youngWork->slug) }}" class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition cursor-pointer">
                                         <span class="mr-2">GO TO THE PROJECT</span>
                                         <svg class="w-4 h-4 text-[#d3924f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>

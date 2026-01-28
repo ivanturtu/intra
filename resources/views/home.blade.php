@@ -38,9 +38,9 @@
                         @endif
                         <div class="absolute inset-0 bg-black/40"></div>
                     </div>
-                    <div class="relative z-10 text-left text-white px-8 container mx-auto">
+                    <div class="relative z-10 text-left text-white px-8 md:px-8 pl-16 pr-16 container mx-auto">
                         @if($project->slug)
-                            <a href="{{ route('work.show', $project->slug) }}" class="block">
+                            <a href="{{ route('work.show', $project->slug) }}" class="block cursor-pointer">
                                 <h2 class="font-light leading-[1.05]" style="font-size: clamp(3rem, 6vw, 6rem);">
                                     {{ $project->title }}
                                 </h2>
@@ -57,14 +57,14 @@
             @if($heroProjects->count() > 1)
                 <!-- Navigation Buttons -->
                 <button @click="currentSlide = (currentSlide - 1 + slides) % slides" 
-                        class="absolute left-4 top-1/2 -translate-y-1/2 z-20 text-white/90 hover:text-white transition">
-                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 text-white/90 hover:text-white transition cursor-pointer">
+                    <svg class="w-8 h-8 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path>
                     </svg>
                 </button>
                 <button @click="currentSlide = (currentSlide + 1) % slides" 
-                        class="absolute right-4 top-1/2 -translate-y-1/2 z-20 text-white/90 hover:text-white transition">
-                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 text-white/90 hover:text-white transition cursor-pointer">
+                    <svg class="w-8 h-8 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path>
                     </svg>
                 </button>
@@ -74,7 +74,7 @@
                     @foreach($heroProjects as $index => $project)
                         <button @click="currentSlide = {{ $index }}" 
                                 :class="currentSlide === {{ $index }} ? 'bg-white' : 'bg-white/40'"
-                                class="h-px w-16 transition"></button>
+                                class="h-px w-16 transition cursor-pointer"></button>
                     @endforeach
                 </div>
             @endif
@@ -104,7 +104,7 @@
                          currentIndex: 0,
                          totalProjects: {{ $sliderProjects->count() }},
                          get totalSlides() {
-                             return Math.ceil(this.totalProjects / 2);
+                             return Math.max(1, this.totalProjects - 1);
                          },
                          nextSlide() {
                              if (this.currentIndex < this.totalSlides - 1) {
@@ -125,38 +125,38 @@
                     <div class="overflow-hidden">
                         <div class="flex transition-transform duration-500 ease-in-out" 
                              :style="`transform: translateX(-${currentIndex * 100}%)`">
-                            @for($i = 0; $i < $sliderProjects->count(); $i += 2)
-                                <div class="w-full flex-shrink-0 flex gap-4">
-                                    @if(isset($sliderProjects[$i]))
-                                        <div class="w-1/2">
-                                            <a href="{{ route('work.show', $sliderProjects[$i]->slug) }}" class="group cursor-pointer block">
-                                                <div class="relative overflow-hidden mb-4">
-                                                    @if($sliderProjects[$i]->main_image)
-                                                        <img src="{{ asset('storage/' . $sliderProjects[$i]->main_image) }}" 
-                                                             alt="{{ $sliderProjects[$i]->title }}" 
-                                                             class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
-                                                    @else
-                                                        <img src="https://via.placeholder.com/600x800/CCCCCC/FFFFFF?text={{ urlencode($sliderProjects[$i]->title) }}" 
-                                                             alt="{{ $sliderProjects[$i]->title }}" 
-                             class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                            @for($i = 0; $i < $sliderProjects->count() - 1; $i++)
+                                <div class="w-full flex-shrink-0 grid grid-cols-1 md:grid-cols-12 gap-4 overflow-hidden">
+                                    <!-- First Project (9 columns) -->
+                                    <div class="md:col-span-9 overflow-hidden">
+                                        <a href="{{ route('work.show', $sliderProjects[$i]->slug) }}" class="group cursor-pointer block">
+                                            <div class="relative overflow-hidden mb-4">
+                                                @if($sliderProjects[$i]->main_image)
+                                                    <img src="{{ asset('storage/' . $sliderProjects[$i]->main_image) }}" 
+                                                         alt="{{ $sliderProjects[$i]->title }}" 
+                                                         class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                                                @else
+                                                    <img src="https://via.placeholder.com/600x800/CCCCCC/FFFFFF?text={{ urlencode($sliderProjects[$i]->title) }}" 
+                                                         alt="{{ $sliderProjects[$i]->title }}" 
+                                                         class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                                                @endif
+                                            </div>
+                                            <div class="flex justify-between items-start">
+                                                <div>
+                                                    <h3 class="font-semibold text-sm uppercase mb-1">{{ strtoupper($sliderProjects[$i]->title) }}</h3>
+                                                    @if($sliderProjects[$i]->location)
+                                                        <p class="text-xs text-gray-600 uppercase">{{ strtoupper($sliderProjects[$i]->location) }}</p>
                                                     @endif
-                    </div>
-                    <div class="flex justify-between items-start">
-                        <div>
-                                                        <h3 class="font-semibold text-sm uppercase mb-1">{{ strtoupper($sliderProjects[$i]->title) }}</h3>
-                                                        @if($sliderProjects[$i]->location)
-                                                            <p class="text-xs text-gray-600 uppercase">{{ strtoupper($sliderProjects[$i]->location) }}</p>
-                                                        @endif
-                        </div>
-                                                    @if($sliderProjects[$i]->category)
-                                                        <span class="text-xs text-gray-500 uppercase">{{ strtoupper($sliderProjects[$i]->category->name) }}</span>
-                                                    @endif
-                    </div>
-                                            </a>
-                </div>
-                                    @endif
+                                                </div>
+                                                @if($sliderProjects[$i]->category)
+                                                    <span class="text-xs text-gray-500 uppercase">{{ strtoupper($sliderProjects[$i]->category->name) }}</span>
+                                                @endif
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <!-- Second Project (3 columns) -->
                                     @if(isset($sliderProjects[$i + 1]))
-                                        <div class="w-1/2">
+                                        <div class="md:col-span-3 overflow-hidden">
                                             <a href="{{ route('work.show', $sliderProjects[$i + 1]->slug) }}" class="group cursor-pointer block">
                                                 <div class="relative overflow-hidden mb-4">
                                                     @if($sliderProjects[$i + 1]->main_image)
@@ -166,24 +166,24 @@
                                                     @else
                                                         <img src="https://via.placeholder.com/600x800/CCCCCC/FFFFFF?text={{ urlencode($sliderProjects[$i + 1]->title) }}" 
                                                              alt="{{ $sliderProjects[$i + 1]->title }}" 
-                             class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
+                                                             class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
                                                     @endif
-                    </div>
-                    <div class="flex justify-between items-start">
-                        <div>
+                                                </div>
+                                                <div class="flex justify-between items-start">
+                                                    <div>
                                                         <h3 class="font-semibold text-sm uppercase mb-1">{{ strtoupper($sliderProjects[$i + 1]->title) }}</h3>
                                                         @if($sliderProjects[$i + 1]->location)
                                                             <p class="text-xs text-gray-600 uppercase">{{ strtoupper($sliderProjects[$i + 1]->location) }}</p>
                                                         @endif
-                        </div>
+                                                    </div>
                                                     @if($sliderProjects[$i + 1]->category)
                                                         <span class="text-xs text-gray-500 uppercase">{{ strtoupper($sliderProjects[$i + 1]->category->name) }}</span>
                                                     @endif
-                    </div>
+                                                </div>
                                             </a>
-                </div>
+                                        </div>
                                     @endif
-                    </div>
+                                </div>
                             @endfor
                         </div>
                     </div>
@@ -191,15 +191,15 @@
                     <!-- Navigation Buttons -->
                     @if($sliderProjects->count() > 2)
                         <button @click="prevSlide()" 
-                                class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-[#1b304e] p-3 rounded-full shadow-lg transition z-10">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 text-[#1b304e]/90 hover:text-[#1b304e] transition cursor-pointer">
+                            <svg class="w-8 h-8 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path>
                             </svg>
                         </button>
                         <button @click="nextSlide()" 
-                                class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-[#1b304e] p-3 rounded-full shadow-lg transition z-10">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 text-[#1b304e]/90 hover:text-[#1b304e] transition cursor-pointer">
+                            <svg class="w-8 h-8 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path>
                             </svg>
                         </button>
                     @endif
@@ -213,19 +213,19 @@
         <div class="container mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-16">
                 <div class="md:col-span-3">
-                    <h2 class="text-4xl md:text-5xl font-bold text-[#d3924f] mb-8">Expertise</h2>
+                    <h2 class="text-3xl md:text-4xl font-medium text-[#d3924f] mb-8">Expertise</h2>
                 </div>
                 <div class="md:col-span-9 -mt-4">
                     <ul class="space-y-0" x-data="{ openId: null }">
                         @foreach($categories as $index => $category)
-                            <li class="py-8 {{ $index < $categories->count() - 1 ? 'border-b border-white/10' : '' }}">
+                            <li class="py-8 {{ $index < $categories->count() - 1 ? 'border-b-2 border-[#CCE2FF]' : '' }}">
                                 <button
                                     type="button"
                                     class="w-full text-left leading-tight flex items-center justify-between gap-6 cursor-pointer group"
                                     @click="openId === {{ $category->id }} ? openId = null : openId = {{ $category->id }}"
                                     :aria-expanded="openId === {{ $category->id }}"
                                 >
-                                    <span class="text-3xl md:text-4xl font-light group-hover:text-[#d3924f] transition-colors">{{ $category->name }}</span>
+                                    <span class="text-3xl md:text-4xl font-light text-[#CCE2FF] group-hover:text-[#d3924f] transition-colors">{{ $category->name }}</span>
                                 </button>
                                 @if(!empty($category->subtitle))
                                     <div
@@ -239,11 +239,11 @@
                                         class="mt-2 flex items-center justify-between"
                                         style="display: none;"
                                     >
-                                        <a href="/work?category={{ $category->id }}" class="text-lg md:text-xl text-[#dfdfbb] inline-flex items-baseline hover:underline">
+                                        <a href="/work?category={{ $category->id }}" class="text-lg md:text-xl text-[#dfdfbb] inline-flex items-baseline hover:text-[#d3924f] transition cursor-pointer">
                                             <span class="opacity-80">›</span>
                                             <span class="ml-2">{{ $category->subtitle }}</span>
                                         </a>
-                                        <a href="/work?category={{ $category->id }}" class="inline-flex items-center text-white hover:text-[#d3924f] transition">
+                                        <a href="/work?category={{ $category->id }}" class="inline-flex items-center text-white hover:text-[#d3924f] transition cursor-pointer">
                                             <span class="mr-2">GO TO THE PROJECTS</span>
                                             <svg class="w-4 h-4 text-[#d3924f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -273,7 +273,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 @if(isset($magazineArticles) && $magazineArticles->count() > 0)
                     @foreach($magazineArticles as $article)
-                    <a href="#" class="group cursor-pointer">
+                    <a href="#" class="group cursor-pointer block">
                         <div class="relative overflow-hidden mb-4 h-[500px]">
                             <!-- Background color extending 9/10 of image height (90%) -->
                             <div class="absolute inset-0 bg-[#d3924f] z-0" style="height: 90%;"></div>

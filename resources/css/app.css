@@ -8,6 +8,10 @@
 @theme {
     --font-sans: 'Ubuntu', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    
+    --color-primary: #1b304e;
+    --color-secondary: #dfdfbb;
+    --color-tertiary: #d3924f;
 }
 
 /* Custom styles */
@@ -21,4 +25,10 @@ body {
 
 .header-logo-container {
     height: 100px;
+}
+
+@layer utilities {
+  .h-8 {
+    height: calc(var(--spacing)*25);
+  }
 }
