@@ -29,37 +29,42 @@
     <!-- Project Overview Section -->
     <section class="bg-white py-8 px-8">
         <div class="container mx-auto">
-            <!-- Top Bar -->
-            <div class="flex justify-between items-center mb-8">
-                <div class="text-sm text-gray-500">Projects</div>
-                @if($project->category)
-                    <a href="/work?category={{ $project->category->id }}" class="bg-[#d3924f] text-white px-4 py-2 text-sm font-medium hover:bg-[#b87a3d] transition cursor-pointer">
-                        {{ strtoupper($project->category->name) }}
-                    </a>
-                @endif
-            </div>
-            
-            <!-- Main Image - Full Width with Overlay Title -->
-            <div class="mb-8 h-[600px] overflow-hidden relative">
-                @if($project->main_image)
-                    <img src="{{ asset('storage/' . $project->main_image) }}" 
-                         alt="{{ $project->title }}" 
-                         class="w-full h-full object-cover object-center">
-                @else
-                    <img src="https://via.placeholder.com/1200x600/87CEEB/FFFFFF?text={{ urlencode($project->title) }}" 
-                         alt="{{ $project->title }}" 
-                         class="w-full h-full object-cover object-center">
-                @endif
-                <!-- Title Overlay - Bottom Left -->
-                <div class="absolute bottom-0 left-0 bg-white px-6 py-4 w-1/2">
-                    <h1 class="text-4xl font-bold text-[#1b304e] leading-tight">{{ $project->title }}</h1>
+            <!-- Top area: same 12-col grid, content in columns 2-11 -->
+            <div class="grid grid-cols-1 lg:grid-cols-12">
+                <div class="lg:col-start-2 lg:col-span-10">
+                    <!-- Top Bar -->
+                    <div class="flex justify-between items-center mb-8">
+                        <div class="text-sm text-gray-500">Projects</div>
+                        @if($project->category)
+                            <a href="/work?category={{ $project->category->id }}" class="bg-[#d3924f] text-white px-4 py-2 text-sm font-medium hover:bg-[#b87a3d] transition cursor-pointer">
+                                {{ strtoupper($project->category->name) }}
+                            </a>
+                        @endif
+                    </div>
+                    
+                    <!-- Main Image with Overlay Title -->
+                    <div class="mb-8 h-[600px] overflow-hidden relative">
+                        @if($project->main_image)
+                            <img src="{{ asset('storage/' . $project->main_image) }}" 
+                                 alt="{{ $project->title }}" 
+                                 class="w-full h-full object-cover object-center">
+                        @else
+                            <img src="https://via.placeholder.com/1200x600/87CEEB/FFFFFF?text={{ urlencode($project->title) }}" 
+                                 alt="{{ $project->title }}" 
+                                 class="w-full h-full object-cover object-center">
+                        @endif
+                        <!-- Title Overlay - Bottom Left -->
+                        <div class="absolute bottom-0 left-0 bg-white px-6 py-4 w-1/2">
+                            <h1 class="text-4xl font-bold text-[#1b304e] leading-tight">{{ $project->title }}</h1>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <!-- Content Grid: Description Left, Metadata Right -->
+            <!-- Content Grid: Description Left, Metadata Right (first and last column empty) -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                <!-- Description - Left Side (6 columns / 50%) -->
-                <div class="lg:col-span-6">
+                <!-- Description - Left Side (columns 2-6) -->
+                <div class="lg:col-span-5 lg:col-start-2">
                     @if($project->short_description)
                         <div class="text-gray-700 mb-6 prose max-w-none text-base leading-relaxed">
                             {!! $project->short_description !!}
@@ -67,8 +72,8 @@
                     @endif
                 </div>
                 
-                <!-- Right Side - Split into 2 sections of 3 columns each -->
-                <!-- First section (3 columns) - GO TO Project Development -->
+                <!-- Right Side - Split into 2 sections -->
+                <!-- First section (columns 7-9) - GO TO Project Development -->
                 <div class="lg:col-span-3">
                     <a href="#development" class="text-[#1b304e] hover:opacity-80 transition inline-block cursor-pointer">
                         <div class="text-lg font-bold">GO TO</div>
@@ -81,8 +86,8 @@
                     </a>
                 </div>
                 
-                <!-- Second section (3 columns) - Project Metadata -->
-                <div class="lg:col-span-3 space-y-4">
+                <!-- Second section (columns 10-11, column 12 empty) - Project Metadata -->
+                <div class="lg:col-span-2 space-y-4">
                     @if($project->sector)
                         <div>
                             <span class="text-sm text-gray-500">Sector:</span>
@@ -112,23 +117,29 @@
         </div>
     </section>
 
-    <!-- Quote Section -->
+    <!-- Quote Section (columns 2-11) -->
     @if($project->quote)
         <section class="bg-[#dfdfbb] py-12 px-8">
             <div class="container mx-auto">
-                <div class="bg-[#dfdfbb] p-8">
-                    <p class="text-4xl text-[#1b304e] leading-tight text-center">
-                        {{ $project->quote }}
-                    </p>
+                <div class="grid grid-cols-1 lg:grid-cols-12">
+                    <div class="lg:col-start-2 lg:col-span-10">
+                        <div class="bg-[#dfdfbb] p-8">
+                            <p class="text-4xl text-[#1b304e] leading-tight text-center">
+                                {{ $project->quote }}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     @endif
 
-    <!-- Image Gallery - Horizontal Scroll -->
+    <!-- Image Gallery - Horizontal Scroll (columns 2-11) -->
     @if($project->image_gallery && count($project->image_gallery) > 0)
         <section class="py-12 px-8 bg-white">
             <div class="container mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-12">
+                    <div class="lg:col-start-2 lg:col-span-10">
                 <div class="relative" 
                      x-data="{ 
                          currentIndex: 0,
@@ -199,14 +210,18 @@
                         </div>
                     @endif
                 </div>
+                    </div>
+                </div>
             </div>
         </section>
     @endif
 
-    <!-- Project Development Section -->
+    <!-- Project Development Section (columns 2-11) -->
     @if($project->description)
         <section id="development" class="py-12 px-8 bg-white border-b" style="border-bottom-color: #dfdfbb;">
             <div class="container mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-12">
+                    <div class="lg:col-start-2 lg:col-span-10">
                 <h2 class="text-3xl font-bold mb-8 border-b" style="border-bottom-color: #dfdfbb; padding-bottom: 1.5rem;">Project development</h2>
                 <div class="mb-12">
                     <div class="description-column text-gray-700 text-base leading-relaxed">
@@ -286,6 +301,8 @@
                                 </li>
                             @endif
                         </ul>
+                    </div>
+                </div>
                     </div>
                 </div>
             </div>

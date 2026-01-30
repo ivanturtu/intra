@@ -21,10 +21,10 @@
                 @endif
             </div>
 
-            <!-- Main Content: Profile + Biography -->
+            <!-- Main Content: Profile + Biography (first and last column empty) -->
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
-                <!-- Left Column: Rosa's Profile (3 columns) -->
-                <div class="md:col-span-3">
+                <!-- Left Column: Rosa's Profile (columns 2-4) -->
+                <div class="md:col-span-3 md:col-start-2">
                     @if($rosa->photo)
                         <img src="{{ asset('storage/' . $rosa->photo) }}" 
                              alt="{{ $rosa->name }} {{ $rosa->surname }}" 
@@ -66,8 +66,8 @@
                     </a>
                 </div>
 
-                <!-- Right Column: Biography and Projects (9 columns) -->
-                <div class="md:col-span-7 md:col-start-5 space-y-8">
+                <!-- Right Column: Biography and Projects (columns 6-11) -->
+                <div class="md:col-span-6 md:col-start-6 space-y-8">
                     @if($rosa->incipit)
                         <div class="prose prose-lg max-w-none text-[#dfdfbb]" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">
                             {!! $rosa->incipit !!}
@@ -144,8 +144,8 @@
                 @foreach($youngWorks as $index => $youngWork)
                 <div class="{{ $index > 0 ? 'border-t border-[#d3924f] pt-8 mt-8' : '' }}">
                     <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-                        <!-- Image (Left) -->
-                        <div class="md:col-span-5">
+                        <!-- Image (Left, columns 2-5) -->
+                        <div class="md:col-span-4 md:col-start-2">
                             @if($youngWork->main_image)
                                 <img src="{{ asset('storage/' . $youngWork->main_image) }}" 
                                      alt="{{ $youngWork->title }}" 
@@ -157,8 +157,8 @@
                             @endif
                         </div>
                         
-                        <!-- Content (Right) -->
-                        <div class="md:col-span-7 flex flex-col">
+                        <!-- Content (Right, columns 6-11, column 12 empty) -->
+                        <div class="md:col-span-6 flex flex-col">
                             <div class="mb-4">
                                 <h3 class="text-lg font-bold text-[#1b304e] mb-2">{{ $youngWork->title }}</h3>
                                 <p class="text-xs text-[#1b304e] mb-2">Short description</p>
