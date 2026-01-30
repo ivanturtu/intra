@@ -21,16 +21,16 @@
                 @endif
             </div>
 
-            <!-- Main Content: Profile + Biography (first and last column empty) -->
+            <!-- Main Content: Profile + Biography -->
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
-                <!-- Left Column: Rosa's Profile (columns 2-4) -->
-                <div class="md:col-span-3 md:col-start-2">
+                <!-- Left Column: Rosa's Profile (3 columns) -->
+                <div class="md:col-span-3">
                     @if($rosa->photo)
                         <img src="{{ asset('storage/' . $rosa->photo) }}" 
                              alt="{{ $rosa->name }} {{ $rosa->surname }}" 
-                             class="w-48 h-48 object-cover rounded-full mb-6">
+                             class="w-full aspect-square object-cover mb-6">
                     @else
-                        <div class="w-48 h-48 bg-gray-200 rounded-full mb-6 flex items-center justify-center text-gray-400">
+                        <div class="w-full aspect-square bg-gray-200 mb-6 flex items-center justify-center text-gray-400">
                             No Photo
                         </div>
                     @endif
@@ -66,15 +66,15 @@
                     </a>
                 </div>
 
-                <!-- Right Column: Biography and Projects (columns 6-11) -->
-                <div class="md:col-span-6 md:col-start-6 space-y-8">
+                <!-- Right Column: Biography and Projects (9 columns) -->
+                <div class="md:col-span-7 md:col-start-5 space-y-8">
                     @if($rosa->incipit)
                         <div class="prose prose-lg max-w-none text-[#dfdfbb]" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">
                             {!! $rosa->incipit !!}
                         </div>
                     @endif
                     @if($rosa->description)
-                        <div class="prose prose-lg max-w-none text-[#1b304e]">
+                        <div class="prose max-w-none text-[#1b304e] text-xl leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ul]:my-4 [&_ol]:my-4">
                             {!! $rosa->description !!}
                         </div>
                     @endif
@@ -144,8 +144,8 @@
                 @foreach($youngWorks as $index => $youngWork)
                 <div class="{{ $index > 0 ? 'border-t border-[#d3924f] pt-8 mt-8' : '' }}">
                     <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-                        <!-- Image (Left, columns 2-5) -->
-                        <div class="md:col-span-4 md:col-start-2">
+                        <!-- Image (Left) -->
+                        <div class="md:col-span-5">
                             @if($youngWork->main_image)
                                 <img src="{{ asset('storage/' . $youngWork->main_image) }}" 
                                      alt="{{ $youngWork->title }}" 
@@ -157,8 +157,8 @@
                             @endif
                         </div>
                         
-                        <!-- Content (Right, columns 6-11, column 12 empty) -->
-                        <div class="md:col-span-6 flex flex-col">
+                        <!-- Content (Right) -->
+                        <div class="md:col-span-7 flex flex-col">
                             <div class="mb-4">
                                 <h3 class="text-lg font-bold text-[#1b304e] mb-2">{{ $youngWork->title }}</h3>
                                 <p class="text-xs text-[#1b304e] mb-2">Short description</p>

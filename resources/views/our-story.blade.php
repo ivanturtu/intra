@@ -14,13 +14,13 @@
                     @if($mainTeamLead->photo)
                         <img src="{{ asset('storage/' . $mainTeamLead->photo) }}" 
                              alt="{{ $mainTeamLead->name }} {{ $mainTeamLead->surname }}" 
-                             class="w-48 h-48 object-cover rounded-full mb-6">
+                             class="w-full aspect-square object-cover mb-6">
                     @else
-                        <div class="w-48 h-48 bg-gray-200 rounded-full mb-6 flex items-center justify-center text-gray-400">
+                        <div class="w-full aspect-square bg-gray-200 mb-6 flex items-center justify-center text-gray-400">
                             No Photo
                         </div>
                     @endif
-                    <h3 class="text-2xl font-bold text-[#d3924f] mb-2">
+                    <h3 class="text-4xl font-bold text-[#dfdfbb] mb-2">
                         {{ $mainTeamLead->name }} {{ $mainTeamLead->surname }}
                     </h3>
                     @if($mainTeamLead->role)
@@ -36,7 +36,7 @@
                     @endif
                     @if($mainTeamLead)
                         <a href="{{ route('rosa-profile') }}" 
-                           class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition cursor-pointer">
+                           class="inline-flex items-center text-[#d3924f] hover:text-[#d3924f]/80 transition cursor-pointer">
                             <span class="mr-2">GO TO {{ strtoupper($mainTeamLead->name) }}'S PROFILE</span>
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -54,7 +54,7 @@
                         </div>
                     @endif
                     @if($ourStory->description)
-                        <div class="prose prose-lg max-w-none">
+                        <div class="prose max-w-none text-xl leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ul]:my-4 [&_ol]:my-4">
                             {!! $ourStory->description !!}
                         </div>
                     @endif
@@ -68,9 +68,9 @@
 
             <!-- Highlight Section (Orange Background) -->
             @if($ourStory->highlight)
-            <div class="bg-[#d3924f] text-white py-12 px-8 mb-16 flex items-center justify-center min-h-[200px]">
-                <div class="container mx-auto">
-                    <div class="prose prose-lg max-w-none text-white text-center" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">
+            <div class="bg-[#d3924f] text-white p-20 mb-16 flex items-center justify-center min-h-[240px]">
+                <div class="container mx-auto flex items-center justify-center">
+                    <div class="prose prose-lg max-w-none text-white text-center [&>*:last-child]:mb-0" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">
                         {!! $ourStory->highlight !!}
                     </div>
                 </div>
@@ -85,9 +85,9 @@
                     @if($teamLead->photo)
                         <img src="{{ asset('storage/' . $teamLead->photo) }}" 
                              alt="{{ $teamLead->name }} {{ $teamLead->surname }}" 
-                             class="w-32 h-32 object-cover rounded-full mb-4">
+                             class="w-full aspect-square object-cover mb-4">
                     @else
-                        <div class="w-32 h-32 bg-gray-200 rounded-full mb-4 flex items-center justify-center text-gray-400 text-xs">
+                        <div class="w-full aspect-square bg-gray-200 mb-4 flex items-center justify-center text-gray-400 text-xs">
                             No Photo
                         </div>
                     @endif
