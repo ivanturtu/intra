@@ -91,7 +91,7 @@
                             No Photo
                         </div>
                     @endif
-                    <h4 class="text-2xl font-bold text-[#d3924f] mb-2">
+                    <h4 class="text-[clamp(24px,2.2vw,34px)] leading-[0.95] font-bold text-secondary/60 mb-2">
                         {{ $teamLead->name }} {{ $teamLead->surname }}
                     </h4>
                     @if($teamLead->role)
