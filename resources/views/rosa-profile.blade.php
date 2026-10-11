@@ -3,190 +3,162 @@
 @section('content')
     @include('partials.header')
 
+    @php
+        // Same type styles as the Rosa block on Our Story (1920px artboard)
+        $nameLarge = 'text-[3.5rem] md:text-[5rem] leading-[1.175] font-medium text-secondary -ml-[0.5rem] md:whitespace-nowrap';
+        $role = 'text-[1.5rem] md:text-[1.875rem] leading-[3rem] font-medium tracking-[0.006em] text-primary';
+        $qualification = 'text-[1.25rem] md:text-[1.5rem] leading-[1.875rem] font-light text-primary';
+        $email = 'text-[1.5rem] md:text-[1.875rem] leading-[3rem] tracking-[0.006em] text-primary';
+        $arrowUpRight = '<svg class="w-[1rem] h-[1rem] text-tertiary shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9"/></svg>';
+        $youngWorksPerPage = 4;
+        $youngWorksPages = $youngWorks ? (int) ceil($youngWorks->count() / $youngWorksPerPage) : 0;
+    @endphp
+
     <!-- Rosa's Profile Section -->
-    <section class="bg-white pt-20 pb-8 px-8">
-        <div class="container mx-auto">
-            <!-- Top Header with Navigation and Quote -->
-            <div class="mb-16">
-                <div class="flex items-center justify-between mb-8">
-                    <div class="flex items-center gap-4 text-[#1b304e]">
-                        <a href="{{ route('our-story') }}" class="text-sm hover:underline cursor-pointer">| OUR STORY</a>
-                        <a href="{{ route('rosa-profile') }}" class="text-sm font-bold cursor-pointer">| ROSA'S PROFILE</a>
+    <section class="bg-white">
+        <div class="site-container site-grid gap-y-12">
+            <!-- Left Column: Rosa's Profile (columns 1-3) -->
+            <div class="col-span-12 md:col-span-3 pt-[1.1875rem]">
+                @if($rosa->photo)
+                    <img src="{{ asset('storage/' . $rosa->photo) }}"
+                         alt="{{ $rosa->name }} {{ $rosa->surname }}"
+                         class="w-full aspect-[397/491] object-cover">
+                @else
+                    <div class="w-full aspect-[397/491] bg-gray-200 flex items-center justify-center text-gray-400">
+                        No Photo
                     </div>
-                </div>
-                @if($rosa->quote)
-                    <div class="text-[#d3924f] text-right" style="font-size: clamp(1.5rem, 3vw, 2.5rem); line-height: 1.3;">
-                        {!! $rosa->quote !!}
-                    </div>
+                @endif
+                <h1 class="mt-[1.875rem] {{ $nameLarge }}">
+                    {{ $rosa->name }} {{ $rosa->surname }}
+                </h1>
+                @if($rosa->role)
+                    <p class="mt-[0.425rem] {{ $role }}">{{ $rosa->role }}</p>
+                @endif
+                @if($rosa->qualification)
+                    <p class="mt-[0.45rem] {{ $qualification }}">{{ $rosa->qualification }}</p>
+                @endif
+                @if($rosa->email)
+                    <p class="mt-[1.3rem] {{ $email }}">
+                        <a href="mailto:{{ $rosa->email }}" class="hover:text-tertiary transition cursor-pointer">{{ $rosa->email }}</a>
+                    </p>
+                @endif
+                @if($youngWorks && $youngWorks->count() > 0)
+                    <a href="#young-works" class="mt-[2.27rem] inline-flex items-center gap-[0.625rem] text-[1.5rem] leading-[1.875rem] font-medium uppercase text-tertiary hover:text-primary transition cursor-pointer">
+                        Young works
+                        <svg class="w-[1.125rem] h-[1.125rem]" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9"/></svg>
+                    </a>
                 @endif
             </div>
 
-            <!-- Main Content: Profile + Biography -->
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
-                <!-- Left Column: Rosa's Profile (3 columns) -->
-                <div class="md:col-span-3">
-                    @if($rosa->photo)
-                        <img src="{{ asset('storage/' . $rosa->photo) }}" 
-                             alt="{{ $rosa->name }} {{ $rosa->surname }}" 
-                             class="w-full aspect-square object-cover mb-6">
-                    @else
-                        <div class="w-full aspect-square bg-gray-200 mb-6 flex items-center justify-center text-gray-400">
-                            No Photo
+            <!-- Right Column: quote + biography (columns 5-11), resume link (column 12) -->
+            <div class="col-span-12 md:col-start-5 md:col-span-8 md:pt-[12.4375rem] pb-[3.25rem]">
+                <div class="grid grid-cols-8 gap-x-[1rem]">
+                    @if($rosa->quote)
+                        <div class="col-span-8 md:col-span-7 text-secondary text-[2.5rem] leading-[2.875rem] md:text-[3.5rem] md:leading-[4rem] [&_p]:m-0">
+                            {!! $rosa->quote !!}
                         </div>
                     @endif
-                    <h1 class="text-3xl font-bold text-[#d3924f] mb-2">
-                        {{ $rosa->name }} {{ $rosa->surname }}
-                    </h1>
-                    @if($rosa->role)
-                        <p class="text-lg text-[#1b304e] mb-2">{{ $rosa->role }}</p>
-                    @endif
-                    @if($rosa->qualification)
-                        <p class="text-sm text-[#1b304e]/70 mb-4 leading-relaxed">{{ $rosa->qualification }}</p>
-                    @endif
-                    @if($rosa->full_resume)
-                        <div class="mb-6">
-                            <a href="{{ asset('storage/' . $rosa->full_resume) }}" target="_blank" class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition text-sm cursor-pointer">
-                                <span class="mr-2">DOWNLOAD<br>complete Resume</span>
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    @endif
-                    @if($rosa->email)
-                        <p class="text-sm text-[#1b304e] mb-6">
-                            <a href="mailto:{{ $rosa->email }}" class="hover:underline cursor-pointer">{{ $rosa->email }}</a>
-                        </p>
-                    @endif
-                    <a href="#young-works" class="inline-flex items-center text-[#d3924f] hover:text-[#d3924f]/80 transition cursor-pointer">
-                        <span class="mr-2">YOUNG WORKS</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                        </svg>
-                    </a>
-                </div>
-
-                <!-- Right Column: Biography and Projects (9 columns) -->
-                <div class="md:col-span-7 md:col-start-5 space-y-8">
                     @if($rosa->incipit)
-                        <div class="prose prose-lg max-w-none text-[#dfdfbb]" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">
+                        <div class="col-span-8 md:col-span-7 {{ $rosa->quote ? 'mt-[2rem]' : '' }} text-secondary text-[2.5rem] leading-[2.875rem] md:text-[3.5rem] md:leading-[4rem] [&_p]:m-0">
                             {!! $rosa->incipit !!}
                         </div>
                     @endif
+
                     @if($rosa->description)
-                        <div class="prose max-w-none text-[#1b304e] text-xl leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ul]:my-4 [&_ol]:my-4">
+                        <div class="col-span-8 md:col-span-7 mt-[2rem] text-[1.5rem] leading-[1.875rem] md:text-[1.875rem] md:leading-[2.25rem] font-light text-primary [overflow-wrap:anywhere] [&_p]:mb-[2.25rem] [&_p:last-child]:mb-0 [&_strong]:font-medium [&_b]:font-medium [&_em]:italic [&_ul]:my-[2.25rem] [&_ol]:my-[2.25rem]">
                             {!! $rosa->description !!}
                         </div>
                     @endif
 
-                    @if($rosa->resume_link)
-                        <div class="text-right">
-                            <a href="{{ $rosa->resume_link }}" target="_blank" class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition text-sm cursor-pointer">
-                                <span class="mr-2">DOWNLOAD complete Resume</span>
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                                </svg>
+                    @if($rosa->full_resume || $rosa->resume_link)
+                        <div class="col-span-8 md:col-span-1 mt-8 md:mt-[2rem]">
+                            <a href="{{ $rosa->full_resume ? asset('storage/' . $rosa->full_resume) : $rosa->resume_link }}" target="_blank" rel="noopener"
+                               class="inline-flex items-end gap-[0.375rem] text-primary hover:text-tertiary transition cursor-pointer">
+                                <span class="text-[0.875rem] leading-[1.0625rem] whitespace-nowrap">
+                                    <span class="block font-medium uppercase">Download</span>
+                                    complete Resume
+                                </span>
+                                {!! $arrowUpRight !!}
                             </a>
                         </div>
                     @endif
-
-                    @if($rosaProjects->count() > 0)
-                        <div>
-                            <h3 class="text-xl font-semibold text-[#1b304e] mb-4">Her recent relevant projects include:</h3>
-                            <ul class="space-y-4 text-[#1b304e]">
-                                @foreach($rosaProjects as $project)
-                                <li class="flex flex-col">
-                                    <div class="font-semibold">{{ $project->title }}{!! $project->location ? ', ' . $project->location : '' !!}</div>
-                                    @if($project->short_description)
-                                        <div class="text-sm mt-1">{!! strip_tags($project->short_description) !!}</div>
-                                    @endif
-                                    <div class="text-sm mt-1">
-                                        @if($project->year)
-                                            {{ $project->year }}
-                                        @endif
-                                        @if($project->year && $project->sector)
-                                            -
-                                        @endif
-                                        @if($project->sector)
-                                            {{ $project->sector }}
-                                        @endif
-                                        @if($project->intraStudioTeamLeads->count() > 0)
-                                            . Role: {{ $project->intraStudioTeamLeads->pluck('role')->filter()->first() ?? 'Team Lead' }}
-                                        @endif
-                                    </div>
-                                </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    <!-- Young Works Title -->
-                    @if($youngWorks && $youngWorks->count() > 0)
-                    <div class="mt-8">
-                        <h2 class="text-xl md:text-2xl font-bold text-[#d3924f] inline-flex items-center">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                            YOUNG WORKS
-                        </h2>
-                    </div>
-                    @endif
                 </div>
+
+                <!-- Young Works Title (arrow hangs in the gutter left of column 5) -->
+                @if($youngWorks && $youngWorks->count() > 0)
+                    <h2 class="relative mt-[4.8rem] text-[2.25rem] md:text-[3rem] leading-[3.5rem] uppercase text-tertiary">
+                        <svg class="absolute -left-[3.25rem] top-1/2 -translate-y-1/2 w-[1.75rem] h-[1.75rem] hidden md:block" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 4v16M5 13l7 7 7-7"/></svg>
+                        Young works
+                    </h2>
+                @endif
             </div>
         </div>
     </section>
 
-    <!-- Young Works Section - Full Width -->
+    <!-- Young Works Section: image on columns 1-3, text on columns 5-12, 4 works per page -->
     @if($youngWorks && $youngWorks->count() > 0)
-    <section id="young-works" class="bg-[#dfdfbb] py-12 px-8 w-full">
-        <div class="container mx-auto">
-            <div class="space-y-0">
-                @foreach($youngWorks as $index => $youngWork)
-                <div class="{{ $index > 0 ? 'border-t border-[#d3924f] pt-8 mt-8' : '' }}">
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-                        <!-- Image (Left) -->
-                        <div class="md:col-span-5">
-                            @if($youngWork->main_image)
-                                <img src="{{ asset('storage/' . $youngWork->main_image) }}" 
-                                     alt="{{ $youngWork->title }}" 
-                                     class="w-full h-[400px] object-cover">
-                            @else
-                                <div class="w-full h-[400px] bg-gray-200 flex items-center justify-center text-gray-400">
-                                    No Image
-                                </div>
+    <section id="young-works" class="bg-[#f2f2e4] pt-[5.8125rem] pb-[3.75rem] scroll-mt-[8.125rem]"
+             x-data="{ page: 0, pages: {{ $youngWorksPages }} }">
+        <div class="site-container">
+            @foreach($youngWorks as $index => $youngWork)
+            <div x-show="page === {{ intdiv($index, $youngWorksPerPage) }}"
+                 class="site-grid gap-y-6 pb-[2rem] mb-[2rem] border-b-2 border-tertiary">
+                <!-- Image (columns 1-3) -->
+                <div class="col-span-12 md:col-span-3 h-[16.9375rem]">
+                    @if($youngWork->main_image)
+                        <img src="{{ asset('storage/' . $youngWork->main_image) }}"
+                             alt="{{ $youngWork->title }}"
+                             class="w-full h-full object-cover">
+                    @else
+                        <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
+                            No Image
+                        </div>
+                    @endif
+                </div>
+
+                <!-- Content (columns 5-12) -->
+                <div class="col-span-12 md:col-start-5 md:col-span-8 flex flex-col text-primary">
+                    <h3 class="text-[2.25rem] leading-[2.75rem] font-medium">{{ $youngWork->title }}</h3>
+                    @if($youngWork->short_description)
+                        <div class="mt-[1.28rem] md:w-[calc((100%-7rem)/8*7+6rem)] text-[1.5rem] leading-[1.875rem] font-light [&_p]:m-0">
+                            {!! $youngWork->short_description !!}
+                        </div>
+                    @endif
+                    <div class="mt-6 md:mt-auto pt-4 flex items-end justify-between gap-6 text-[1.125rem] leading-[1.375rem]">
+                        <p>
+                            @if($youngWork->client)
+                                Courtesy <span class="font-medium uppercase">{{ $youngWork->client }}©</span>
                             @endif
-                        </div>
-                        
-                        <!-- Content (Right) -->
-                        <div class="md:col-span-7 flex flex-col">
-                            <div class="mb-4">
-                                <h3 class="text-lg font-bold text-[#1b304e] mb-2">{{ $youngWork->title }}</h3>
-                                <p class="text-xs text-[#1b304e] mb-2">Short description</p>
-                                @if($youngWork->short_description)
-                                    <div class="prose prose-sm max-w-none text-[#1b304e] mb-3 text-sm">
-                                        {!! $youngWork->short_description !!}
-                                    </div>
-                                @endif
-                                @if($youngWork->client)
-                                    <p class="text-xs text-[#1b304e] mb-4">Courtesy {{ $youngWork->client }}©</p>
-                                @endif
-                            </div>
-                            <div class="mt-auto">
-                                <div class="flex justify-end">
-                                    <a href="{{ route('work.show', $youngWork->slug) }}" class="inline-flex items-center text-[#1b304e] hover:text-[#d3924f] transition cursor-pointer">
-                                        <span class="mr-2">GO TO THE PROJECT</span>
-                                        <svg class="w-4 h-4 text-[#d3924f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                                        </svg>
-                                    </a>
-                                </div>
-                                <div class="border-b border-[#d3924f] mt-2"></div>
-                            </div>
-                        </div>
+                        </p>
+                        <a href="{{ route('work.show', $youngWork->slug) }}" class="shrink-0 inline-flex items-center gap-[0.5rem] uppercase hover:text-tertiary transition cursor-pointer">
+                            <span><span class="font-medium">Go to the</span> Project</span>
+                            {!! $arrowUpRight !!}
+                        </a>
                     </div>
                 </div>
-                @endforeach
             </div>
+            @endforeach
+
+            <!-- Pagination -->
+            @if($youngWorksPages > 1)
+            <div class="flex items-center justify-center gap-[1.25rem] pt-[1rem] text-primary">
+                <button @click="page = Math.max(0, page - 1)" :disabled="page === 0"
+                        class="disabled:opacity-30 disabled:cursor-not-allowed hover:text-tertiary transition cursor-pointer" aria-label="Previous page">
+                    <svg class="w-[2rem] h-[1rem]" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 32 16"><path d="M31 8H1M8 1L1 8l7 7"/></svg>
+                </button>
+                <div class="flex items-center gap-[0.5rem]">
+                    @for($p = 0; $p < $youngWorksPages; $p++)
+                        <button @click="page = {{ $p }}"
+                                :class="page === {{ $p }} ? 'bg-primary' : 'bg-primary/30'"
+                                class="w-[0.3125rem] h-[0.3125rem] rounded-full transition cursor-pointer" aria-label="Page {{ $p + 1 }}"></button>
+                    @endfor
+                </div>
+                <button @click="page = Math.min(pages - 1, page + 1)" :disabled="page === pages - 1"
+                        class="disabled:opacity-30 disabled:cursor-not-allowed hover:text-tertiary transition cursor-pointer" aria-label="Next page">
+                    <svg class="w-[2rem] h-[1rem]" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 32 16"><path d="M1 8h30M24 1l7 7-7 7"/></svg>
+                </button>
+            </div>
+            @endif
         </div>
     </section>
     @endif

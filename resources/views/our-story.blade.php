@@ -3,110 +3,111 @@
 @section('content')
     @include('partials.header')
 
+    @php
+        // Shared type styles from the Our Story artboard (1920px)
+        $nameLarge = 'text-[3.5rem] md:text-[5rem] leading-[1.175] font-medium text-secondary -ml-[0.5rem] md:whitespace-nowrap';
+        $nameSmall = 'text-[2.75rem] md:text-[3.75rem] leading-[1.5667] font-medium text-secondary -ml-[0.5rem] md:whitespace-nowrap';
+        $role = 'text-[1.5rem] md:text-[1.875rem] leading-[3rem] font-medium tracking-[0.006em] text-primary';
+        $qualification = 'text-[1.25rem] md:text-[1.5rem] leading-[1.875rem] font-light text-primary';
+        $email = 'text-[1.5rem] md:text-[1.875rem] leading-[3rem] tracking-[0.006em] text-primary';
+        $body = 'text-[1.5rem] leading-[1.875rem] md:text-[1.875rem] md:leading-[2.25rem] font-light text-primary [&_p]:mb-[2.25rem] [&_p:last-child]:mb-0 [&_strong]:font-medium [&_b]:font-medium';
+    @endphp
+
     <!-- Our Story Section -->
-    <section class="our-story bg-white py-20 px-8">
-        <div class="container mx-auto">
-            <!-- Top Section: Main Team Lead + Intro/Description -->
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
-                <!-- Main Team Lead (Left) -->
+    <section class="our-story bg-white pb-[12.5rem]">
+        <div class="site-container">
+            <!-- Top Section: Main Team Lead (columns 1-3) + Intro/Description (columns 5-11) -->
+            <div class="site-grid gap-y-12">
                 @if($mainTeamLead)
-                <div class="md:col-span-3">
+                <div class="col-span-12 md:col-span-3 pt-[1.1875rem]">
                     @if($mainTeamLead->photo)
-                        <img src="{{ asset('storage/' . $mainTeamLead->photo) }}" 
-                             alt="{{ $mainTeamLead->name }} {{ $mainTeamLead->surname }}" 
-                             class="w-full aspect-square object-cover mb-8">
+                        <img src="{{ asset('storage/' . $mainTeamLead->photo) }}"
+                             alt="{{ $mainTeamLead->name }} {{ $mainTeamLead->surname }}"
+                             class="w-full aspect-[397/491] object-cover">
                     @else
-                        <div class="w-full aspect-square bg-gray-200 mb-8 flex items-center justify-center text-gray-400">
+                        <div class="w-full aspect-[397/491] bg-gray-200 flex items-center justify-center text-gray-400">
                             No Photo
                         </div>
                     @endif
-                    <h3 class="text-[clamp(44px,4.2vw,52px)] leading-[0.95] font-bold text-secondary/60 mb-3">
+                    <h3 class="mt-[1.875rem] {{ $nameLarge }}">
                         {{ $mainTeamLead->name }} {{ $mainTeamLead->surname }}
                     </h3>
                     @if($mainTeamLead->role)
-                        <p class="text-lg font-semibold text-[#1b304e] mb-3">{{ $mainTeamLead->role }}</p>
+                        <p class="mt-[0.425rem] {{ $role }}">{{ $mainTeamLead->role }}</p>
                     @endif
                     @if($mainTeamLead->qualification)
-                        <p class="text-sm leading-relaxed text-[#1b304e]/65 mb-6">{{ $mainTeamLead->qualification }}</p>
+                        <p class="mt-[0.45rem] {{ $qualification }}">{{ $mainTeamLead->qualification }}</p>
                     @endif
                     @if($mainTeamLead->email)
-                        <p class="text-sm text-[#1b304e] mb-8">
-                            <a href="mailto:{{ $mainTeamLead->email }}" class="hover:underline cursor-pointer">{{ $mainTeamLead->email }}</a>
+                        <p class="mt-[1.3rem] {{ $email }}">
+                            <a href="mailto:{{ $mainTeamLead->email }}" class="hover:text-tertiary transition cursor-pointer">{{ $mainTeamLead->email }}</a>
                         </p>
                     @endif
-                    @if($mainTeamLead)
-                        <a href="{{ route('rosa-profile') }}" 
-                           class="inline-flex items-center text-[#d3924f] hover:text-[#d3924f]/80 transition cursor-pointer text-sm font-semibold tracking-wide uppercase">
-                            <span class="mr-3">GO TO {{ strtoupper($mainTeamLead->name) }}'S PROFILE</span>
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </a>
-                    @endif
+                    <a href="{{ route('rosa-profile') }}"
+                       class="mt-[1.645rem] inline-flex items-center gap-[0.625rem] text-[1.5rem] leading-[1.875rem] font-medium uppercase text-tertiary hover:text-primary transition cursor-pointer">
+                        Go to {{ $mainTeamLead->name }}’s profile
+                        <svg class="w-[1.125rem] h-[1.125rem]" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9"/></svg>
+                    </a>
                 </div>
                 @endif
 
-                <!-- Intro and Description (Right) -->
-                <div class="md:col-span-7 md:col-start-5 space-y-6">
+                <div class="col-span-12 md:col-start-5 md:col-span-7 md:pt-[12.4375rem]">
                     @if($ourStory->intro)
-                        <div class="our-story-intro max-w-none text-[#d3924f] font-light leading-tight" style="font-size: clamp(1.75rem, 3vw, 2.75rem);">
+                        <div class="our-story-intro text-tertiary text-[2.5rem] leading-[2.875rem] md:text-[3.5rem] md:leading-[4rem]">
                             {!! $ourStory->intro !!}
                         </div>
                     @endif
                     @if($ourStory->description)
-                        <div class="our-story-body max-w-none text-lg md:text-xl leading-relaxed text-[#1b304e]/80 [&_p]:mb-6 [&_p:last-child]:mb-0 [&_strong]:font-bold [&_strong]:text-[#1b304e]">
+                        <div class="our-story-body mt-12 md:mt-[8rem] {{ $body }} [&_p]:!mb-0">
                             {!! $ourStory->description !!}
                         </div>
                     @endif
-                    <div class="pt-2 mt-8">
-                        <a href="{{ route('works.index') }}" class="inline-flex items-center justify-center bg-[#1b304e] text-white px-10 py-4 font-semibold tracking-wide uppercase hover:bg-[#1b304e]/90 transition cursor-pointer">
-                            VIEW OUR WORKS
-                        </a>
-                    </div>
+                    <a href="{{ route('works.index') }}"
+                       class="mt-[5.2rem] flex items-center justify-center w-full md:w-[calc((100%-6rem)/7*4+3rem)] h-[3.125rem] bg-primary text-secondary text-[1.375rem] font-medium uppercase hover:bg-primary/90 transition cursor-pointer">
+                        View our works
+                    </a>
                 </div>
             </div>
 
-            <!-- Highlight Section (Orange Background) -->
+            <!-- Highlight Section: orange box on all 12 columns, text on columns 2-11 -->
             @if($ourStory->highlight)
-            <div class="bg-[#d3924f] text-white p-20 mb-16 flex items-center justify-center min-h-[240px]">
-                <div class="container mx-auto flex items-center justify-center">
-                    <div class="prose prose-lg max-w-none text-white text-center [&>*:last-child]:mb-0" style="font-size: clamp(1.5rem, 3vw, 2.5rem);">
-                        {!! $ourStory->highlight !!}
-                    </div>
+            <div class="mt-[4.8125rem] bg-tertiary site-grid py-[3rem] px-6 md:px-0 md:py-[8.125rem]">
+                <div class="col-span-12 md:col-start-2 md:col-span-10 text-white text-[1.75rem] leading-[2.25rem] md:text-[2.5rem] md:leading-[3.125rem] [&_p]:mb-0 [&_strong]:font-bold [&_b]:font-bold">
+                    {!! $ourStory->highlight !!}
                 </div>
             </div>
             @endif
 
-            <!-- Other Team Leads (Grid) -->
+            <!-- Other Team Leads: 3 cards of 3 columns, spread across the row -->
             @if($otherTeamLeads->count() > 0)
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-                @foreach($otherTeamLeads as $index => $teamLead)
-                <div class="md:col-span-3 {{ $index === 0 ? 'md:col-start-1' : ($index === 1 ? 'md:col-start-5' : 'md:col-start-9') }}">
+            <div class="mt-[4.25rem] grid gap-y-16 md:grid-cols-[repeat(3,calc((100%-11rem)/12*3+2rem))] md:justify-between">
+                @foreach($otherTeamLeads as $teamLead)
+                <div>
                     @if($teamLead->photo)
-                        <img src="{{ asset('storage/' . $teamLead->photo) }}" 
-                             alt="{{ $teamLead->name }} {{ $teamLead->surname }}" 
-                             class="w-full aspect-square object-cover mb-4">
+                        <img src="{{ asset('storage/' . $teamLead->photo) }}"
+                             alt="{{ $teamLead->name }} {{ $teamLead->surname }}"
+                             class="w-full aspect-square object-cover">
                     @else
-                        <div class="w-full aspect-square bg-gray-200 mb-4 flex items-center justify-center text-gray-400 text-xs">
+                        <div class="w-full aspect-square bg-gray-200 flex items-center justify-center text-gray-400 text-xs">
                             No Photo
                         </div>
                     @endif
-                    <h4 class="text-[clamp(24px,2.2vw,34px)] leading-[0.95] font-bold text-secondary/60 mb-2">
+                    <h4 class="mt-[1.67rem] {{ $nameSmall }}">
                         {{ $teamLead->name }} {{ $teamLead->surname }}
                     </h4>
                     @if($teamLead->role)
-                        <p class="text-base text-[#1b304e] mb-2 font-bold">{{ $teamLead->role }}</p>
+                        <p class="{{ $role }}">{{ $teamLead->role }}</p>
                     @endif
                     @if($teamLead->qualification)
-                        <p class="text-sm text-[#1b304e]/70 mb-2">{{ $teamLead->qualification }}</p>
+                        <p class="mt-[0.45rem] {{ $qualification }}">{{ $teamLead->qualification }}</p>
                     @endif
                     @if($teamLead->email)
-                        <p class="text-sm text-[#1b304e] mb-4">
-                            <a href="mailto:{{ $teamLead->email }}" class="hover:underline cursor-pointer">{{ $teamLead->email }}</a>
+                        <p class="mt-[1.425rem] {{ $email }}">
+                            <a href="mailto:{{ $teamLead->email }}" class="hover:text-tertiary transition cursor-pointer">{{ $teamLead->email }}</a>
                         </p>
                     @endif
                     @if($teamLead->description)
-                        <div class="prose prose-sm max-w-none text-[#1b304e]">
+                        <div class="mt-[2.375rem] {{ $body }} [&_strong]:!font-normal [&_b]:!font-normal">
                             {!! $teamLead->description !!}
                         </div>
                     @endif

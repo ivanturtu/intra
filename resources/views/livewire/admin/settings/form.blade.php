@@ -76,7 +76,7 @@
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-[#1b304e] mb-2">Address</label>
-                        <textarea wire:model="address" rows="3" placeholder="1505 Barrington Street, Suite 100 - M03, Halifax, Nova Scotia, B3J 2A4 CANADA" class="w-full px-4 py-2 border border-[#1b304e]/20 rounded-lg focus:ring-2 focus:ring-[#d3924f] focus:border-[#d3924f] bg-white"></textarea>
+                        <textarea wire:model="address" rows="3" placeholder="1505 Barrington Street, Suite 100 - M03&#10;Halifax, Nova Scotia&#10;B3J 2A4 CANADA" class="w-full px-4 py-2 border border-[#1b304e]/20 rounded-lg focus:ring-2 focus:ring-[#d3924f] focus:border-[#d3924f] bg-white"></textarea>
                         @error('address') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 

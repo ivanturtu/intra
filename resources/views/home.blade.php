@@ -3,11 +3,16 @@
 @section('content')
     @include('partials.header')
 
+    @php
+        $heroArrow = 'absolute top-1/2 -translate-y-1/2 z-20 w-[3rem] h-[3rem] flex items-center justify-center transition cursor-pointer';
+        $arrowIcon = 'w-[1.75rem] h-[3.5rem]';
+    @endphp
+
     <!-- Hero Section -->
     @if($heroProjects->count() > 0)
-        <section class="relative h-[80vh] min-h-[600px]"
-                 x-data="{ 
-                     currentSlide: 0, 
+        <section class="relative h-[37.5rem] md:h-[59.375rem] overflow-hidden"
+                 x-data="{
+                     currentSlide: 0,
                      slides: {{ $heroProjects->count() }},
                      init() {
                          if (this.slides > 1) {
@@ -18,320 +23,220 @@
                      }
                  }">
             @foreach($heroProjects as $index => $project)
-                <div x-show="currentSlide === {{ $index }}" 
+                <div x-show="currentSlide === {{ $index }}"
                      x-transition:enter="transition ease-out duration-300"
                      x-transition:enter-start="opacity-0"
                      x-transition:enter-end="opacity-100"
                      x-transition:leave="transition ease-in duration-300"
                      x-transition:leave-start="opacity-100"
                      x-transition:leave-end="opacity-0"
-                     class="absolute inset-0 flex items-center">
+                     class="absolute inset-0">
                     <div class="absolute inset-0 z-0">
                         @if($project->main_image)
-                            <img src="{{ asset('storage/' . $project->main_image) }}" 
-                                 alt="{{ $project->title }}" 
+                            <img src="{{ asset('storage/' . $project->main_image) }}"
+                                 alt="{{ $project->title }}"
                                  class="w-full h-full object-cover">
                         @else
-                            <img src="https://via.placeholder.com/1920x1080/87CEEB/FFFFFF?text={{ urlencode($project->title) }}" 
-                                 alt="{{ $project->title }}" 
+                            <img src="https://via.placeholder.com/1920x1080/87CEEB/FFFFFF?text={{ urlencode($project->title) }}"
+                                 alt="{{ $project->title }}"
                                  class="w-full h-full object-cover">
                         @endif
-                        <div class="absolute inset-0 bg-black/40"></div>
+                        <div class="absolute inset-0 bg-black/20"></div>
                     </div>
-                    <div class="relative z-10 text-left text-white px-8 md:px-8 pl-16 pr-16 container mx-auto">
-                        @if($project->slug)
-                            <a href="{{ route('work.show', $project->slug) }}" class="block cursor-pointer">
-                                <h2 class="font-light leading-[1.05]" style="font-size: clamp(3rem, 6vw, 6rem);">
-                                    {{ $project->title }}
-                                </h2>
-                            </a>
-                        @else
-                            <h2 class="font-light leading-[1.05]" style="font-size: clamp(3rem, 6vw, 6rem);">
+                    <div class="relative z-10 site-container pt-[12rem] md:pt-[23.2rem] text-white">
+                        <a href="{{ $project->slug ? route('work.show', $project->slug) : '#' }}" class="block cursor-pointer md:w-3/4">
+                            <h2 class="font-light text-[3rem] leading-[1.07] md:text-[5.5rem] md:leading-[5.875rem]">
                                 {{ $project->title }}
                             </h2>
+                        </a>
+                        @if($project->category)
+                            <p class="mt-[1.75rem] text-[1.5rem] leading-[1.875rem] uppercase text-secondary">{{ $project->category->name }}</p>
                         @endif
                     </div>
                 </div>
             @endforeach
-            
+
             @if($heroProjects->count() > 1)
                 <!-- Navigation Buttons -->
-                <button @click="currentSlide = (currentSlide - 1 + slides) % slides" 
-                        class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 text-white/90 hover:text-white transition cursor-pointer">
-                    <svg class="w-8 h-8 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path>
+                <button @click="currentSlide = (currentSlide - 1 + slides) % slides"
+                        class="{{ $heroArrow }} left-2 md:left-[3.2rem] text-white/90 hover:text-white" aria-label="Previous">
+                    <svg class="{{ $arrowIcon }}" fill="none" stroke="currentColor" viewBox="0 0 16 32">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M14 2L2 16l12 14"></path>
                     </svg>
                 </button>
-                <button @click="currentSlide = (currentSlide + 1) % slides" 
-                        class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 text-white/90 hover:text-white transition cursor-pointer">
-                    <svg class="w-8 h-8 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path>
+                <button @click="currentSlide = (currentSlide + 1) % slides"
+                        class="{{ $heroArrow }} right-2 md:right-[3.2rem] text-white/90 hover:text-white" aria-label="Next">
+                    <svg class="{{ $arrowIcon }}" fill="none" stroke="currentColor" viewBox="0 0 16 32">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M2 2l12 14L2 30"></path>
                     </svg>
                 </button>
-                
-                <!-- Dots Indicator -->
-                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
-                    @foreach($heroProjects as $index => $project)
-                        <button @click="currentSlide = {{ $index }}" 
-                                :class="currentSlide === {{ $index }} ? 'bg-white' : 'bg-white/40'"
-                                class="h-px w-16 transition cursor-pointer"></button>
-                    @endforeach
+
+                <!-- Slide indicators: one bar per slide across the content width -->
+                <div class="absolute bottom-[3.25rem] inset-x-0 z-20">
+                    <div class="site-container flex gap-[1rem]">
+                        @foreach($heroProjects as $index => $project)
+                            <button @click="currentSlide = {{ $index }}"
+                                    :class="currentSlide === {{ $index }} ? 'bg-white' : 'bg-white/50'"
+                                    class="flex-1 h-[2px] transition cursor-pointer" aria-label="Slide {{ $index + 1 }}"></button>
+                        @endforeach
+                    </div>
                 </div>
             @endif
         </section>
     @else
-        <section class="relative h-[80vh] min-h-[600px] flex items-center">
-        <div class="absolute inset-0 z-0">
-            <img src="https://via.placeholder.com/1920x1080/87CEEB/FFFFFF?text=Ornate+Interior+Design" 
-                 alt="Hero Background" 
-                 class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black/40"></div>
-        </div>
-            <div class="relative z-10 text-left text-white px-8 container mx-auto">
-                <h2 class="font-light leading-[1.05]" style="font-size: clamp(3rem, 6vw, 6rem);">
-                The Delight Factor. A New Metric of Your Workplace.
-            </h2>
-        </div>
-    </section>
+        <section class="relative h-[37.5rem] md:h-[59.375rem] overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img src="https://via.placeholder.com/1920x1080/87CEEB/FFFFFF?text=Ornate+Interior+Design"
+                     alt="Hero Background"
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/20"></div>
+            </div>
+            <div class="relative z-10 site-container pt-[12rem] md:pt-[23.2rem] text-white">
+                <h2 class="font-light text-[3rem] leading-[1.07] md:text-[5.5rem] md:leading-[5.875rem] md:w-3/4">
+                    The Delight Factor. A New Metric of Your Workplace.
+                </h2>
+            </div>
+        </section>
     @endif
 
-    <!-- Project Showcase Slider -->
+    <!-- Project Showcase Slider: one project on 10 columns, the next one peeking from the right edge -->
     @if(isset($sliderProjects) && $sliderProjects && $sliderProjects->count() > 0)
-    <section class="py-16 px-8 bg-white">
-        <div class="container mx-auto">
-                <div class="relative" 
-                     x-data="{ 
-                         currentIndex: 0,
-                         totalProjects: {{ $sliderProjects->count() }},
-                         get totalSlides() {
-                             return Math.max(1, this.totalProjects - 1);
-                         },
-                         nextSlide() {
-                             if (this.currentIndex < this.totalSlides - 1) {
-                                 this.currentIndex++;
-                             } else {
-                                 this.currentIndex = 0;
-                             }
-                         },
-                         prevSlide() {
-                             if (this.currentIndex > 0) {
-                                 this.currentIndex--;
-                             } else {
-                                 this.currentIndex = this.totalSlides - 1;
-                             }
-                         }
-                     }">
-                    <!-- Slider Container -->
-                    <div class="overflow-hidden">
-                        <div class="flex transition-transform duration-500 ease-in-out" 
-                             :style="`transform: translateX(-${currentIndex * 100}%)`">
-                            @for($i = 0; $i < $sliderProjects->count() - 1; $i++)
-                                <div class="w-full flex-shrink-0 grid grid-cols-1 md:grid-cols-12 gap-4 overflow-hidden">
-                                    <!-- First Project (9 columns) -->
-                                    <div class="md:col-span-9 overflow-hidden">
-                                        <a href="{{ route('work.show', $sliderProjects[$i]->slug) }}" class="group cursor-pointer block">
-                                            <div class="relative overflow-hidden mb-4">
-                                                @if($sliderProjects[$i]->main_image)
-                                                    <img src="{{ asset('storage/' . $sliderProjects[$i]->main_image) }}" 
-                                                         alt="{{ $sliderProjects[$i]->title }}" 
-                                                         class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
-                                                @else
-                                                    <img src="https://via.placeholder.com/600x800/CCCCCC/FFFFFF?text={{ urlencode($sliderProjects[$i]->title) }}" 
-                                                         alt="{{ $sliderProjects[$i]->title }}" 
-                                                         class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
-                                                @endif
-                                            </div>
-                                            <div class="flex justify-between items-start">
-                                                <div>
-                                                    <h3 class="font-semibold text-sm uppercase mb-1">{{ strtoupper($sliderProjects[$i]->title) }}</h3>
-                                                    @if($sliderProjects[$i]->location)
-                                                        <p class="text-xs text-gray-600 uppercase">{{ strtoupper($sliderProjects[$i]->location) }}</p>
-                                                    @endif
-                                                </div>
-                                                @if($sliderProjects[$i]->category)
-                                                    <span class="text-xs text-gray-500 uppercase">{{ strtoupper($sliderProjects[$i]->category->name) }}</span>
-                                                @endif
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <!-- Second Project (3 columns) -->
-                                    @if(isset($sliderProjects[$i + 1]))
-                                        <div class="md:col-span-3 overflow-hidden">
-                                            <a href="{{ route('work.show', $sliderProjects[$i + 1]->slug) }}" class="group cursor-pointer block">
-                                                <div class="relative overflow-hidden mb-4">
-                                                    @if($sliderProjects[$i + 1]->main_image)
-                                                        <img src="{{ asset('storage/' . $sliderProjects[$i + 1]->main_image) }}" 
-                                                             alt="{{ $sliderProjects[$i + 1]->title }}" 
-                                                             class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
-                                                    @else
-                                                        <img src="https://via.placeholder.com/600x800/CCCCCC/FFFFFF?text={{ urlencode($sliderProjects[$i + 1]->title) }}" 
-                                                             alt="{{ $sliderProjects[$i + 1]->title }}" 
-                                                             class="w-full h-[500px] object-cover group-hover:scale-105 transition duration-300">
-                                                    @endif
-                                                </div>
-                                                <div class="flex justify-between items-start">
-                                                    <div>
-                                                        <h3 class="font-semibold text-sm uppercase mb-1">{{ strtoupper($sliderProjects[$i + 1]->title) }}</h3>
-                                                        @if($sliderProjects[$i + 1]->location)
-                                                            <p class="text-xs text-gray-600 uppercase">{{ strtoupper($sliderProjects[$i + 1]->location) }}</p>
-                                                        @endif
-                                                    </div>
-                                                    @if($sliderProjects[$i + 1]->category)
-                                                        <span class="text-xs text-gray-500 uppercase">{{ strtoupper($sliderProjects[$i + 1]->category->name) }}</span>
-                                                    @endif
-                                                </div>
-                                            </a>
-                                        </div>
+    <section class="relative bg-white overflow-hidden pt-[4rem] md:pt-[7.4375rem] pb-[3.75rem]"
+             x-data="{
+                 currentIndex: 0,
+                 maxIndex: {{ $sliderProjects->count() - 1 }},
+                 next() { this.currentIndex = this.currentIndex < this.maxIndex ? this.currentIndex + 1 : 0 },
+                 prev() { this.currentIndex = this.currentIndex > 0 ? this.currentIndex - 1 : this.maxIndex }
+             }">
+        <div class="site-container">
+            <div class="[clip-path:inset(0_-100vw_0_0)]">
+                <div class="flex gap-[3rem] transition-transform duration-500 ease-in-out [--slide-w:85%] md:[--slide-w:calc((100%-11rem)/12*10+9rem)]"
+                     :style="`transform: translateX(calc(${currentIndex} * -1 * (var(--slide-w) + 3rem)))`">
+                    @foreach($sliderProjects as $project)
+                        <a href="{{ route('work.show', $project->slug) }}" class="group block flex-none w-[var(--slide-w)] cursor-pointer text-primary">
+                            <div class="overflow-hidden h-[20rem] md:h-[48rem]">
+                                @if($project->main_image)
+                                    <img src="{{ asset('storage/' . $project->main_image) }}"
+                                         alt="{{ $project->title }}"
+                                         class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                @else
+                                    <img src="https://via.placeholder.com/1400x800/CCCCCC/FFFFFF?text={{ urlencode($project->title) }}"
+                                         alt="{{ $project->title }}"
+                                         class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                @endif
+                            </div>
+                            <div class="grid grid-cols-10 gap-x-[1rem] mt-[0.5625rem]">
+                                <div class="col-span-10 md:col-span-5">
+                                    <h3 class="text-[1.5rem] leading-[1.75rem] font-light uppercase">{{ $project->title }}</h3>
+                                    @if($project->location)
+                                        <p class="mt-[0.27rem] text-[1.125rem] leading-[1.5rem] uppercase">{{ $project->location }}</p>
                                     @endif
                                 </div>
-                            @endfor
-                        </div>
-                    </div>
-                    
-                    <!-- Navigation Buttons -->
-                    @if($sliderProjects->count() > 2)
-                        <button @click="prevSlide()" 
-                                class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 text-[#1b304e]/90 hover:text-[#1b304e] transition cursor-pointer">
-                            <svg class="w-8 h-8 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path>
-                            </svg>
-                        </button>
-                        <button @click="nextSlide()" 
-                                class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 text-[#1b304e]/90 hover:text-[#1b304e] transition cursor-pointer">
-                            <svg class="w-8 h-8 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </button>
-                    @endif
+                                @if($project->category)
+                                    <p class="hidden md:block md:col-span-5 text-[1.5rem] leading-[1.75rem] font-light">{{ $project->category->name }}</p>
+                                @endif
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
             </div>
         </div>
+
+        <!-- Navigation Buttons (centered on the image, in the side margins) -->
+        @if($sliderProjects->count() > 1)
+            <button @click="prev()"
+                    class="{{ $heroArrow }} !top-[calc(4rem+10rem)] md:!top-[calc(7.4375rem+24rem)] left-2 md:left-[3.2rem] text-primary/90 hover:text-primary" aria-label="Previous">
+                <svg class="{{ $arrowIcon }}" fill="none" stroke="currentColor" viewBox="0 0 16 32">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M14 2L2 16l12 14"></path>
+                </svg>
+            </button>
+            <button @click="next()"
+                    class="{{ $heroArrow }} !top-[calc(4rem+10rem)] md:!top-[calc(7.4375rem+24rem)] right-2 md:right-[3.2rem] text-white/90 hover:text-white" aria-label="Next">
+                <svg class="{{ $arrowIcon }}" fill="none" stroke="currentColor" viewBox="0 0 16 32">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M2 2l12 14L2 30"></path>
+                </svg>
+            </button>
+        @endif
     </section>
     @endif
 
     <!-- Expertise Section -->
-    <section id="expertise" class="bg-[#1b304e] text-white py-20 px-8">
-        <div class="container mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-16">
-                <div class="md:col-span-3">
-                    <h2 class="text-3xl md:text-4xl font-medium text-[#d3924f] mb-8">Expertise</h2>
-                </div>
-                <div class="md:col-span-9 -mt-4">
-                    <ul class="space-y-0" x-data="{ openId: null }">
-                        @foreach($categories as $index => $category)
-                            <li class="py-8 {{ $index < $categories->count() - 1 ? 'border-b-2 border-[#CCE2FF]' : '' }}">
-                                <button
-                                    type="button"
-                                    class="w-full text-left leading-tight flex items-center justify-between gap-6 cursor-pointer group"
-                                    @click="openId === {{ $category->id }} ? openId = null : openId = {{ $category->id }}"
-                                    :aria-expanded="openId === {{ $category->id }}"
-                                >
-                                    <span class="text-3xl md:text-4xl font-light text-[#CCE2FF] group-hover:text-[#d3924f] transition-colors">{{ $category->name }}</span>
-                                </button>
-                                @if(!empty($category->subtitle))
-                                    <div
-                                        x-show="openId === {{ $category->id }}"
-                                        x-transition:enter="transition ease-out duration-200"
-                                        x-transition:enter-start="opacity-0 -translate-y-1"
-                                        x-transition:enter-end="opacity-100 translate-y-0"
-                                        x-transition:leave="transition ease-in duration-150"
-                                        x-transition:leave-start="opacity-100 translate-y-0"
-                                        x-transition:leave-end="opacity-0 -translate-y-1"
-                                        class="mt-2 flex items-center justify-between"
-                                        style="display: none;"
-                                    >
-                                        <a href="/work?category={{ $category->id }}" class="text-lg md:text-xl text-[#dfdfbb] inline-flex items-baseline hover:text-[#d3924f] transition cursor-pointer">
-                                            <span class="opacity-80">›</span>
-                                            <span class="ml-2">{{ $category->subtitle }}</span>
-                                        </a>
-                                        <a href="/work?category={{ $category->id }}" class="inline-flex items-center text-white hover:text-[#d3924f] transition cursor-pointer">
-                                            <span class="mr-2">GO TO THE PROJECTS</span>
-                                            <svg class="w-4 h-4 text-[#d3924f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                            </svg>
-                                        </a>
-                                    </div>
-                                @endif
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
+    <section id="expertise" class="bg-primary text-white pt-[4rem] md:pt-[11.8rem] pb-[4rem] md:pb-[9.5rem]">
+        <div class="site-container site-grid">
+            <div class="col-span-12 md:col-span-3 md:pt-[0.825rem]">
+                <h2 class="text-[2.25rem] md:text-[3rem] leading-[3.5rem] font-medium text-tertiary">Expertise</h2>
             </div>
+            <ul class="col-span-12 md:col-span-9">
+                @foreach($categories as $category)
+                    <li class="group pt-[0.825rem] pb-[calc(2.7rem-2px)] border-b-2 border-sky">
+                        <a href="/work?category={{ $category->id }}" class="block cursor-pointer">
+                            <span class="block text-[2.25rem] md:text-[3rem] leading-[3.5rem] font-light text-sky group-hover:text-tertiary transition-colors">{{ $category->name }}</span>
+                        </a>
+                        <div class="mt-[1.975rem] flex flex-col md:flex-row md:items-baseline md:justify-between gap-4">
+                            @if(!empty($category->subtitle))
+                                <a href="/work?category={{ $category->id }}" class="text-[1.5rem] md:text-[1.875rem] leading-[2.25rem] font-light text-secondary cursor-pointer">
+                                    ›&nbsp;&nbsp;{{ $category->subtitle }}
+                                </a>
+                            @else
+                                <span></span>
+                            @endif
+                            <a href="/work?category={{ $category->id }}" class="shrink-0 inline-flex items-center gap-[0.5rem] text-[1.125rem] uppercase text-white hover:text-tertiary transition cursor-pointer">
+                                <span><span class="font-medium">Go to the</span> Projects</span>
+                                <svg class="w-[0.9rem] h-[0.9rem]" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9"/></svg>
+                            </a>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
         </div>
     </section>
 
-    <!-- Intra Mag Section -->
-    <section id="mag" class="relative py-20 px-8 overflow-hidden">
-        <!-- Background: Tertiary color covering 4/5 (80%) of section -->
-        <div class="absolute inset-0 bg-[#d3924f] z-0" style="height: 80%;"></div>
-        <!-- Background: White covering remaining 1/5 (20%) -->
-        <div class="absolute bottom-0 left-0 right-0 bg-white z-0" style="height: 20%;"></div>
-        
-        <div class="container mx-auto relative z-10">
-            <h2 class="text-4xl md:text-5xl mb-12 text-[#1b304e]">
-                <span class="font-normal">Intra</span> <span class="font-bold">Mag</span>
+    <!-- Intra Mag Section: orange background stops 34px above the bottom of the images -->
+    <section id="mag" class="relative bg-white border-t-[0.5625rem] border-white pt-[3.875rem] pb-[6.1875rem]">
+        <div class="absolute inset-x-0 top-0 bottom-[10.625rem] bg-tertiary z-0"></div>
+
+        <div class="site-container relative z-10">
+            <h2 class="text-[2.25rem] md:text-[3rem] leading-[3.5rem] text-primary">
+                <span class="font-light">Intra</span> <span class="font-medium">Mag</span>
             </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="site-grid gap-y-8 mt-[2.4375rem]">
                 @if(isset($magazineArticles) && $magazineArticles->count() > 0)
                     @foreach($magazineArticles as $article)
-                    <a href="#" class="group cursor-pointer block">
-                        <div class="relative overflow-hidden mb-4 h-[500px]">
-                            <!-- Background color extending 9/10 of image height (90%) -->
-                            <div class="absolute inset-0 bg-[#d3924f] z-0" style="height: 90%;"></div>
-                            <!-- Image -->
-                            <div class="relative z-10 h-full">
-                                @if($article->image)
-                                    <img src="{{ asset('storage/' . $article->image) }}" 
-                                         alt="{{ $article->title }}" 
-                                         class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                                @else
-                                    <img src="https://via.placeholder.com/800x600/8B7355/FFFFFF?text={{ urlencode($article->title) }}" 
-                                         alt="{{ $article->title }}" 
-                                         class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                                @endif
-                            </div>
+                    <a href="#" class="group cursor-pointer block col-span-12 md:col-span-6">
+                        <div class="relative overflow-hidden h-[20rem] md:h-[31.6875rem]">
+                            @if($article->image)
+                                <img src="{{ asset('storage/' . $article->image) }}"
+                                     alt="{{ $article->title }}"
+                                     class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            @else
+                                <img src="https://via.placeholder.com/800x600/8B7355/FFFFFF?text={{ urlencode($article->title) }}"
+                                     alt="{{ $article->title }}"
+                                     class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            @endif
                             @if($article->category)
-                                <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2 z-20">
-                                    <span class="text-xs uppercase text-white">{{ strtoupper($article->category->name) }}</span>
+                                <div class="absolute bottom-0 left-0 bg-primary px-[0.5rem]">
+                                    <span class="block text-[1rem] leading-[2rem] uppercase text-white">{{ $article->category->name }}</span>
                                 </div>
                             @endif
                         </div>
-                        <h3 class="text-lg font-light text-[#1b304e]">{{ $article->title }}</h3>
+                        <h3 class="mt-[0.5625rem] text-[1.5rem] leading-[1.75rem] font-light text-primary">{{ $article->title }}</h3>
                     </a>
                     @endforeach
                 @else
                     <!-- Fallback static content if no articles -->
-                <div class="group cursor-pointer">
-                        <div class="relative overflow-hidden mb-4 h-[500px]">
-                            <!-- Background color extending 9/10 of image height (90%) -->
-                            <div class="absolute inset-0 bg-[#d3924f] z-0" style="height: 90%;"></div>
-                            <!-- Image -->
-                            <div class="relative z-10 h-full">
-                        <img src="https://via.placeholder.com/800x600/8B7355/FFFFFF?text=Parthenon+Ruins" 
-                             alt="L'antico tempio della Grecia" 
-                                     class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                            </div>
-                            <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2 z-20">
-                                <span class="text-xs uppercase text-white">BENI CULTURALI</span>
+                    @foreach([['L\'antico tempio della Grecia', 'Beni culturali', 'Parthenon+Ruins'], ['Giovanni Muzio. Casa dei giornalisti (Milano 1936).', 'Sostenibilità', 'Giovanni+Muzio']] as [$title, $tag, $img])
+                    <div class="group cursor-pointer col-span-12 md:col-span-6">
+                        <div class="relative overflow-hidden h-[20rem] md:h-[31.6875rem]">
+                            <img src="https://via.placeholder.com/800x600/8B7355/FFFFFF?text={{ $img }}"
+                                 alt="{{ $title }}"
+                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <div class="absolute bottom-0 left-0 bg-primary px-[0.5rem]">
+                                <span class="block text-[1rem] leading-[2rem] uppercase text-white">{{ $tag }}</span>
                             </div>
                         </div>
-                        <h3 class="text-lg font-light text-[#1b304e]">L'antico tempio della Grecia</h3>
+                        <h3 class="mt-[0.5625rem] text-[1.5rem] leading-[1.75rem] font-light text-primary">{{ $title }}</h3>
                     </div>
-                <div class="group cursor-pointer">
-                        <div class="relative overflow-hidden mb-4 h-[500px]">
-                            <!-- Background color extending 9/10 of image height (90%) -->
-                            <div class="absolute inset-0 bg-[#d3924f] z-0" style="height: 90%;"></div>
-                            <!-- Image -->
-                            <div class="relative z-10 h-full">
-                        <img src="https://via.placeholder.com/800x600/2C2C2C/FFFFFF?text=Giovanni+Muzio+Book" 
-                             alt="Giovanni Muzio" 
-                                     class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                            </div>
-                            <div class="absolute bottom-0 left-0 bg-[#1b304e] px-4 py-2 z-20">
-                                <span class="text-xs uppercase text-white">SOSTENIBILITÀ</span>
-                            </div>
-                        </div>
-                        <h3 class="text-lg font-light text-[#1b304e]">Giovanni Muzio, Casa dei giornalisti (Milano 1936).</h3>
-                    </div>
+                    @endforeach
                 @endif
             </div>
         </div>
