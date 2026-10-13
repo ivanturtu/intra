@@ -193,7 +193,7 @@
 
     <!-- Intra Mag Section: orange background stops 34px above the bottom of the images -->
     <section id="mag" class="relative bg-white border-t-[0.5625rem] border-white pt-[3.875rem] pb-[6.1875rem]">
-        <div class="absolute inset-x-0 top-0 bottom-[10.625rem] bg-tertiary z-0"></div>
+        <div class="absolute inset-x-0 top-0 {{ isset($magazineArticles) && $magazineArticles->count() > 0 ? 'bottom-[10.625rem]' : 'bottom-0' }} bg-tertiary z-0"></div>
 
         <div class="site-container relative z-10">
             <h2 class="text-[2.25rem] md:text-[3rem] leading-[3.5rem] text-primary">
@@ -223,20 +223,9 @@
                     </a>
                     @endforeach
                 @else
-                    <!-- Fallback static content if no articles -->
-                    @foreach([['L\'antico tempio della Grecia', 'Beni culturali', 'Parthenon+Ruins'], ['Giovanni Muzio. Casa dei giornalisti (Milano 1936).', 'Sostenibilità', 'Giovanni+Muzio']] as [$title, $tag, $img])
-                    <div class="group cursor-pointer col-span-12 md:col-span-6">
-                        <div class="relative overflow-hidden h-[20rem] md:h-[31.6875rem]">
-                            <img src="https://via.placeholder.com/800x600/8B7355/FFFFFF?text={{ $img }}"
-                                 alt="{{ $title }}"
-                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                            <div class="absolute bottom-0 left-0 bg-primary px-[0.5rem]">
-                                <span class="block text-[1rem] leading-[2rem] uppercase text-white">{{ $tag }}</span>
-                            </div>
-                        </div>
-                        <h3 class="mt-[0.5625rem] text-[1.5rem] leading-[1.75rem] font-light text-primary">{{ $title }}</h3>
-                    </div>
-                    @endforeach
+                    <p class="col-span-12 text-[1.5rem] leading-[1.75rem] font-light text-primary">
+                        There are currently no posts in the magazine.
+                    </p>
                 @endif
             </div>
         </div>

@@ -99,8 +99,8 @@
                     <label class="block text-sm font-medium text-[#1b304e] mb-2">Team Members</label>
                     @foreach($teamMembers as $index => $member)
                         <div class="flex gap-4 mb-2">
-                            <input type="text" wire:model="teamMembers.{{ $index }}.field1" placeholder="Field 1" class="flex-1 px-4 py-2 border border-[#1b304e]/20 rounded-lg focus:ring-2 focus:ring-[#d3924f] focus:border-[#d3924f] bg-white">
-                            <input type="text" wire:model="teamMembers.{{ $index }}.field2" placeholder="Field 2" class="flex-1 px-4 py-2 border border-[#1b304e]/20 rounded-lg focus:ring-2 focus:ring-[#d3924f] focus:border-[#d3924f] bg-white">
+                            <input type="text" wire:model="teamMembers.{{ $index }}.field1" placeholder="Role (e.g. Architect, Canada)" class="flex-1 px-4 py-2 border border-[#1b304e]/20 rounded-lg focus:ring-2 focus:ring-[#d3924f] focus:border-[#d3924f] bg-white">
+                            <input type="text" wire:model="teamMembers.{{ $index }}.field2" placeholder="Name (e.g. Rosa Milito)" class="flex-1 px-4 py-2 border border-[#1b304e]/20 rounded-lg focus:ring-2 focus:ring-[#d3924f] focus:border-[#d3924f] bg-white">
                             @if(count($teamMembers) > 1)
                                 <button type="button" wire:click="removeTeamMember({{ $index }})" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">Remove</button>
                             @endif

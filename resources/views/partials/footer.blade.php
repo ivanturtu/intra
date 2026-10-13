@@ -3,6 +3,7 @@
     // Address lines: line breaks entered in the admin textarea win, commas are the fallback
     $address = trim((string) $settings->address);
     $addressLines = $address === '' ? [] : (str_contains($address, "\n") ? preg_split('/\R/', $address) : explode(', ', $address));
+    $mapsUrl = $addressLines ? 'https://www.google.com/maps/search/?api=1&query=' . urlencode(implode(', ', array_map('trim', $addressLines))) : null;
     $footerHeading = 'text-[1.375rem] leading-[2.1875rem] tracking-[0.016em] text-tertiary';
     $footerList = 'mt-[1.72rem] text-[1.125rem] leading-[2.3125rem] text-secondary';
     $footerLink = 'hover:text-white transition cursor-pointer';
@@ -18,11 +19,11 @@
                 <!-- Logo: the vertical line of the logotype sits on the first grid column -->
                 <img src="{{ asset('images/INTRAstudio-logotype-beige.png') }}" alt="INTRA studio" class="h-[9.375rem] w-auto -ml-[2.27rem]">
                 @if($settings->address)
-                <div class="mt-[2.1rem] text-[1rem] leading-[1.625rem] tracking-[0.025em] text-white">
+                <a href="{{ $mapsUrl }}" target="_blank" rel="noopener noreferrer" class="block w-fit mt-[2.1rem] text-[1rem] leading-[1.625rem] tracking-[0.025em] text-white hover:text-secondary transition cursor-pointer">
                     @foreach($addressLines as $line)
-                        <div>{{ trim($line) }}</div>
+                        <span class="block">{{ trim($line) }}</span>
                     @endforeach
-                </div>
+                </a>
                 @endif
                 <div class="mt-[2.35rem] flex gap-[2.5rem]">
                     @if($settings->facebook_url)

@@ -17,7 +17,7 @@
         </a>
 
         <!-- Desktop Menu -->
-        <nav class="hidden md:flex items-center gap-[4.4375rem] absolute left-1/2 -translate-x-1/2 h-full text-[1.5rem] uppercase">
+        <nav class="hidden lg:flex items-center whitespace-nowrap gap-[4.4375rem] absolute left-1/2 -translate-x-1/2 h-full text-[1.5rem] uppercase">
             <a href="/work" class="{{ $navLink }} {{ $navActive($isWorks) }}">Works</a>
             <div class="relative h-full flex items-center" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
                 <a href="{{ url('/#expertise') }}" class="{{ $navLink }} font-light">Expertise</a>
@@ -55,7 +55,7 @@
         </nav>
 
         <!-- Mobile Menu Button -->
-        <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 text-secondary focus:outline-none cursor-pointer" aria-label="Toggle menu">
+        <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden p-2 text-secondary focus:outline-none cursor-pointer" aria-label="Toggle menu">
             <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
@@ -73,7 +73,7 @@
          x-transition:leave="transition ease-in duration-150"
          x-transition:leave-start="opacity-100 transform translate-y-0"
          x-transition:leave-end="opacity-0 transform -translate-y-4"
-         class="md:hidden bg-primary border-t border-white/10 py-4">
+         class="lg:hidden bg-primary border-t border-white/10 py-4">
         <nav class="site-container space-y-4 text-base uppercase">
             <a href="/work" class="block py-2 {{ $navLink }} {{ $navActive($isWorks) }}" @click="mobileMenuOpen = false">Works</a>
 

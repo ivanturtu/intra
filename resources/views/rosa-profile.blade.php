@@ -42,9 +42,19 @@
                         <a href="mailto:{{ $rosa->email }}" class="hover:text-tertiary transition cursor-pointer">{{ $rosa->email }}</a>
                     </p>
                 @endif
+                @if($rosa->full_resume || $rosa->resume_link)
+                    <a href="{{ $rosa->full_resume ? asset('storage/' . $rosa->full_resume) : $rosa->resume_link }}" target="_blank" rel="noopener"
+                       class="mt-[1.3rem] flex w-fit items-end gap-[0.375rem] text-primary hover:text-tertiary transition cursor-pointer">
+                        <span class="text-[0.875rem] leading-[1.0625rem] whitespace-nowrap">
+                            <span class="block font-medium uppercase">Download</span>
+                            complete Resume
+                        </span>
+                        {!! $arrowUpRight !!}
+                    </a>
+                @endif
                 @if($youngWorks && $youngWorks->count() > 0)
-                    <a href="#young-works" class="mt-[2.27rem] inline-flex items-center gap-[0.625rem] text-[1.5rem] leading-[1.875rem] font-medium uppercase text-tertiary hover:text-primary transition cursor-pointer">
-                        Young works
+                    <a href="#previous-works" class="mt-[2.27rem] inline-flex items-center gap-[0.625rem] text-[1.5rem] leading-[1.875rem] font-medium uppercase text-tertiary hover:text-primary transition cursor-pointer">
+                        Previous works
                         <svg class="w-[1.125rem] h-[1.125rem]" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9"/></svg>
                     </a>
                 @endif
@@ -70,34 +80,22 @@
                         </div>
                     @endif
 
-                    @if($rosa->full_resume || $rosa->resume_link)
-                        <div class="col-span-8 md:col-span-1 mt-8 md:mt-[2rem]">
-                            <a href="{{ $rosa->full_resume ? asset('storage/' . $rosa->full_resume) : $rosa->resume_link }}" target="_blank" rel="noopener"
-                               class="inline-flex items-end gap-[0.375rem] text-primary hover:text-tertiary transition cursor-pointer">
-                                <span class="text-[0.875rem] leading-[1.0625rem] whitespace-nowrap">
-                                    <span class="block font-medium uppercase">Download</span>
-                                    complete Resume
-                                </span>
-                                {!! $arrowUpRight !!}
-                            </a>
-                        </div>
-                    @endif
                 </div>
 
-                <!-- Young Works Title (arrow hangs in the gutter left of column 5) -->
+                <!-- Previous Works Title (arrow hangs in the gutter left of column 5) -->
                 @if($youngWorks && $youngWorks->count() > 0)
                     <h2 class="relative mt-[4.8rem] text-[2.25rem] md:text-[3rem] leading-[3.5rem] uppercase text-tertiary">
                         <svg class="absolute -left-[3.25rem] top-1/2 -translate-y-1/2 w-[1.75rem] h-[1.75rem] hidden md:block" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 4v16M5 13l7 7 7-7"/></svg>
-                        Young works
+                        Previous works
                     </h2>
                 @endif
             </div>
         </div>
     </section>
 
-    <!-- Young Works Section: image on columns 1-3, text on columns 5-12, 4 works per page -->
+    <!-- Previous Works Section: image on columns 1-3, text on columns 5-12, 4 works per page -->
     @if($youngWorks && $youngWorks->count() > 0)
-    <section id="young-works" class="bg-[#f2f2e4] pt-[5.8125rem] pb-[3.75rem] scroll-mt-[8.125rem]"
+    <section id="previous-works" class="bg-[#f2f2e4] pt-[5.8125rem] pb-[3.75rem] scroll-mt-[8.125rem]"
              x-data="{ page: 0, pages: {{ $youngWorksPages }} }">
         <div class="site-container">
             @foreach($youngWorks as $index => $youngWork)

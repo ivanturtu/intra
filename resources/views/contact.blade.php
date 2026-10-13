@@ -8,6 +8,7 @@
         $address = trim((string) $settings->address);
         $addressLines = $address === '' ? [] : (str_contains($address, "\n") ? preg_split('/\R/', $address) : explode(', ', $address));
         $contactIcon = 'w-[1.6875rem] h-[1.6875rem] text-primary shrink-0';
+        $mapsUrl = $addressLines ? 'https://www.google.com/maps/search/?api=1&query=' . urlencode(implode(', ', array_map('trim', $addressLines))) : null;
     @endphp
 
     <!-- Get In Touch Section with Background -->
@@ -26,11 +27,11 @@
                             @if($addressLines)
                             <div class="flex items-start gap-[0.8125rem]">
                                 <svg class="{{ $contactIcon }}" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                                <p>
+                                <a href="{{ $mapsUrl }}" target="_blank" rel="noopener noreferrer" class="hover:text-tertiary transition cursor-pointer">
                                     @foreach($addressLines as $line)
                                         {{ trim($line) }}@if(!$loop->last)<br>@endif
                                     @endforeach
-                                </p>
+                                </a>
                             </div>
                             @endif
 
@@ -51,9 +52,10 @@
                     </div>
 
                     <!-- Icon panel (columns 7-9), framed by 1rem of white -->
-                    <div class="hidden md:flex col-span-3 my-[1rem] bg-primary items-center justify-center">
-                        <svg class="w-[5rem] h-[5rem] text-secondary" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    </div>
+                    <a @if($mapsUrl) href="{{ $mapsUrl }}" target="_blank" rel="noopener noreferrer" aria-label="Open in Google Maps" @endif
+                       class="hidden md:flex col-span-3 my-[1rem] bg-primary items-center justify-center group {{ $mapsUrl ? 'cursor-pointer' : '' }}">
+                        <svg class="w-[5rem] h-[5rem] text-secondary group-hover:text-tertiary transition" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </a>
                 </div>
             </div>
         </div>

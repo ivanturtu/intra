@@ -11,8 +11,8 @@
             'Year' => $project->year,
         ]);
         $gallery = $project->image_gallery ?? [];
-        $listHeading = 'text-[1.125rem] leading-[1.5rem] font-medium text-tertiary mb-[0.75rem]';
-        $listItem = 'py-[0.5rem] border-b border-secondary last:border-b-0 text-[1.125rem] leading-[1.5rem] font-light text-primary';
+        $listHeading = 'text-[1.5rem] leading-[1.75rem] font-medium text-tertiary pb-[0.5rem] border-b border-secondary';
+        $listRow = 'min-h-[3.75rem] py-[0.5rem] items-center border-b border-secondary text-[1.125rem] leading-[1.6875rem] text-primary';
     @endphp
 
     <!-- Project Overview Section: content on columns 2-11 -->
@@ -94,7 +94,7 @@
         </section>
     @endif
 
-    <!-- Image Gallery (columns 2-11): fixed height, the next image peeks on the right -->
+    <!-- Image Gallery (columns 2-11): fixed height, the next image peeks on the right; loops and opens a lightbox -->
     @if(count($gallery) > 0)
         <section class="bg-white pt-[3.875rem]">
             <div class="site-container site-grid">
@@ -103,18 +103,28 @@
                          currentIndex: 0,
                          total: {{ count($gallery) }},
                          offset: 0,
+                         images: @js(array_map(fn ($image) => asset('storage/' . $image), $gallery)),
+                         lightbox: null,
                          go(i) {
-                             this.currentIndex = Math.max(0, Math.min(this.total - 1, i));
+                             this.currentIndex = (i + this.total) % this.total;
                              this.offset = this.$refs.track.children[this.currentIndex].offsetLeft;
-                         }
-                     }">
+                         },
+                         open(i) { this.lightbox = i; document.body.classList.add('overflow-hidden'); },
+                         close() { this.lightbox = null; document.body.classList.remove('overflow-hidden'); },
+                         step(d) { this.lightbox = (this.lightbox + d + this.total) % this.total; }
+                     }"
+                     @keydown.window.escape="lightbox !== null && close()"
+                     @keydown.window.arrow-left="lightbox !== null && step(-1)"
+                     @keydown.window.arrow-right="lightbox !== null && step(1)">
                     <div class="overflow-hidden">
                         <div x-ref="track" class="flex gap-[1rem] h-[18rem] md:h-[30.5rem] transition-transform duration-500 ease-in-out"
                              :style="`transform: translateX(-${offset}px)`">
                             @foreach($gallery as $i => $image)
-                                <img src="{{ asset('storage/' . $image) }}"
-                                     alt="{{ $project->title }} – {{ $i + 1 }}"
-                                     class="h-full w-auto max-w-none flex-none object-cover">
+                                <button type="button" @click="open({{ $i }})" class="h-full flex-none cursor-zoom-in" aria-label="Open image {{ $i + 1 }}">
+                                    <img src="{{ asset('storage/' . $image) }}"
+                                         alt="{{ $project->title }} – {{ $i + 1 }}"
+                                         class="h-full w-auto max-w-none object-cover">
+                                </button>
                             @endforeach
                         </div>
                     </div>
@@ -122,16 +132,45 @@
                     <!-- Navigation -->
                     <div class="flex items-center gap-[1.25rem] mt-[1.25rem] text-primary">
                         @if(count($gallery) > 1)
-                            <button @click="go(currentIndex - 1)" :disabled="currentIndex === 0"
-                                    class="text-primary/60 hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed transition cursor-pointer" aria-label="Previous image">
+                            <button @click="go(currentIndex - 1)"
+                                    class="text-primary/60 hover:text-primary transition cursor-pointer" aria-label="Previous image">
                                 <svg class="w-[1.5rem] h-[0.75rem]" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 32 16"><path d="M31 8H1M8 1L1 8l7 7"/></svg>
                             </button>
-                            <button @click="go(currentIndex + 1)" :disabled="currentIndex === total - 1"
-                                    class="text-primary/60 hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed transition cursor-pointer" aria-label="Next image">
+                            <button @click="go(currentIndex + 1)"
+                                    class="text-primary/60 hover:text-primary transition cursor-pointer" aria-label="Next image">
                                 <svg class="w-[1.5rem] h-[0.75rem]" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 32 16"><path d="M1 8h30M24 1l7 7-7 7"/></svg>
                             </button>
                         @endif
                         <span class="text-[1rem] leading-[1.5rem]"><span x-text="currentIndex + 1">1</span>/{{ count($gallery) }}</span>
+                    </div>
+
+                    <!-- Lightbox -->
+                    <div x-show="lightbox !== null" x-cloak
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0"
+                         x-transition:enter-end="opacity-100"
+                         x-transition:leave="transition ease-in duration-150"
+                         x-transition:leave-start="opacity-100"
+                         x-transition:leave-end="opacity-0"
+                         @click.self="close()"
+                         class="fixed inset-0 z-[100] bg-primary/95 flex items-center justify-center"
+                         role="dialog" aria-modal="true" aria-label="{{ $project->title }} gallery">
+                        <img :src="lightbox !== null ? images[lightbox] : ''"
+                             alt="{{ $project->title }}"
+                             class="max-w-[85vw] max-h-[85vh] object-contain">
+
+                        <button @click="close()" class="absolute top-6 right-6 text-secondary hover:text-white transition cursor-pointer" aria-label="Close">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                        </button>
+                        @if(count($gallery) > 1)
+                            <button @click="step(-1)" class="absolute left-4 md:left-[3.2rem] top-1/2 -translate-y-1/2 text-secondary hover:text-white transition cursor-pointer" aria-label="Previous image">
+                                <svg class="w-[1.75rem] h-[3.5rem]" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 32"><path d="M14 2L2 16l12 14"/></svg>
+                            </button>
+                            <button @click="step(1)" class="absolute right-4 md:right-[3.2rem] top-1/2 -translate-y-1/2 text-secondary hover:text-white transition cursor-pointer" aria-label="Next image">
+                                <svg class="w-[1.75rem] h-[3.5rem]" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 32"><path d="M2 2l12 14L2 30"/></svg>
+                            </button>
+                            <span class="absolute bottom-6 left-1/2 -translate-x-1/2 text-secondary text-[1rem]"><span x-text="lightbox + 1"></span>/{{ count($gallery) }}</span>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -159,37 +198,49 @@
         </section>
     @endif
 
-    <!-- Team Section (columns 2-11) -->
-    @if($project->projectTeamMembers->count() > 0 || $project->intraStudioTeamLeads->count() > 0)
-        <section class="bg-white pt-[5rem]">
-            <div class="site-container site-grid gap-y-10">
-                @if($project->projectTeamMembers->count() > 0)
-                    <div class="col-span-12 md:col-start-2 md:col-span-4">
-                        <h3 class="{{ $listHeading }}">Team</h3>
-                        <ul>
-                            @foreach($project->projectTeamMembers as $member)
-                                <li class="{{ $listItem }}">
-                                    @if($member->name && $member->role)
-                                        <span class="font-medium">{{ $member->name }}:</span> {{ $member->role }}
-                                    @else
-                                        {{ $member->name ?: $member->role }}
-                                    @endif
-                                </li>
-                            @endforeach
-                        </ul>
+    <!-- Team / Team Leads / Details: three blocks of 3 columns spread across columns 2-11 -->
+    @if($project->projectTeamMembers->count() > 0 || $project->intraStudioTeamLeads->count() > 0 || count($details) > 0)
+        <section class="bg-white pt-[4.8rem]">
+            <div class="site-container site-grid">
+                <div class="col-span-12 md:col-start-2 md:col-span-10 grid gap-y-12 md:grid-cols-[repeat(3,calc((100%-9rem)/10*3+2rem))] md:justify-between items-start">
+                    <!-- Team -->
+                    <div>
+                        @if($project->projectTeamMembers->count() > 0)
+                            <h3 class="{{ $listHeading }}">Team</h3>
+                            <ul>
+                                @foreach($project->projectTeamMembers as $member)
+                                    <li class="{{ $listRow }} grid grid-cols-[57%_minmax(0,1fr)] gap-x-[0.5rem]">
+                                        {{-- Admin "Field 1" (name column) is the bold label, "Field 2" (role column) the value --}}
+                                        <span class="font-medium">{{ $member->name }}</span>
+                                        <span class="font-light">{{ $member->role }}</span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
                     </div>
-                @endif
 
-                @if($project->intraStudioTeamLeads->count() > 0)
-                    <div class="col-span-12 md:col-span-3 {{ $project->projectTeamMembers->count() > 0 ? 'md:col-start-7' : 'md:col-start-2' }}">
-                        <h3 class="{{ $listHeading }}">INTRAstudio Team Leads</h3>
-                        <ul>
-                            @foreach($project->intraStudioTeamLeads as $lead)
-                                <li class="{{ $listItem }}">{{ $lead->name }}@if($lead->surname) {{ $lead->surname }}@endif</li>
-                            @endforeach
-                        </ul>
+                    <!-- INTRAstudio Team Leads -->
+                    <div>
+                        @if($project->intraStudioTeamLeads->count() > 0)
+                            <h3 class="{{ $listHeading }}">INTRAstudio Team Leads</h3>
+                            <ul>
+                                @foreach($project->intraStudioTeamLeads as $lead)
+                                    <li class="{{ $listRow }} !min-h-[3.25rem] flex font-medium">{{ $lead->name }}@if($lead->surname) {{ $lead->surname }}@endif</li>
+                                @endforeach
+                            </ul>
+                        @endif
                     </div>
-                @endif
+
+                    <!-- Project details -->
+                    <dl>
+                        @foreach($details as $label => $value)
+                            <div class="py-[0.9375rem] first:pt-0 border-b border-secondary last:border-b-0 text-[1.125rem] leading-[1.5rem] text-primary">
+                                <dt class="font-medium">{{ $label }}</dt>
+                                <dd class="font-light">{{ $value }}</dd>
+                            </div>
+                        @endforeach
+                    </dl>
+                </div>
             </div>
         </section>
     @endif

@@ -30,7 +30,11 @@ class Form extends Component
 
         // Send email
         try {
-            Mail::raw($this->message, function ($mail) use ($toEmail) {
+            $body = "Name: {$this->name}\n"
+                . "Email: {$this->email}\n\n"
+                . $this->message;
+
+            Mail::raw($body, function ($mail) use ($toEmail) {
                 $mail->to($toEmail)
                      ->subject('New Contact Form Submission from ' . $this->name)
                      ->replyTo($this->email, $this->name);
@@ -39,6 +43,7 @@ class Form extends Component
             session()->flash('message', 'Thank you for your message! We will get back to you soon.');
             $this->reset(['name', 'email', 'message']);
         } catch (\Exception $e) {
+            report($e);
             session()->flash('error', 'Sorry, there was an error sending your message. Please try again later.');
         }
     }
