@@ -46,7 +46,7 @@
                     <a href="{{ route('rosa-profile') }}"
                        class="mt-[1.645rem] inline-flex items-center gap-[0.625rem] text-[1.5rem] leading-[1.875rem] font-medium uppercase text-tertiary hover:text-primary transition cursor-pointer">
                         Go to {{ $mainTeamLead->name }}’s profile
-                        <svg class="w-[1.125rem] h-[1.125rem]" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9"/></svg>
+                        <svg class="w-[1.25rem] h-[1.25rem]" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 21L21 3M7 3h14v14"/></svg>
                     </a>
                 </div>
                 @endif

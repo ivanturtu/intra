@@ -64,7 +64,7 @@
                             <span class="block font-medium uppercase">Go to</span>
                             Project Development
                         </span>
-                        <svg class="w-[1rem] h-[1rem] text-tertiary" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9"/></svg>
+                        <svg class="w-[1rem] h-[1rem] text-tertiary" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 21L21 3M7 3h14v14"/></svg>
                     </a>
                 @endif
             </div>

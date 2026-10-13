@@ -9,7 +9,7 @@
         $role = 'text-[1.5rem] md:text-[1.875rem] leading-[3rem] font-medium tracking-[0.006em] text-primary';
         $qualification = 'text-[1.25rem] md:text-[1.5rem] leading-[1.875rem] font-light text-primary';
         $email = 'text-[1.5rem] md:text-[1.875rem] leading-[3rem] tracking-[0.006em] text-primary';
-        $arrowUpRight = '<svg class="w-[1rem] h-[1rem] text-tertiary shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9"/></svg>';
+        $arrowUpRight = '<svg class="w-[1rem] h-[1rem] text-tertiary shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 21L21 3M7 3h14v14"/></svg>';
         $youngWorksPerPage = 4;
         $youngWorksPages = $youngWorks ? (int) ceil($youngWorks->count() / $youngWorksPerPage) : 0;
     @endphp
@@ -55,7 +55,7 @@
                 @if($youngWorks && $youngWorks->count() > 0)
                     <a href="#previous-works" class="mt-[2.27rem] inline-flex items-center gap-[0.625rem] text-[1.5rem] leading-[1.875rem] font-medium uppercase text-tertiary hover:text-primary transition cursor-pointer">
                         Previous works
-                        <svg class="w-[1.125rem] h-[1.125rem]" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9"/></svg>
+                        <svg class="w-[1.25rem] h-[1.25rem]" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 21L21 3M7 3h14v14"/></svg>
                     </a>
                 @endif
             </div>
